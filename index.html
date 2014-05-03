@@ -1,0 +1,90 @@
+<!doctype html>
+<html class="no-js" lang="en" ng-app="dreadApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation</title>
+    <link rel="stylesheet" href="stylesheets/app.css" />
+    <script src="bower_components/modernizr/modernizr.js"></script>
+</head>
+<body>
+
+    <div class="split-container" ng-controller="MainCtrl">
+        <div class="left-side">
+
+            <h1>Dread</h1>
+
+            <p>
+                <label for="set-wpm-sel">Words per minute</label>
+                <select ng-model="settings.wpm" id="set-wpm-sel">
+                    <option value="200">100</option>
+                    <option value="200">150</option>
+                    <option value="200">200</option>
+                    <option value="250">250</option>
+                    <option value="300">300</option>
+                    <option value="350">350</option>
+                    <option value="400">400</option>
+                    <option value="450">450</option>
+                    <option value="500">500</option>
+                    <option value="500">550</option>
+                    <option value="500">600</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="set-startword-inp">Start at word</label>
+                <input id="set-startword-inp" ng-model="game.currentWord" type="number">
+            </p>
+            
+            <p>
+                <input ng-model="settings.include_paragraphs" id="set-para-chk" type="checkbox">
+                <label for="set-para-chk">Pause between line breaks</label>
+            </p>
+            
+            <p>
+                <input ng-change="toggleNightMode()" ng-model="settings.night_mode" id="set-nm-chk" type="checkbox" checked>
+                <label for="set-nm-chk">Night mode</label>
+            </p>
+
+            <button ng-click="start()">Start</button>
+
+            <p>Psst. Click anywhere on the screen to pause during the read.</p>
+        </div>
+
+        <div class="right-side">
+
+            <div class="toggle-settings" ng-click="toggleSettings(true); pauseRead();">Settings</div>
+
+            <textarea ng-model="settings.text" class="editor" placeholder="Paste your text here..." spellcheck=false>
+Have you ever forgotten your phone?
+
+When did you realise you’d forgotten it? I’m guessing you didn’t just smack your forehead and exclaim ‘damn’ apropos of nothing. The realisation probably didn’t dawn on you spontaneously. More likely, you reached for your phone, pawing open your pocket or handbag, and were momentarily confused by it not being there. Then you did a mental restep of the morning’s events.
+
+Shit.
+
+In my case, my phone’s alarm woke me up as normal but I realised the battery was lower than I expected. It was a new phone and it had this annoying habit of leaving applications running that drain the battery overnight. So, I put it on to charge while I showered instead of into my bag like normal. It was a momentary slip from the routine but that was all it took. Once in the shower, my brain got back into ‘the routine’ it follows every morning and that was it.
+
+Forgotten.</textarea>
+            
+            <div class="word-canvas" ng-click="pauseRead()">
+                <div class="word-container">{{ game.words[game.currentWord] }}</div>
+                <div class="timeline">
+                    <div class="marker"></div>
+                    <div class="text">{{ game.percentComplete(true) }}%</div>
+                </div>
+                <div class="paused">
+                    <p>Reading paused, {{ game.percentComplete(true) }}% complete</p>
+                    <button ng-click="continueRead(); $event.stopPropagation();">Start</button> or <button ng-click="continueRead(10); $event.stopPropagation();">Start from 10 words back</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/foundation/js/foundation.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
