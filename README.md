@@ -1,29 +1,16 @@
-# Foundation Compass Template
+# Speed reader
 
-The easiest way to get started with Foundation + Compass.
+Studies have found that by not having to move your eyes to follow the text your reading, you will greatly improve the speed of your reading. This simple application allows you to read a chunk of text simply by flashing words in the same position. Enter your text, click Start and enjoy the read.
 
-## Requirements
+## Why did you make Speed reader?
 
-  * Ruby 1.9+
-  * [Node.js](http://nodejs.org)
-  * [compass](http://compass-style.org/): `gem install compass`
-  * [bower](http://bower.io): `npm install bower -g`
+Mostly because all other speed reading applications i've found lack customization and important usability features such as pause between paragraphs/sentences, but also because i wanted to play with AngularJS, and i had no other project ideas in mind.
 
-## Quickstart
+## Todo
 
-  * [Download this starter compass project and unzip it](https://github.com/zurb/foundation-compass-template/archive/master.zip)
-  * Run `bower install` to install the latest version of Foundation
-  
-Then when you're working on your project, just run the following command:
-
-```bash
-compass watch
-```
-
-## Upgrading
-
-If you'd like to upgrade to a newer version of Foundation down the road just run:
-
-```bash
-bower update
-```
+- Sexier scroll bar in the text editor 
+- Get away from the default Foundation styling, completely redesign settings panel
+- Maybe some kind of splash screen after completing the read, instead of just returning to the settings
+- Left align text in center (text is still centered on the screen, but all words align, if that makes sense)
+- Adjust font size/colors, perhaps allow customization
+- Cross browser test, currently only tested in Chrome.
