@@ -1,8 +1,10 @@
+
 // Foundation JavaScript
 // Documentation can be found at: http://foundation.zurb.com/docs
-$(document).foundation();
+// $(document).foundation();
 
-var app = angular.module('dreadApp', []);
+
+var app = angular.module('speedReadingApp', []);
 
 app.controller('MainCtrl', function($scope, $timeout) {
 
@@ -30,29 +32,39 @@ app.controller('MainCtrl', function($scope, $timeout) {
 	};
 
 
-
-	$scope.start = function() {
+	/**
+	 * Prepares for reading then fires off wordLoop
+	 */
+	$scope.startRead = function() {
 		$scope.game.words = $scope.splitToWords($scope.settings.text);
-
 		$scope.game.paused = false;
-
 		$scope.settings.settings_collapsed = true;
 
+		// Hold a second before we star the read
 		$timeout(function() {
-			$scope.nextWord();
-		}, 1000);
-
+			$scope.wordLoop();
+		}, 800);
 	}
 
+
+	/**
+	 * Splits chunk of text into array of words, with spaces between
+	 * paragraphs if specified.
+	 */
 	$scope.splitToWords = function(text) {
+
+		// Remove double spaces, tabs, and new lines, this could be improved
 		var text = $.trim(text).replace(/ +(?= )/g, '').replace("\n\n", "\n"),
 			paras = text.split(/[\n]/),
 			words = [];
 
-
+		// Loop through all paragraphs
 		for(i in paras) {
-			var para = paras[i];
-			words.push.apply(words, para.split(' ') );
+			var para = paras[i],
+				paraWords = para.split(' ');
+
+			// Add words in paragraph to words array
+			words.push.apply(words, paraWords);
 
 			// Add space between each paragraph
 			if($scope.settings.include_paragraphs) {
@@ -68,15 +80,25 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		return words;
 	}
 
-	$scope.nextWord = function() {
+
+	/**
+	 * Loop that changes current word. Interval based on specified WPM.
+	 */
+	$scope.wordLoop = function() {
+
+		// If reading is paused, don't continue
 		if($scope.game.paused === true) {
 			return false;
 		}
 
-		$scope.game.currentWord += 1;
-
+		// Unless this is the last word, set timeout for next word
 		if ($scope.game.currentWord < $scope.game.words.length) {
-			$timeout($scope.nextWord, $scope.settings.wpm_ms());
+
+			// Show next word and set timeout
+			$scope.game.currentWord += 1;
+			$timeout($scope.wordLoop, $scope.settings.wpm_ms());
+
+		// Last word, let's hold a second before we go back to the settings
 		} else {
 			$timeout(function() {
 				$scope.settings.settings_collapsed = false;
@@ -85,18 +107,23 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		}
 	}
 
+	/**
+	 * Runs when reading is continued from a paused state
+	 */
 	$scope.continueRead = function(offset) {
+
+		// Bail if we're not paused
 		if(!$scope.game.paused) {
 			return false;
 		}
+
+		// Calculate new starting point based on offset
 		var startPoint = $scope.game.currentWord - (offset || 0),
 			startPoint = startPoint < 0 ? 0 : startPoint;
 
 		$scope.game.currentWord = startPoint;
-
 		$scope.game.paused = false;
-
-		$scope.nextWord();
+		$scope.wordLoop();
 	}
 
 });

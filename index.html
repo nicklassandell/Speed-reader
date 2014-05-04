@@ -1,9 +1,9 @@
 <!doctype html>
-<html class="no-js" lang="en" ng-app="dreadApp">
+<html class="no-js" lang="en" ng-app="speedReadingApp">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foundation</title>
+    <title>Speed read</title>
     <link rel="stylesheet" href="stylesheets/app.css" />
     <script src="bower_components/modernizr/modernizr.js"></script>
 </head>
@@ -12,7 +12,7 @@
     <div class="split-container">
         <div class="left-side">
 
-            <h1>Dread</h1>
+            <h1>Speed read</h1>
 
             <p>
                 <label for="set-wpm-sel">Words per minute</label>
@@ -46,14 +46,14 @@
                 <label for="set-nm-chk">Night mode</label>
             </p>
 
-            <button ng-click="start()">Start</button>
+            <button ng-click="startRead()">Start</button>
 
             <p>Psst. Click anywhere on the screen to pause during the read.</p>
         </div>
 
         <div class="right-side">
 
-            <div class="toggle-settings" ng-click="settings.settings_collapsed=true; game.paused=true;">Settings</div>
+            <div class="toggle-settings" ng-click="game.paused=true; settings.settings_collapsed=false;">Settings</div>
 
             <textarea ng-model="settings.text" class="editor" placeholder="Paste your text here..." spellcheck=false>
 Have you ever forgotten your phone?
@@ -81,9 +81,8 @@ Forgotten.</textarea>
         </div>
     </div>
 
-
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/foundation/js/foundation.min.js"></script>
+    <!--<script src="bower_components/foundation/js/foundation.min.js"></script>-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
     <script src="js/app.js"></script>
 </body>
