@@ -13,7 +13,8 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		'wpm_ms' : function() {
 			return 60000 / $scope.settings.wpm;
 		},
-		'include_paragraphs' : true,
+		'pause_between_paragraphs' : true,
+		'pause_between_sentences' : true,
 		'night_mode' : true,
 		'text' : $('[ng-model="settings.text"]').val(),
 		'settings_collapsed' : false
@@ -54,26 +55,43 @@ app.controller('MainCtrl', function($scope, $timeout) {
 	$scope.splitToWords = function(text) {
 
 		// Remove double spaces, tabs, and new lines, this could be improved
-		var text = $.trim(text).replace(/ +(?= )/g, '').replace("\n\n", "\n"),
+		var text = $.trim(text).replace(/(\s){2,}/g, '$1'),
 			paras = text.split(/[\n]/),
 			words = [];
 
 		// Loop through all paragraphs
 		for(i in paras) {
 			var para = paras[i],
-				paraWords = para.split(' ');
+				paraWords = para.split(' '),
+				spaceAfterSentence = false;
 
-			// Add words in paragraph to words array
-			words.push.apply(words, paraWords);
+			// Loop through all words
+			for(w in paraWords) {
+				var w = paraWords[w],
+					lastChar = w.slice(-1);
+
+				// Append word to array
+				words.push(w);
+
+				// Append space after word if it's the last word in a
+				// sentence, and the setting is on
+				spaceAfterSentence = false;
+				if($scope.settings.pause_between_sentences) {
+					if(lastChar === '.' || lastChar === '?' || lastChar === '!') {
+						words.push(' ');
+						spaceAfterSentence = true;
+					}
+				}
+			}
 
 			// Add space between each paragraph
-			if($scope.settings.include_paragraphs) {
+			if($scope.settings.pause_between_paragraphs && !spaceAfterSentence) {
 				words.push(' ');
 			}
 		}
 
 		// Remove last whitespace
-		if($scope.settings.include_paragraphs) {
+		if($scope.settings.pause_between_paragraphs) {
 			words.pop();
 		}
 		

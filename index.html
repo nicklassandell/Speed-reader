@@ -37,8 +37,13 @@
             </p>
             
             <p>
-                <input ng-model="settings.include_paragraphs" id="set-para-chk" type="checkbox">
-                <label for="set-para-chk">Pause between line breaks</label>
+                <input ng-model="settings.pause_between_paragraphs" id="set-pause-para-chk" type="checkbox">
+                <label for="set-pause-para-chk">Pause between line breaks</label>
+            </p>
+            
+            <p>
+                <input ng-model="settings.pause_between_sentences" id="set-pause-sent-chk" type="checkbox">
+                <label for="set-pause-sent-chk">Pause between sentences</label>
             </p>
             
             <p>
@@ -56,7 +61,7 @@
             <div class="toggle-settings" ng-click="game.paused=true; settings.settings_collapsed=false;">Settings</div>
 
             <textarea ng-model="settings.text" class="editor" placeholder="Paste your text here..." spellcheck=false>
-Have you ever forgotten your phone?
+Have     you ever forgotten your phone?
 
 When did you realise you’d forgotten it? I’m guessing you didn’t just smack your forehead and exclaim ‘damn’ apropos of nothing. The realisation probably didn’t dawn on you spontaneously. More likely, you reached for your phone, pawing open your pocket or handbag, and were momentarily confused by it not being there. Then you did a mental restep of the morning’s events.
 
