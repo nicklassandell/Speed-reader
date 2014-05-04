@@ -34,6 +34,45 @@ app.controller('MainCtrl', function($scope, $timeout) {
 
 
 	/**
+	 * Loads saved data from localStorage if found
+	 */
+	$scope.loadFromSessionStorage = function() {
+		if(!localStorage.spread) return false;
+
+		var stored = JSON.parse(localStorage.spread);
+
+		for(model in stored) {
+			var modelValue = stored[model];
+
+			// For checkboxes
+			if(modelValue === 'on') {
+				modelValue = true;
+			}
+			if(modelValue === 'off') {
+				modelValue = false;
+			}
+
+			// Make numbers actual numbers
+			if(modelValue == parseInt(modelValue)) {
+				modelValue = parseInt(modelValue);
+			}
+
+			// Split model name by dot, loop through each level and update
+			// the corresponding value in $scope
+			model.split('.').reduce(function(result, key, index, array) {
+				if(index === array.length-1) {
+					result[key] = modelValue;
+				}
+				return result[key];
+			}, $scope);
+		}
+
+	}
+
+	$scope.loadFromSessionStorage();
+
+
+	/**
 	 * Prepares for reading then fires off wordLoop
 	 */
 	$scope.startRead = function() {
@@ -143,5 +182,53 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		$scope.game.paused = false;
 		$scope.wordLoop();
 	}
+
+});
+
+
+
+/**
+ * Directive to automatically save form field in localStorage.
+ * The data saved in localStorage will be automatically set on load.
+ */
+app.directive('saveOnChange', function() {
+
+	// Check support for localStorage before we attempt to save anything
+	if(typeof window.localStorage !== void(0)) {
+	    return {
+	        restrict: 'A',
+	        require: 'ngModel',
+	        link: function(scope, elm) {
+	        	var elem = $(elm[0]);
+
+	        	// If the element is not bound to a model, do nothing
+	        	if(!elem.attr('ng-model')) {
+	        		return false;
+	        	}
+	            
+	            // Watch for change and keyup events
+	            $(elm[0]).on('change keyup', function() {
+	            	var elem = $(this),
+	            		model = elem.attr('ng-model'),
+	            		currStored = localStorage.spread ? JSON.parse(localStorage.spread) : {};
+
+	            	// Checkboxes need some special treatment
+	            	if(elem.is('input[type=checkbox]')) {
+	            		var val = elem.is(':checked') ? true : false;
+	            	} else {
+	            		var val = elem.val();
+	            	}
+
+	            	currStored[model] = val;
+	            	localStorage.spread = JSON.stringify(currStored);
+	            });
+	        }
+	    };
+
+	// No localStorage support, do nothing
+	} else {
+		return {};
+	}
+
 
 });
