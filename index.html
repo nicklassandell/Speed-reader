@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="stylesheets/app.css" />
     <script src="bower_components/modernizr/modernizr.js"></script>
 </head>
-<body>
+<body ng-controller="MainCtrl" class="{{ game.paused ? 'paused' : '' }} {{ !settings.night_mode ? 'bright_mode' : '' }} {{ settings.settings_collapsed ? 'settings-collapsed' : '' }}">
 
-    <div class="split-container" ng-controller="MainCtrl">
+    <div class="split-container">
         <div class="left-side">
 
             <h1>Dread</h1>
@@ -42,7 +42,7 @@
             </p>
             
             <p>
-                <input ng-change="toggleNightMode()" ng-model="settings.night_mode" id="set-nm-chk" type="checkbox" checked>
+                <input ng-model="settings.night_mode" id="set-nm-chk" type="checkbox" checked>
                 <label for="set-nm-chk">Night mode</label>
             </p>
 
@@ -53,7 +53,7 @@
 
         <div class="right-side">
 
-            <div class="toggle-settings" ng-click="toggleSettings(true); pauseRead();">Settings</div>
+            <div class="toggle-settings" ng-click="settings.settings_collapsed=true; game.paused=true;">Settings</div>
 
             <textarea ng-model="settings.text" class="editor" placeholder="Paste your text here..." spellcheck=false>
 Have you ever forgotten your phone?
@@ -66,10 +66,10 @@ In my case, my phone’s alarm woke me up as normal but I realised the battery w
 
 Forgotten.</textarea>
             
-            <div class="word-canvas" ng-click="pauseRead()">
+            <div class="word-canvas" ng-click="game.paused=true">
                 <div class="word-container">{{ game.words[game.currentWord] }}</div>
                 <div class="timeline">
-                    <div class="marker"></div>
+                    <div class="marker" style="width: {{ game.percentComplete() }}%"></div>
                     <div class="text">{{ game.percentComplete(true) }}%</div>
                 </div>
                 <div class="paused">
@@ -84,7 +84,7 @@ Forgotten.</textarea>
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/foundation/js/foundation.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

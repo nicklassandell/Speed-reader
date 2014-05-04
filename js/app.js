@@ -2,23 +2,19 @@
 // Documentation can be found at: http://foundation.zurb.com/docs
 $(document).foundation();
 
-/*
-$('.right-side').on('click', function() {
-	$('body').toggleClass('settings-collapsed');
-});
-*/
-
-
-
 var app = angular.module('dreadApp', []);
 
 app.controller('MainCtrl', function($scope, $timeout) {
 
 	$scope.settings = {
 		'wpm' : 350,
+		'wpm_ms' : function() {
+			return 60000 / $scope.settings.wpm;
+		},
 		'include_paragraphs' : true,
 		'night_mode' : true,
-		'text' : $('[ng-model="settings.text"]').val()
+		'text' : $('[ng-model="settings.text"]').val(),
+		'settings_collapsed' : false
 	};
 
 	$scope.game = {
@@ -27,7 +23,7 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		'paused' : false,
 		'percentComplete' : function(round) {
 			var perc = ($scope.game.currentWord / $scope.game.words.length) * 100,
-			ret = round ? perc.toFixed(1) : perc;
+				ret = round ? perc.toFixed(1) : perc;
 
 			return ret;
 		}
@@ -39,9 +35,8 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		$scope.game.words = $scope.splitToWords($scope.settings.text);
 
 		$scope.game.paused = false;
-		$('body').removeClass('paused');
 
-		$scope.toggleSettings(false);
+		$scope.settings.settings_collapsed = true;
 
 		$timeout(function() {
 			$scope.nextWord();
@@ -75,42 +70,19 @@ app.controller('MainCtrl', function($scope, $timeout) {
 
 	$scope.nextWord = function() {
 		if($scope.game.paused === true) {
-			console.log('paused, aborting');
 			return false;
 		}
 
 		$scope.game.currentWord += 1;
 
-		var percentComplete = $scope.game.percentComplete();
-		$('.timeline .marker').css('width', percentComplete + '%');
-
 		if ($scope.game.currentWord < $scope.game.words.length) {
-			$timeout($scope.nextWord, $scope.WpmToMs());
+			$timeout($scope.nextWord, $scope.settings.wpm_ms());
 		} else {
 			$timeout(function() {
-				$scope.toggleSettings(true);
+				$scope.settings.settings_collapsed = false;
 				$scope.game.currentWord = 0;
-				$('.timeline .marker').css('width', 0);
 			}, 1000);
 		}
-	}
-
-	$scope.WpmToMs = function() {
-		return 60000 / $scope.settings.wpm;
-	}
-
-
-	$scope.toggleNightMode = function() {
-		if($scope.settings.night_mode) {
-			$('body').removeClass('bright_mode');
-		} else {
-			$('body').addClass('bright_mode');
-		}
-	}
-
-	$scope.pauseRead = function() {
-		$scope.game.paused = true;
-		$('body').addClass('paused');
 	}
 
 	$scope.continueRead = function(offset) {
@@ -123,20 +95,8 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		$scope.game.currentWord = startPoint;
 
 		$scope.game.paused = false;
-		$('body').removeClass('paused');
 
 		$scope.nextWord();
-	}
-
-	$scope.toggleSettings = function(showSettings) {
-
-		if(typeof showSettings === 'undefined') {
-			$('body').toggleClass('settings-collapsed');
-		} else if (showSettings == false) {
-			$('body').addClass('settings-collapsed');
-		} else {
-			$('body').removeClass('settings-collapsed');
-		}
 	}
 
 });
