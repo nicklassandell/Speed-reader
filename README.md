@@ -15,6 +15,8 @@ Mostly because all other speed reading applications i've found lack customizatio
 - Maybe some kind of splash screen after completing the read, instead of just returning to the settings
 - Left align text in center (text is still centered on the screen, but all words align, if that makes sense)
 - Adjust font size/colors, perhaps allow customization
+- Keyboard shortcut to pause (space?)
+- Automatically pause when window loses focus
 - Cross browser test, currently only tested in Chrome.
 
 Released under the MIT License.
