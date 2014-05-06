@@ -119,13 +119,22 @@ body {
 
 			.word-container {
 				font-size: 58px;
-				text-align: center;
 				position: absolute;
 				top: 45%;
 				left: 0;
 				right: 0;
+				text-align: center;
 				@include transform(translateY(-50%));
 				@include transition-duration(.3s);
+				
+				.left-align-text & .center-point {
+					display: block;
+					height: 1em;
+					width: 1px;
+					margin: 0px auto;
+					text-indent: -65px;
+					white-space: nowrap;
+				}
 			}
 
 			.timeline {

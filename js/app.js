@@ -17,7 +17,8 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		'pause_between_sentences' : true,
 		'night_mode' : true,
 		'text' : $('[ng-model="settings.text"]').val(),
-		'settings_collapsed' : false
+		'settings_collapsed' : false,
+		'left_align_text' : true
 	};
 
 	$scope.game = {
@@ -181,6 +182,13 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		$scope.game.currentWord = startPoint;
 		$scope.game.paused = false;
 		$scope.wordLoop();
+	}
+
+
+	$scope.formatPastedText = function($event) {
+		$timeout(function() {
+			
+		}, 0);
 	}
 
 });
