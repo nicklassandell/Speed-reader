@@ -18,13 +18,13 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		'night_mode' : true,
 		'text' : $('[ng-model="settings.text"]').val(),
 		'settings_collapsed' : false,
-		'left_align_text' : true
+		'left_align_text' : false
 	};
 
 	$scope.game = {
 		'words' : [],
 		'currentWord' : 0,
-		'paused' : false,
+		'paused' : true,
 		'percentComplete' : function(round) {
 			var perc = ($scope.game.currentWord / $scope.game.words.length) * 100,
 				ret = round ? perc.toFixed(1) : perc;
@@ -77,6 +77,13 @@ app.controller('MainCtrl', function($scope, $timeout) {
 	 * Prepares for reading then fires off wordLoop
 	 */
 	$scope.startRead = function() {
+		
+		// If it's already running, abort
+		// Edge cases
+		if($scope.game.paused !== true)  {
+			return false;
+		}
+
 		$scope.game.words = $scope.splitToWords($scope.settings.text);
 		$scope.game.paused = false;
 		$scope.settings.settings_collapsed = true;
@@ -85,6 +92,12 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		$timeout(function() {
 			$scope.wordLoop();
 		}, 800);
+	}
+
+	$scope.stopRead = function() {
+		$scope.game.paused = true;
+		$scope.game.currentWord = 0;
+		$scope.settings.settings_collapsed = false;
 	}
 
 
@@ -149,6 +162,8 @@ app.controller('MainCtrl', function($scope, $timeout) {
 			return false;
 		}
 
+		console.log('running:', $scope.game.currentWord, 'typeof:', typeof $scope.game.currentWord);
+
 		// Unless this is the last word, set timeout for next word
 		if ($scope.game.currentWord < $scope.game.words.length) {
 
@@ -158,6 +173,7 @@ app.controller('MainCtrl', function($scope, $timeout) {
 
 		// Last word, let's hold a second before we go back to the settings
 		} else {
+			console.log('is last word:', $scope.game.currentWord);
 			$timeout(function() {
 				$scope.settings.settings_collapsed = false;
 				$scope.game.currentWord = 0;

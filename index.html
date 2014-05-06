@@ -17,7 +17,7 @@
 
             <h1>Speed read</h1>
 
-            <p>
+            <div class="form-row">
                 <label for="set-wpm-sel">Words per minute:</label>
                 <select ng-model="settings.wpm" id="set-wpm-sel" save-on-change>
                     <option value="200">100</option>
@@ -32,41 +32,54 @@
                     <option value="500">550</option>
                     <option value="500">600</option>
                 </select>
-            </p>
+            </div>
+            
+            <div class="form-row">
+                <div class="checkbox">
+                    <div class="check">
+                        <input ng-model="settings.pause_between_paragraphs" id="set-pause-para-chk" type="checkbox" save-on-change>
+                        <span></span>
+                    </div>
+                    <label for="set-pause-para-chk">Pause between line breaks</label>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="checkbox">
+                    <div class="check">
+                        <input ng-model="settings.pause_between_sentences" id="set-pause-sent-chk" type="checkbox" save-on-change>
+                        <span></span>
+                    </div>
+                    <label for="set-pause-sent-chk">Pause between sentences</label>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="checkbox">
+                    <div class="check">
+                        <input ng-model="settings.left_align_text" id="set-leftalign-chk" type="checkbox" save-on-change>
+                        <span></span>
+                    </div>
+                    <label for="set-leftalign-chk">Left align text</label>
+                </div>
+            </div>
 
-            <p>
-                <label for="set-startword-inp">Start after word:</label>
-                <input id="set-startword-inp" ng-model="game.currentWord" type="number" save-on-change>
-            </p>
-            
-            <p>
-                <input ng-model="settings.pause_between_paragraphs" id="set-pause-para-chk" type="checkbox" save-on-change>
-                <label for="set-pause-para-chk">Pause between line breaks</label>
-            </p>
-            
-            <p>
-                <input ng-model="settings.pause_between_sentences" id="set-pause-sent-chk" type="checkbox" save-on-change>
-                <label for="set-pause-sent-chk">Pause between sentences</label>
-            </p>
-            
-            <p>
-                <input ng-model="settings.night_mode" id="set-nm-chk" type="checkbox" save-on-change>
-                <label for="set-nm-chk">Night mode</label>
-            </p>
-            
-            <p>
-                <input ng-model="settings.left_align_text" id="set-leftalign-chk" type="checkbox" save-on-change>
-                <label for="set-leftalign-chk">Left align text</label>
-            </p>
-
-            <button ng-click="startRead()">Start</button>
-
-            <p>Psst. Click anywhere on the screen to pause during the read.</p>
+            <button class="expand" ng-click="startRead()">Start</button>
         </div>
 
         <div class="right-side">
 
-            <div class="toggle-settings" ng-click="game.paused=true; settings.settings_collapsed=false;">Settings</div>
+            <div class="toggle-settings" ng-click="stopRead()">Stop reading</div>
+
+            <div class="top-bar">
+                <div class="checkbox">
+                    <div class="check">
+                        <input ng-model="settings.night_mode" id="set-nm-chk" type="checkbox" save-on-change>
+                        <span></span>
+                    </div>
+                    <label for="set-nm-chk">Night mode</label>
+                </div>
+            </div>
 
             <textarea ng-model="settings.text" class="editor" placeholder="Paste your text here..." spellcheck=false ng-paste="formatPastedText($event)" save-on-change>
 Have     you ever forgotten your phone?
@@ -89,7 +102,7 @@ Forgotten.</textarea>
                 </div>
                 <div class="paused">
                     <p>Reading paused, {{ game.percentComplete(true) }}% complete</p>
-                    <button ng-click="continueRead(); $event.stopPropagation();">Start</button> or <button ng-click="continueRead(10); $event.stopPropagation();">Start from 10 words back</button>
+                    <button ng-click="continueRead(); $event.stopPropagation();">Start</button> &nbsp;&nbsp;or&nbsp;&nbsp; <button ng-click="continueRead(10); $event.stopPropagation();">Start from 10 words back</button>
                 </div>
             </div>
 
