@@ -1,9 +1,3 @@
-
-// Foundation JavaScript
-// Documentation can be found at: http://foundation.zurb.com/docs
-// $(document).foundation();
-
-
 var app = angular.module('speedReadingApp', []);
 
 app.controller('MainCtrl', function($scope, $timeout) {
@@ -162,8 +156,6 @@ app.controller('MainCtrl', function($scope, $timeout) {
 			return false;
 		}
 
-		console.log('running:', $scope.game.currentWord, 'typeof:', typeof $scope.game.currentWord);
-
 		// Unless this is the last word, set timeout for next word
 		if ($scope.game.currentWord < $scope.game.words.length) {
 
@@ -173,7 +165,6 @@ app.controller('MainCtrl', function($scope, $timeout) {
 
 		// Last word, let's hold a second before we go back to the settings
 		} else {
-			console.log('is last word:', $scope.game.currentWord);
 			$timeout(function() {
 				$scope.settings.settings_collapsed = false;
 				$scope.game.currentWord = 0;
