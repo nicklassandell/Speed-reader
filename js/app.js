@@ -187,7 +187,7 @@ app.controller('MainCtrl', function($scope, $timeout) {
 
 	$scope.formatPastedText = function($event) {
 		$timeout(function() {
-			
+			$scope.settings.text = $.trim($scope.settings.text).replace(/(\r\n|\n|\r)+/gm, '\r\n\r\n'); //.replace(/[\r\n]+/gm, '\r\n\r\n');
 		}, 0);
 	}
 
