@@ -11,14 +11,14 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		'pause_between_sentences' : true,
 		'night_mode' : true,
 		'text' : $('[ng-model="settings.text"]').val(),
-		'settings_collapsed' : false,
 		'left_align_text' : false
 	};
 
 	$scope.game = {
 		'words' : [],
 		'currentWord' : 0,
-		'paused' : true,
+		'paused' : false,
+		'has_started' : false,
 		'percentComplete' : function(round) {
 			var perc = ($scope.game.currentWord / $scope.game.words.length) * 100,
 				ret = round ? perc.toFixed(1) : perc;
@@ -72,15 +72,14 @@ app.controller('MainCtrl', function($scope, $timeout) {
 	 */
 	$scope.startRead = function() {
 		
-		// If it's already running, abort
-		// Edge cases
-		if($scope.game.paused !== true)  {
+		// Bail if already started
+		if($scope.game.has_started) {
 			return false;
 		}
 
 		$scope.game.words = $scope.splitToWords($scope.settings.text);
+		$scope.game.has_started = true;
 		$scope.game.paused = false;
-		$scope.settings.settings_collapsed = true;
 
 		// Hold a second before we star the read
 		$timeout(function() {
@@ -89,9 +88,45 @@ app.controller('MainCtrl', function($scope, $timeout) {
 	}
 
 	$scope.stopRead = function() {
-		$scope.game.paused = true;
+
+		// Bail if not started
+		if(!$scope.game.has_started) {
+			return false;
+		}
+
+		$scope.game.has_started = false;
+		$scope.game.paused = false;
 		$scope.game.currentWord = 0;
-		$scope.settings.settings_collapsed = false;
+	}
+
+	$scope.pauseRead = function() {
+
+		// Bail if not started or already paused
+		if(!$scope.game.has_started || $scope.game.paused) {
+			return false;
+		}
+
+		$scope.game.paused = true;
+	}
+
+	/**
+	 * Runs when reading is continued from a paused state
+	 */
+	$scope.continueRead = function(offset) {
+
+		// Bail if we're not paused or not running
+		if(!$scope.game.has_started || !$scope.game.paused) {
+			return false;
+		}
+
+		// Calculate new starting point based on offset
+		var startPoint = $scope.game.currentWord - (offset || 0),
+			startPoint = startPoint < 0 ? 0 : startPoint;
+
+		$scope.game.currentWord = startPoint;
+		$scope.game.paused = false;
+		$scope.game.has_started = true;
+		$scope.wordLoop();
 	}
 
 
@@ -166,29 +201,9 @@ app.controller('MainCtrl', function($scope, $timeout) {
 		// Last word, let's hold a second before we go back to the settings
 		} else {
 			$timeout(function() {
-				$scope.settings.settings_collapsed = false;
-				$scope.game.currentWord = 0;
+				$scope.stopRead();
 			}, 1000);
 		}
-	}
-
-	/**
-	 * Runs when reading is continued from a paused state
-	 */
-	$scope.continueRead = function(offset) {
-
-		// Bail if we're not paused
-		if(!$scope.game.paused) {
-			return false;
-		}
-
-		// Calculate new starting point based on offset
-		var startPoint = $scope.game.currentWord - (offset || 0),
-			startPoint = startPoint < 0 ? 0 : startPoint;
-
-		$scope.game.currentWord = startPoint;
-		$scope.game.paused = false;
-		$scope.wordLoop();
 	}
 
 
@@ -202,6 +217,34 @@ app.controller('MainCtrl', function($scope, $timeout) {
 
 
 
+app.directive('toggleDropdown', function($timeout) {
+	return {
+		link: function(scope, elem, attr) {
+			$(elem[0]).on('click', function() {
+				var target = $('#' + attr.toggleDropdown);
+
+				if(target.length > 0) {
+					target.toggleClass('open');
+
+					target.on('click', function(e) {
+						e.stopImmediatePropagation();
+					});
+
+					// Optimize this!
+					// Also fix weird bug where you have to click outside once before you open again
+					$timeout(function() {
+						$('body').one('click', function() {
+							target.removeClass('open');
+						});
+					}, 50);
+				}
+			});
+		}
+	}
+});
+
+
+
 /**
  * Directive to automatically save form field in localStorage.
  * The data saved in localStorage will be automatically set on load.
@@ -211,10 +254,9 @@ app.directive('saveOnChange', function() {
 	// Check support for localStorage before we attempt to save anything
 	if(typeof window.localStorage !== void(0)) {
 	    return {
-	        restrict: 'A',
 	        require: 'ngModel',
-	        link: function(scope, elm) {
-	        	var elem = $(elm[0]);
+	        link: function(scope, elem) {
+	        	var elem = $(elem[0]);
 
 	        	// If the element is not bound to a model, do nothing
 	        	if(!elem.attr('ng-model')) {
@@ -222,7 +264,7 @@ app.directive('saveOnChange', function() {
 	        	}
 	            
 	            // Watch for change and keyup events
-	            $(elm[0]).on('change keyup', function() {
+	            $(elem[0]).on('change keyup', function() {
 	            	var elem = $(this),
 	            		model = elem.attr('ng-model'),
 	            		currStored = localStorage.spread ? JSON.parse(localStorage.spread) : {};
