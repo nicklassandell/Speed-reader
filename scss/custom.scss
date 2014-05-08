@@ -2,25 +2,22 @@
 @import "compass/utilities/general/clearfix";
 
 @import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,300|family=Lato);
+@import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 
 
 $base-blue: #1B6896;
 $base-grey: #C8C0BB;
 $base-brown: #26231A;
-
 $text-color: #C5C7BC;
 
-$top-bar-height: 60px;
-
+$top-bar-height: 80px;
 $center-container-width: 1024px;
 $center-container-padding: 40px;
 
 $global-radius: 4px;
-
 $global-transition-duration: .3s;
 
 $global-line-height: 1.3rem;
-
 $global-font-family: 'Lato', sans-serif;
 
 
@@ -42,14 +39,18 @@ body {
 	&.bright-mode {
 		background: #E3E0DD;
 		color: #4A4A4A;
+
+		.top-bar {
+			background: rgba(0,0,0,.1);
+		}
 	}
 }
-
 
 
 *, *.before, *:after {
 	@include box-sizing(border-box);
 }
+
 
 ::selection {
 	background: rgba(150,150,150,.2);
@@ -57,6 +58,7 @@ body {
 ::-moz-selection {
 	background: rgba(150,150,150,.2);
 }
+
 
 
 p {
@@ -67,6 +69,7 @@ a {
 	color: $base-blue;
 	text-decoration: none;
 }
+
 
 
 .right {
@@ -81,30 +84,7 @@ a {
 }
 
 
-.block-links {
-	&, & li {
-		padding: 0;
-		margin: 0;
-		display: block;
-	}
 
-	.dropdown & {
-		margin: -10px -20px;
-	}
-
-	li a {
-		display: block;
-		padding: 10px 20px;
-		font-size: .75rem;
-		text-transform: uppercase;
-		@include transition-duration(.3s);
-
-		&:hover {
-			background: lighten($base-grey, 10%);
-			color: $base-blue;
-		}
-	}
-}
 
 
 
@@ -149,32 +129,8 @@ a {
 }
 
 
-.dropdown {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	width: 300px;
-	padding: 20px;
-	background: #FFF;
-	color: #666;
-	display: none;
-	line-height: $global-line-height;
-	@include border-radius($global-radius);
 
-	&.open {
-		display: block;
-	}
 
-	&::after {
-		position: absolute;
-		bottom: 100%;
-		left: 19%;
-		content: '';
-		border: 7px solid transparent;
-		border-top: 0;
-		border-bottom-color: #FFF;
-	}
-}
 
 
 .top-bar {
@@ -212,12 +168,52 @@ a {
 			margin-right: 0;
 		}
 	}
+
+	.dropdown {
+		top: 88%;
+	}
+
+	.timeline {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background: transparent;
+		overflow: hidden;
+		@include transition-duration($global-transition-duration);
+
+		.marker {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			width: 0;
+			background: rgba(255,255,255,.15);
+			@include transition-duration(.3s);
+			@include transition-timing-function(linear);
+
+			.is-paused & {
+				@include transition-duration(0);
+			}
+
+			&:after {
+				position: absolute;
+				content: '';
+				top: 0;
+				right: 0;
+				bottom: 0;
+				width: 20px;
+				@include background-image(linear-gradient(to left, rgba(255,255,255,.3), transparent));
+			}
+		}
+	}
 }
 
 
 .editor {
 	position: absolute;
-	top: 60px;
+	top: $top-bar-height;
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -242,6 +238,7 @@ a {
 		opacity: 0;
 	}
 }
+
 
 
 .word-canvas {
@@ -294,52 +291,6 @@ a {
 		}
 	}
 
-	.timeline {
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		height: 30px;
-		background: rgba(0,0,0,.05);
-		overflow: hidden;
-		@include transition-duration($global-transition-duration);
-
-		&:hover, .is-paused & {
-			height: 80px;
-
-			.text {
-				opacity: 1;
-				@include transform(none);
-			}
-		}
-
-		.marker {
-			position: absolute;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			width: 0;
-			background: rgba(0,0,0,.2);
-			@include transition-duration(.5s);
-			@include transition-timing-function(linear);
-		}
-
-		.text {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			color: #FFF;
-			opacity: 0;
-			text-align: center;
-			line-height: 80px;
-			font-size: 22px;
-			@include transform(scale(.5));
-			@include transition-duration($global-transition-duration);
-		}
-	}
-
 	.paused-screen {
 		position: absolute;
 		top: 50%;
@@ -362,6 +313,38 @@ a {
 		}
 	}
 }
+
+
+
+
+
+
+
+.block-links {
+	&, & li {
+		padding: 0;
+		margin: 0;
+		display: block;
+	}
+
+	.dropdown & {
+		margin: -10px -20px;
+	}
+
+	li a {
+		display: block;
+		padding: 10px 20px;
+		font-size: .75rem;
+		text-transform: uppercase;
+		@include transition-duration(.3s);
+
+		&:hover {
+			background: lighten($base-grey, 10%);
+			color: $base-blue;
+		}
+	}
+}
+
 
 
 
@@ -399,7 +382,7 @@ label {
 
 button {
 	background: $base-blue;
-	padding: .7rem 1.5rem;
+	padding: .7rem 1.3rem;
 	margin: 0;
 	font-size: 1.2rem;
 	outline: none;
@@ -481,6 +464,36 @@ button {
 			background-position: center;
 			border-color: $base-blue;
 		}
+	}
+}
+
+
+
+
+.dropdown {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 300px;
+	padding: 20px;
+	background: #FFF;
+	color: #666;
+	display: none;
+	line-height: $global-line-height;
+	@include border-radius($global-radius);
+
+	&.open {
+		display: block;
+	}
+
+	&::after {
+		position: absolute;
+		bottom: 100%;
+		left: 18.5%;
+		content: '';
+		border: 7px solid transparent;
+		border-top: 0;
+		border-bottom-color: #FFF;
 	}
 }
 

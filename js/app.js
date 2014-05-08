@@ -17,6 +17,7 @@ app.controller('MainCtrl', function($scope, $timeout) {
 	$scope.game = {
 		'words' : [],
 		'currentWord' : 0,
+		'lastSentenceIndex' : 0,
 		'paused' : false,
 		'has_started' : false,
 		'percentComplete' : function(round) {
@@ -106,6 +107,8 @@ app.controller('MainCtrl', function($scope, $timeout) {
 			return false;
 		}
 
+		$scope.game.lastSentenceIndex = $scope.findLastSentence();
+
 		$scope.game.paused = true;
 	}
 
@@ -119,14 +122,69 @@ app.controller('MainCtrl', function($scope, $timeout) {
 			return false;
 		}
 
-		// Calculate new starting point based on offset
-		var startPoint = $scope.game.currentWord - (offset || 0),
-			startPoint = startPoint < 0 ? 0 : startPoint;
+		var startPoint = $scope.game.currentWord;
 
-		$scope.game.currentWord = startPoint;
+		if(offset == 'last_sentence') {
+			startPoint = $scope.game.lastSentenceIndex;
+		}
+
+		$scope.game.currentWord = startPoint-1;
 		$scope.game.paused = false;
 		$scope.game.has_started = true;
 		$scope.wordLoop();
+	}
+
+	$scope.togglePause = function() {
+		if(!$scope.game.has_started) {
+			return false;
+		}
+
+		if($scope.game.paused) {
+			$scope.continueRead();
+		} else {
+			$scope.pauseRead();
+		}
+	}
+
+
+	$scope.findLastSentence = function() {
+		var possible = false,
+			currWord = $scope.game.currentWord,
+			countDown = currWord;
+
+		for(; countDown >= 2; --countDown) {
+
+			/*
+			if(countDown > limit) {
+				console.log('returned');
+				return countDown;
+			}
+			*/
+
+			var word = $scope.game.words[countDown],
+				prevWord = $scope.game.words[countDown-1],
+				secondPrevWord = $scope.game.words[countDown-2];
+
+			if( $scope.isBeginningOfSentence(word) && ($scope.isEndOfSentence(prevWord) || $scope.isEndOfSentence(secondPrevWord)) ) {
+				return countDown;
+			}
+		}
+		return 0;
+	};
+
+	$scope.isBeginningOfSentence = function(word) {
+		if( word.charAt(0) === word.charAt(0).toUpperCase() ) {
+			return true;
+		}
+		return false;
+	}
+
+	$scope.isEndOfSentence = function(word) {
+		var lastChar = word.slice(-1);
+		if( lastChar === '!' || lastChar === '?' || lastChar === '.' ) {
+			return true;
+		}
+		return false;
 	}
 
 
@@ -216,27 +274,60 @@ app.controller('MainCtrl', function($scope, $timeout) {
 });
 
 
-
+// It works, but makes zero sense, redo it from scratch
 app.directive('toggleDropdown', function($timeout) {
+
+	// Stop event bubbling from within dropdowns
+	$('.dropdown').on('click', function(e) {
+		e.stopPropagation();
+	});
+
 	return {
 		link: function(scope, elem, attr) {
-			$(elem[0]).on('click', function() {
-				var target = $('#' + attr.toggleDropdown);
 
-				if(target.length > 0) {
-					target.toggleClass('open');
+			var trigger = $(elem[0]);
 
-					target.on('click', function(e) {
-						e.stopImmediatePropagation();
+			// On trigger click
+			trigger.on('click', function() {
+				var dropdown = $('#' + attr.toggleDropdown);
+
+				// Check if dropdown exists
+				if(dropdown.length > 0) {
+
+					// If it's open, close it and remove close event handler
+					if(dropdown.is('.open')) {
+						dropdown.removeClass('open');
+						$(document).off('click.toggle-dropdown');
+						return;
+					}
+
+					// When you click on the dropdown
+					$(document).on('click.toggle-dropdown', dropdown, function(e) {
+						var target = $(e.target);
+
+						// Make sure you didn't click the actual dropdown
+						if(!target.is(dropdown)) {
+
+							// If closed, open
+							if(!dropdown.is('.open')) {
+								dropdown.addClass('open');
+
+							// If open, close
+							} else {
+								dropdown.removeClass('open');
+								$(document).off('click.toggle-dropdown');
+							}
+						}
 					});
 
-					// Optimize this!
-					// Also fix weird bug where you have to click outside once before you open again
+					/*
 					$timeout(function() {
-						$('body').one('click', function() {
+						$(document).one('click', function(e) {
 							target.removeClass('open');
 						});
 					}, 50);
+					*/
+
 				}
 			});
 		}
