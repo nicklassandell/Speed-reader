@@ -16,6 +16,6 @@ Mostly because all other speed reading applications i've found lack customizatio
 
 ## Known bugs
 
--Start read. Pause. Start. Spam space key for turbo. Inconsistent results.
+- Start read. Pause. Start. Spam space key for turbo. Inconsistent results.
 
 Released under the MIT License.
