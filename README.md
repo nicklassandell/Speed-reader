@@ -11,12 +11,11 @@ Mostly because all other speed reading applications i've found lack customizatio
 ## Todo
 
 - Sexier scroll bar in the text editor 
-- Get away from the default Foundation styling, completely redesign settings panel
-- Maybe some kind of splash screen after completing the read, instead of just returning to the settings
-- Left align text in center (text is still centered on the screen, but all words align, if that makes sense)
-- Adjust font size/colors, perhaps allow customization
-- Keyboard shortcut to pause (space?)
-- Automatically pause when window loses focus
+- Adjust font size/colors, perhaps allow for customization
 - Cross browser test, currently only tested in Chrome.
+
+## Known bugs
+
+-Start read. Pause. Start. Spam space key for turbo. Inconsistent results.
 
 Released under the MIT License.

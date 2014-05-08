@@ -336,6 +336,35 @@ app.directive('toggleDropdown', function($timeout) {
 
 
 
+app.directive('pauseOnBlur', function($window) {
+	return {
+		link: function(scope, elem) {
+			var win = angular.element($window);
+
+			win.bind('blur', function() {
+				scope.pauseRead();
+			});
+		}
+	}
+});
+
+
+
+app.directive('pauseOnSpace', function($window) {
+	return {
+		link: function(scope, elem) {
+			var win = angular.element($window);
+
+			win.bind('keyup', function(e) {
+				if(e.which === 32) {
+					scope.pauseRead();
+				}
+			});
+		}
+	}
+});
+
+
 /**
  * Directive to automatically save form field in localStorage.
  * The data saved in localStorage will be automatically set on load.
