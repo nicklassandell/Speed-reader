@@ -216,7 +216,7 @@ a {
 	top: $top-bar-height;
 	left: 0;
 	right: 0;
-	bottom: 0;
+	height: calc(100% - #{$top-bar-height});
 	z-index: 10;
 	width: 100%;
 	max-width: $center-container-width + ($center-container-padding*2);
@@ -379,7 +379,7 @@ label {
 
 button {
 	background: $base-blue;
-	padding: .7rem 1.3rem;
+	padding: 12px 16px;
 	margin: 0;
 	font-size: 1.2rem;
 	outline: none;
