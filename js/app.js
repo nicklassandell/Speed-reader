@@ -199,7 +199,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window) {
 	$scope.splitToWords = function(text) {
 
 		// Remove double spaces, tabs, and new lines, this could be improved
-		var text = $.trim(text).replace(/(\s){2,}/g, '$1'),
+		var text = text.betterTrim().replace(/(\s){2,}/g, '$1'),
 			paras = text.split(/[\n]/),
 			words = [];
 
@@ -271,7 +271,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window) {
 
 	$scope.formatPastedText = function($event) {
 		$timeout(function() {
-			$scope.settings.text = $.trim($scope.settings.text).replace(/(\r\n|\n|\r)+/gm, '\r\n\r\n'); //.replace(/[\r\n]+/gm, '\r\n\r\n');
+			$scope.settings.text = $scope.settings.text.betterTrim().replace(/(\r\n|\n|\r)+/gm, '\r\n\r\n'); //.replace(/[\r\n]+/gm, '\r\n\r\n');
 		}, 0);
 	}
 
@@ -282,7 +282,10 @@ app.directive('toggleDropdown', function($timeout) {
 	return {
 		link: function(scope, elem, attr) {
 			angular.element(elem[0]).on('click', function() {
-				angular.element('#' + attr.toggleDropdown).toggleClass('open');
+				var dropdown = angular.element(document.getElementById(attr.toggleDropdown));
+				if(dropdown.length > 0) {
+					dropdown.toggleClass('open');
+				}
 			});
 		}
 	}
@@ -309,13 +312,13 @@ app.directive('saveOnChange', function() {
 	            
 	            // Watch for change and keyup events
 	            elem.on('change keyup', function() {
-	            	var elem = $(this),
+	            	var elem = angular.element(this),
 	            		model = elem.attr('ng-model'),
 	            		currStored = localStorage.spread ? JSON.parse(localStorage.spread) : {};
 
 	            	// Checkboxes need some special treatment
-	            	if(elem.is('input[type=checkbox]')) {
-	            		var val = elem.is(':checked') ? true : false;
+	            	if(elem[0].tagName === 'INPUT' && elem[0].type === 'checkbox') {
+	            		var val = elem[0].checked ? true : false;
 	            	} else {
 	            		var val = elem.val();
 	            	}
@@ -333,3 +336,7 @@ app.directive('saveOnChange', function() {
 
 
 });
+
+String.prototype.betterTrim = function() {
+	return this.replace(/\s+(?=\s)/g, '').trim();
+};
