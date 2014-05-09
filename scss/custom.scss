@@ -473,7 +473,7 @@ button {
 .dropdown {
 	position: absolute;
 	top: 100%;
-	left: 0;
+	right: 0;
 	width: 300px;
 	padding: 20px;
 	background: #FFF;
@@ -489,7 +489,7 @@ button {
 	&::after {
 		position: absolute;
 		bottom: 100%;
-		left: 18.5%;
+		right: 18.5%;
 		content: '';
 		border: 7px solid transparent;
 		border-top: 0;
