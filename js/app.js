@@ -278,61 +278,11 @@ app.controller('MainCtrl', function($scope, $timeout, $window) {
 });
 
 
-// It works, but makes zero sense, redo it from scratch
 app.directive('toggleDropdown', function($timeout) {
-
-	// Stop event bubbling from within dropdowns
-	$('.dropdown').on('click', function(e) {
-		e.stopPropagation();
-	});
-
 	return {
 		link: function(scope, elem, attr) {
-
-			var trigger = $(elem[0]);
-
-			// On trigger click
-			trigger.on('click', function() {
-				var dropdown = $('#' + attr.toggleDropdown);
-
-				// Check if dropdown exists
-				if(dropdown.length > 0) {
-
-					// If it's open, close it and remove close event handler
-					if(dropdown.is('.open')) {
-						dropdown.removeClass('open');
-						$(document).off('click.toggle-dropdown');
-						return;
-					}
-
-					// When you click on the dropdown
-					$(document).on('click.toggle-dropdown', dropdown, function(e) {
-						var target = $(e.target);
-
-						// Make sure you didn't click the actual dropdown
-						if(!target.is(dropdown)) {
-
-							// If closed, open
-							if(!dropdown.is('.open')) {
-								dropdown.addClass('open');
-
-							// If open, close
-							} else {
-								dropdown.removeClass('open');
-								$(document).off('click.toggle-dropdown');
-							}
-						}
-					});
-
-					/*
-					$timeout(function() {
-						$(document).one('click', function(e) {
-							target.removeClass('open');
-						});
-					}, 50);
-					*/
-
-				}
+			angular.element(elem[0]).on('click', function() {
+				angular.element('#' + attr.toggleDropdown).toggleClass('open');
 			});
 		}
 	}
