@@ -10,7 +10,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window) {
 		'pause_between_paragraphs' : true,
 		'pause_between_sentences' : true,
 		'night_mode' : true,
-		'text' : $('[ng-model="settings.text"]').val(),
+		'text' : '',
 		'left_align_text' : false
 	};
 
@@ -300,7 +300,7 @@ app.directive('saveOnChange', function() {
 	    return {
 	        require: 'ngModel',
 	        link: function(scope, elem) {
-	        	var elem = $(elem[0]);
+	        	var elem = angular.element(elem[0]);
 
 	        	// If the element is not bound to a model, do nothing
 	        	if(!elem.attr('ng-model')) {
@@ -308,7 +308,7 @@ app.directive('saveOnChange', function() {
 	        	}
 	            
 	            // Watch for change and keyup events
-	            $(elem[0]).on('change keyup', function() {
+	            elem.on('change keyup', function() {
 	            	var elem = $(this),
 	            		model = elem.attr('ng-model'),
 	            		currStored = localStorage.spread ? JSON.parse(localStorage.spread) : {};
