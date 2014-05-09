@@ -293,21 +293,18 @@ a {
 
 	.paused-screen {
 		position: absolute;
-		top: 50%;
+		top: -1000000px;
 		left: 0;
 		right: 0;
 		margin: 0 auto;
 		text-align: center;
-		opacity: 0;
+		opacity: .2;
 		@include transform(translateY(100px) scale(.8));
 		@include transition-duration($global-transition-duration);
 		@include transition-property(transform opacity);
 
-		p {
-
-		}
-
 		.is-paused & {
+			top: 50%;
 			opacity: 1;
 			@include transform(translateY(-50px));
 		}
