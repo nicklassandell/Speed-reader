@@ -1,6 +1,6 @@
 var app = angular.module('speedReadingApp', []);
 
-app.controller('MainCtrl', function($scope, $timeout) {
+app.controller('MainCtrl', function($scope, $timeout, $window) {
 
 	$scope.settings = {
 		'wpm' : 350,
@@ -27,6 +27,10 @@ app.controller('MainCtrl', function($scope, $timeout) {
 			return ret;
 		}
 	};
+
+	angular.element($window).bind('blur', function() {
+		$scope.pauseRead();
+	});
 
 
 	/**
@@ -328,36 +332,6 @@ app.directive('toggleDropdown', function($timeout) {
 					}, 50);
 					*/
 
-				}
-			});
-		}
-	}
-});
-
-
-
-app.directive('pauseOnBlur', function($window) {
-	return {
-		link: function(scope, elem) {
-			var win = angular.element($window);
-
-			win.bind('blur', function() {
-				scope.pauseRead();
-			});
-		}
-	}
-});
-
-
-
-app.directive('pauseOnSpace', function($window) {
-	return {
-		link: function(scope, elem) {
-			var win = angular.element($window);
-
-			win.bind('keyup', function(e) {
-				if(e.which === 32) {
-					scope.pauseRead();
 				}
 			});
 		}

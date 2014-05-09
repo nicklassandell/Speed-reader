@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="stylesheets/app.css" />
     <script src="bower_components/modernizr/modernizr.js"></script>
 </head>
-<body ng-controller="MainCtrl" pause-on-blur pause-on-space class="{{ game.paused ? 'is-paused' : 'is-not-paused' }}
+<body ng-controller="MainCtrl" class="{{ game.paused ? 'is-paused' : 'is-not-paused' }}
                                       {{ game.has_started ? 'has-started' : 'has-not-started' }}
                                       {{ !settings.night_mode ? 'bright-mode' : '' }}
                                       {{ settings.left_align_text ? 'left-align-text' : '' }} ">
