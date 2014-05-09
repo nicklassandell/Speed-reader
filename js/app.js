@@ -244,8 +244,8 @@ app.controller('MainCtrl', function($scope, $timeout) {
 	 */
 	$scope.wordLoop = function() {
 
-		// If reading is paused, don't continue
-		if($scope.game.paused === true) {
+		// If reading is paused or not started, don't continue
+		if($scope.game.has_started === false || $scope.game.paused === true) {
 			return false;
 		}
 
