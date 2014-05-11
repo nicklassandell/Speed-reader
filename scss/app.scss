@@ -183,6 +183,7 @@ a {
 		right: 0;
 		background: transparent;
 		opacity: 0;
+		overflow: hidden;
 		@include transition-duration($global-transition-duration);
 
 		.has-started & {
