@@ -27,20 +27,16 @@
                 <p>Paste your text below and enjoy the read!</p>
             </div>
 
-            <div class="bar-item show-if-paused">
-                <div class="relative">
-                    <div class="btn-group">
-                        <button style="width: 130px;" ng-click="continueRead()">Continue <i class="fa fa-play"></i></button>
-                        <button ng-click="stopRead()">Stop <i class="fa fa-stop"></i></button>
-                    </div>
-                </div>
+            <div class="bar-item small-gap show-if-paused">
+                <button style="width: 130px;" ng-click="continueRead()">Continue <i class="fa fa-play"></i></button>
             </div>
 
-            <div class="bar-item show-if-not-paused">
-                <div class="btn-group">
-                    <button style="width: 130px;" class="show-if-running" ng-click="pauseRead()">Pause <i class="fa fa-pause"></i></button>
-                    <button ng-click="stopRead()">Stop <i class="fa fa-stop"></i></button>
-                </div>
+            <div class="bar-item small-gap show-if-not-paused">
+                <button style="width: 130px;" class="show-if-running" ng-click="pauseRead()">Pause <i class="fa fa-pause"></i></button>
+            </div>
+
+            <div class="bar-item show-if-started">
+                <button class="dark" ng-click="stopRead()">Stop <i class="fa fa-stop"></i></button>
             </div>
             
             <div class="bar-item right">
@@ -121,7 +117,8 @@
             <div class="center-point">{{ game.words[game.currentWord] }}</div>
         </div>
         <div class="paused-screen">
-            <p>Reading paused, {{ game.percentComplete(true) }}% complete. Click anywhere to start, or <button ng-click="continueRead('last_sentence'); $event.stopPropagation();">start from last sentence.</button></p>
+            <p class="big">{{ game.percentComplete(true) }}% complete.</p>
+            <p>Click anywhere to start, or <button ng-click="continueRead('last_sentence'); $event.stopPropagation();">start from last sentence.</button></p>
         </div>
     </div>
     

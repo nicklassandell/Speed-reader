@@ -170,6 +170,10 @@ a {
 		&:last-child {
 			margin-right: 0;
 		}
+
+		&.small-gap {
+			margin-right: 20px;
+		}
 	}
 
 	.dropdown {
@@ -215,6 +219,7 @@ a {
 	font-size: 20px;
 	line-height: 2rem;
 	font-family: 'Roboto Slab', serif;
+	font-weight: 100;
 	@include transition-duration($global-transition-duration);
 
 	.has-started & {
@@ -287,6 +292,12 @@ a {
 		@include transform(translateY(100px) scale(.8));
 		@include transition-duration($global-transition-duration);
 		@include transition-property(transform opacity);
+
+		.big {
+			font-size: 22px;
+			font-weight: 100;
+			margin-bottom: 30px;
+		}
 
 		.is-paused & {
 			top: 50%;

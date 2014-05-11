@@ -29,10 +29,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window) {
 		}
 	};
 
-	angular.element($window).bind('blur', function() {
-		$scope.pauseRead();
-	});
-
+	// Clean below and move to directive
 	var sleepTimer;
 	angular.element('body').bind('mousemove', function() {
 		$scope.settings.sleep = false;

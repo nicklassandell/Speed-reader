@@ -140,6 +140,7 @@ $prefix: 'ngrs-';
 		width: $handleWidth;
 		margin: 0 0 0 (-$handleWidth / 2);
 		background: #efefef;
+		cursor: pointer;
 		@include border-radius(100px);
 		@include transition-duration(.2s);
 		@include transition-property(opacity transform);
