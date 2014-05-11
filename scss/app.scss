@@ -385,6 +385,14 @@ button {
 	&:active {
 		background: darken($base-blue, 15%);
 	}
+
+	&.dark {
+		background: rgba(255,255,255,.05);
+	}
+
+	&.green {
+		background: #437E35;
+	}
 }
 
 .checkbox {
