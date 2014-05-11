@@ -5,7 +5,8 @@
 @import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 
 
-$base-blue: #1B6896;
+$base-blue: #187986;
+$base-green: #437E35;
 $base-grey: #C8C0BB;
 $base-brown: #20201E;
 $text-color: #D0D1CB;
@@ -386,12 +387,27 @@ button {
 		background: darken($base-blue, 15%);
 	}
 
+
 	&.dark {
 		background: rgba(255,255,255,.05);
+
+		&:hover {
+			background: rgba(255,255,255,.08);
+		}
+		&:active {
+			background: rgba(255,255,255,.1);
+		}
 	}
 
 	&.green {
-		background: #437E35;
+		background: $base-green;
+
+		&:hover {
+			background: darken($base-green, 5%);
+		}
+		&:active {
+			background: darken($base-green, 15%);
+		}
 	}
 }
 
