@@ -179,11 +179,11 @@ a {
 
 	.timeline {
 		position: absolute;
-		top: 100%;
+		top: calc(100% - 10px);
+		z-index: 20;
 		left: 0;
 		right: 0;
 		background: transparent;
-		overflow: hidden;
 		opacity: 0;
 		@include transition-duration($global-transition-duration);
 
@@ -261,6 +261,7 @@ a {
 		right: 0;
 		text-align: center;
 		font-family: 'Roboto Slab', serif;
+		font-weight: 100;
 		cursor: default;
 		@include transform(translateY(-50%));
 		@include transition-duration($global-transition-duration);
@@ -455,6 +456,7 @@ button {
 .dropdown {
 	position: absolute;
 	top: 100%;
+	z-index: 100;
 	right: 0;
 	width: 300px;
 	padding: 20px;
