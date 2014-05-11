@@ -9,7 +9,8 @@
 <body ng-controller="MainCtrl" class="{{ game.paused ? 'is-paused' : 'is-not-paused' }}
                                       {{ game.has_started ? 'has-started' : 'has-not-started' }}
                                       {{ !settings.night_mode ? 'bright-mode' : '' }}
-                                      {{ settings.left_align_text ? 'left-align-text' : '' }} ">
+                                      {{ settings.left_align_text ? 'left-align-text' : '' }}
+                                      {{ settings.sleep ? 'is-sleeping' : 'is-not-sleeping' }} ">
 
     <div class="top-bar">
         <div class="inner-container">
@@ -109,7 +110,7 @@
         </div> <!-- inner container -->
 
         <div class="timeline">
-            <div class="marker" style="width: {{ game.percentComplete() }}%"></div>
+            <div range-slider min="0" max="game.words.length" model-max="game.currentWord" pin-handle="min"></div>
         </div>
     </div> <!-- top bar -->
 
@@ -123,8 +124,11 @@
             <p>Reading paused, {{ game.percentComplete(true) }}% complete. Click anywhere to start, or <button ng-click="continueRead('last_sentence'); $event.stopPropagation();">start from last sentence.</button></p>
         </div>
     </div>
-
+    
+    <!-- jQuery only used for range slider support -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
+    <script src="js/angular.rangeSlider.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

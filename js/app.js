@@ -1,4 +1,4 @@
-var app = angular.module('speedReadingApp', []);
+var app = angular.module('speedReadingApp', ['ui-rangeSlider']);
 
 app.controller('MainCtrl', function($scope, $timeout, $window) {
 
@@ -11,7 +11,8 @@ app.controller('MainCtrl', function($scope, $timeout, $window) {
 		'pause_between_sentences' : true,
 		'night_mode' : true,
 		'text' : '',
-		'left_align_text' : false
+		'left_align_text' : false,
+		'sleep' : false
 	};
 
 	$scope.game = {
@@ -30,6 +31,17 @@ app.controller('MainCtrl', function($scope, $timeout, $window) {
 
 	angular.element($window).bind('blur', function() {
 		$scope.pauseRead();
+	});
+
+	var sleepTimer;
+	angular.element('body').bind('mousemove', function() {
+		$scope.settings.sleep = false;
+		$scope.$apply();
+		$timeout.cancel(sleepTimer);
+		sleepTimer = $timeout(function() {
+			$scope.settings.sleep = true;
+			$scope.$apply();
+		}, 1000);
 	});
 
 

@@ -20,6 +20,8 @@ $global-transition-duration: .3s;
 $global-line-height: 1.3rem;
 $global-font-family: 'Lato', sans-serif;
 
+@import "angular.rangeSlider.scss";
+
 
 
 html, body {
@@ -148,6 +150,8 @@ a {
 		max-width: $center-container-width + ($center-container-padding*2);
 		margin: 0 auto;
 		padding: 0 $center-container-padding;
+		position: relative;
+		z-index: 10;
 	}
 
 	h1 {
@@ -178,35 +182,15 @@ a {
 		top: 100%;
 		left: 0;
 		right: 0;
-		height: 2px;
 		background: transparent;
 		overflow: hidden;
+		opacity: 0;
 		@include transition-duration($global-transition-duration);
 
-		.marker {
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			width: 0;
-			background: rgba(255,255,255,.15);
-			@include transition-duration(.3s);
-			@include transition-timing-function(linear);
-
-			.is-paused & {
-				@include transition-duration(0);
-			}
-
-			&:after {
-				position: absolute;
-				content: '';
-				top: 0;
-				right: 0;
-				bottom: 0;
-				width: 20px;
-				@include background-image(linear-gradient(-45deg, rgba(255,255,255,.3), transparent));
-			}
+		.has-started & {
+			opacity: 1;
 		}
+		
 	}
 }
 
