@@ -24,7 +24,7 @@
             </div>
 
             <div class="bar-item show-if-not-started">
-                <p>Paste your text below and enjoy the read!</p>
+                <p id="status-text">{{ settings.toast }}</p>
             </div>
 
             <div class="bar-item small-gap show-if-paused">
@@ -110,7 +110,7 @@
         </div>
     </div> <!-- top bar -->
 
-    <textarea ng-model="settings.text" class="editor" placeholder="Paste your text here..." spellcheck=false ng-paste="formatPastedText($event)" save-on-change></textarea>
+    <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here and press start" spellcheck=false ng-paste="formatPastedText($event)" save-on-change></textarea>
     
     <div class="word-canvas" ng-click="togglePause()">
         <div class="word-container">
@@ -118,7 +118,7 @@
         </div>
         <div class="paused-screen">
             <p class="big">{{ game.percentComplete(true) }}% complete.</p>
-            <p>Click anywhere to start, or <button ng-click="continueRead('last_sentence'); $event.stopPropagation();">start from last sentence.</button></p>
+            <p><button style="margin-right: 20px;" ng-click="continueRead(); $event.stopPropagation();">Continue</button><button class="dark" ng-click="continueRead('last_sentence'); $event.stopPropagation();">Continue from last sentence.</button></p>
         </div>
     </div>
     

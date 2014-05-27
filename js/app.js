@@ -1,6 +1,6 @@
 var app = angular.module('speedReadingApp', ['ui-rangeSlider']);
 
-app.controller('MainCtrl', function($scope, $timeout, $window) {
+app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 	$scope.settings = {
 		'wpm' : 350,
@@ -12,8 +12,12 @@ app.controller('MainCtrl', function($scope, $timeout, $window) {
 		'night_mode' : true,
 		'text' : '',
 		'left_align_text' : false,
-		'sleep' : false
+		'sleep' : false,
+		'toastDefault' : 'Paste text or URL below',
+		'toast' : '',
 	};
+
+	$scope.settings.toast = $scope.settings.toastDefault;
 
 	$scope.game = {
 		'words' : [],
@@ -91,11 +95,28 @@ app.controller('MainCtrl', function($scope, $timeout, $window) {
 			return false;
 		}
 
-		$scope.game.words = $scope.splitToWords($scope.settings.text);
-		$scope.game.has_started = true;
-		$scope.game.paused = false;
+		if($scope.isValidURL($scope.settings.text)) {
+			$scope.settings.toast = 'Extracting text from URL...';
+			$scope.extractFromUrl($scope.settings.text, function(res) {
+				if(res.status == 'success') {
+					var text = res.result.betterTrim();
+					$scope.settings.text = $scope.makeTextReadable(text);
+					$scope.game.words = $scope.splitToWords(text);
+					$scope.game.has_started = true;
+					$scope.game.paused = false;
+					$scope.startCountdown();
+					$scope.resetToast();
+				}
+			});
+		} else {
+			$scope.game.words = $scope.splitToWords($scope.settings.text);
+			$scope.game.has_started = true;
+			$scope.game.paused = false;
+			$scope.startCountdown();
+		}
+	}
 
-		// Hold a second before we star the read
+	$scope.startCountdown = function() {
 		$timeout(function() {
 			$scope.wordLoop();
 		}, 800);
@@ -157,6 +178,20 @@ app.controller('MainCtrl', function($scope, $timeout, $window) {
 		} else {
 			$scope.pauseRead();
 		}
+	}
+
+
+	$scope.extractFromUrl = function(url, callback) {
+		url = url.betterTrim();
+		$http.get(window.location.href + 'readability.php?url=' + encodeURIComponent(url)).success(function(data, status) {
+			callback(data);
+		});
+	}
+
+
+		
+	$scope.resetToast = function() {
+		$scope.settings.toast = $scope.settings.toastDefault;
 	}
 
 
@@ -278,13 +313,18 @@ app.controller('MainCtrl', function($scope, $timeout, $window) {
 	}
 
 
-	$scope.formatPastedText = function($event) {
-		$timeout(function() {
-			$scope.settings.text = $scope.settings.text.betterTrim().replace(/(\r\n|\n|\r)+/gm, '\r\n\r\n'); //.replace(/[\r\n]+/gm, '\r\n\r\n');
-		}, 0);
+	$scope.makeTextReadable = function(text) {
+		return text.betterTrim().replace(/(\r\n|\n|\r)+/gm, '\r\n\r\n'); //.replace(/[\r\n]+/gm, '\r\n\r\n');
+	}
+
+
+	$scope.isValidURL = function(text) {
+		return text.betterTrim().match(/^http(s?):\/\/[a-z\/-_.]+$/i);
 	}
 
 });
+
+
 
 
 app.directive('toggleDropdown', function($timeout) {
