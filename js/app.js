@@ -105,7 +105,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		if($scope.isValidURL($scope.settings.text)) {
 			$scope.settings.toast = 'Extracting text from URL...';
 			$scope.extractFromUrl($scope.settings.text, function(res) {
-				if(res.status == 'success') {
+				if(res.status === 'success') {
 					var text = res.result.betterTrim();
 					$scope.settings.text = $scope.makeTextReadable(text);
 					$scope.game.words = $scope.splitToWords(text);
@@ -113,6 +113,11 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 					$scope.game.paused = false;
 					$scope.startCountdown();
 					$scope.resetToast();
+				} else {
+					$scope.settings.toast = 'Error: Could not parse URL';
+					$timeout(function() {
+						$scope.resetToast();
+					}, 3*1000);
 				}
 			});
 		} else {
@@ -190,8 +195,10 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 	$scope.extractFromUrl = function(url, callback) {
 		url = url.betterTrim();
-		$http.get(window.location.href + 'readability.php?url=' + encodeURIComponent(url)).success(function(data, status) {
+		$http.get(window.location.href + 'readability.php?url=' + encodeURIComponent(url)) .success(function(data, status) {
 			callback(data);
+		}).error(function() {
+			callback(false);
 		});
 	}
 
@@ -337,15 +344,18 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 			// Show next word and set timeout
 			$timeout(function() {
-				$scope.game.currentWord += 1;
-				$scope.wordLoop();
+				// Todo: Clean dis' up
+				if($scope.game.has_started === true && $scope.game.paused === false) {
+					$scope.game.currentWord += 1;
+					$scope.wordLoop();
+				}
 			}, timeout);
 
 		// Last word, let's hold a second before we go back to the settings
 		} else {
 			$timeout(function() {
 				$scope.stopRead();
-			}, 1000);
+			}, 500);
 		}
 	}
 
@@ -356,7 +366,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 
 	$scope.isValidURL = function(text) {
-		return text.betterTrim().match(/^http(s?):\/\/[a-z\/-_.]+$/i);
+		return text.betterTrim().match(/^\bhttps?:\/\/?[-A-Za-z0-9+&@#\/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]$/);
 	}
 
 });

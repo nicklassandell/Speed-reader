@@ -14,10 +14,9 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 $apiRes = curl_exec($ch);
 curl_close($ch);
 
+$data = json_decode($apiRes, true);
 
-if(!empty($apiRes)) {
-
-	$data = json_decode($apiRes, true);
+if(!empty($apiRes) && !isset($data['error'])) {
 	$content = $data['content'];
 	$content = str_replace(['</p>', '</h1>', '</h2>', '</h3>', '</h4>', '<br/>', '<br />'], "\r\n", $content);
 	$content = strip_tags($content);

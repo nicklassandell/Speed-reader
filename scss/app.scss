@@ -237,6 +237,7 @@ a {
 	width: 100%;
 	z-index: 15;
 	opacity: 0;
+	overflow: hidden;
 	@include transition-property(opacity);
 	@include transition-duration($global-transition-duration);
 
