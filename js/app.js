@@ -216,9 +216,9 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 			}
 			*/
 
-			var word = $scope.game.words[countDown],
-				prevWord = $scope.game.words[countDown-1],
-				secondPrevWord = $scope.game.words[countDown-2];
+			var word = $scope.game.words[countDown].value,
+				prevWord = $scope.game.words[countDown-1].value,
+				secondPrevWord = $scope.game.words[countDown-2].value;
 
 			if( $scope.isBeginningOfSentence(word) && ($scope.isEndOfSentence(prevWord) || $scope.isEndOfSentence(secondPrevWord)) ) {
 				return countDown;
@@ -263,17 +263,41 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 			// Loop through all words
 			for(w in paraWords) {
 				var w = paraWords[w],
-					lastChar = w.slice(-1);
+					lastChar = w.slice(-1),
+					multiplier = '';
+
+				// Short
+				if (w.length <= 4) {
+					multiplier = .8;
+
+				// Normal
+				} else if (w.length <= 8) {
+					multiplier = 1;
+
+				// Long
+				} else if(w.length <= 12) {
+					multiplier = 1.3;
+
+				// Super long
+				} else {
+					multiplier = 1.5;
+				}
 
 				// Append word to array
-				words.push(w);
+				words.push({
+					'multiplier': multiplier,
+					'value': w
+				});
 
 				// Append space after word if it's the last word in a
 				// sentence, and the setting is on
 				spaceAfterSentence = false;
 				if($scope.settings.pause_between_sentences) {
 					if(lastChar === '.' || lastChar === '?' || lastChar === '!') {
-						words.push(' ');
+						words.push({
+							'multiplier': 2,
+							'value': ' '
+						});
 						spaceAfterSentence = true;
 					}
 				}
@@ -281,7 +305,10 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 			// Add space between each paragraph
 			if($scope.settings.pause_between_paragraphs && !spaceAfterSentence) {
-				words.push(' ');
+				words.push({
+					'multiplier': 3,
+					'value': ' '
+				});
 			}
 		}
 
@@ -306,10 +333,13 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 		// Unless this is the last word, set timeout for next word
 		if ($scope.game.currentWord < $scope.game.words.length) {
+			var timeout = $scope.settings.wpm_ms() * $scope.game.words[$scope.game.currentWord].multiplier;
 
 			// Show next word and set timeout
-			$scope.game.currentWord += 1;
-			$timeout($scope.wordLoop, $scope.settings.wpm_ms());
+			$timeout(function() {
+				$scope.game.currentWord += 1;
+				$scope.wordLoop();
+			}, timeout);
 
 		// Last word, let's hold a second before we go back to the settings
 		} else {

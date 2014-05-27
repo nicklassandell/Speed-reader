@@ -104,7 +104,7 @@
     
     <div class="word-canvas" ng-click="togglePause()">
         <div class="word-container">
-            <div class="center-point">{{ game.words[game.currentWord] }}</div>
+            <div class="center-point">{{ game.words[game.currentWord].value }}</div>
         </div>
         <div class="paused-screen">
             <p class="big">{{ game.percentComplete(true) }}% complete.</p>
