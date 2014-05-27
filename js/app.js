@@ -46,6 +46,13 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	});
 
 
+	// We merged these two settings, but let's keep them under the hood for now
+	// This makes sure the values stay the same
+	$scope.$watch('settings.pause_between_sentences', function() {
+		$scope.settings.pause_between_paragraphs = $scope.settings.pause_between_sentences;
+	});
+
+
 	/**
 	 * Loads saved data from localStorage if found
 	 */
