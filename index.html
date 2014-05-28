@@ -94,15 +94,11 @@
             </div>
 
         </div> <!-- inner container -->
-
-        <div class="timeline">
-            <div range-slider min="0" max="game.words.length" model-max="game.currentWord" pin-handle="min" show-values="false"></div>
-        </div>
     </div> <!-- top bar -->
 
     <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here and press start" spellcheck=false ng-paste="formatPastedText($event)" save-on-change></textarea>
     
-    <div class="word-canvas" ng-click="togglePause()">
+    <div class="word-canvas" ng-click="pauseRead()">
         <div class="word-container">
             <div class="center-point">
                 <span class="before">{{ game.words[game.currentWord].raw.start }}</span>
@@ -117,6 +113,10 @@
                 <button class="right-spacing dark" ng-click="goToPosition('last_sentence'); $event.stopPropagation();">Last sentence <i class="fa fa-step-backward"></i></button>
                 <button class="dark" ng-click="restartRead(); $event.stopPropagation();">Restart <i class="fa fa-undo"></i></button>
             </p>
+        </div>
+
+        <div id="timeline" class="timeline">
+            <div range-slider min="0" max="game.words.length" model-max="game.currentWord" pin-handle="min" show-values="false"></div>
         </div>
     </div>
     

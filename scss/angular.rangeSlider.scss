@@ -47,11 +47,11 @@
 \*------------------------------------*/
 
 // handle dimensions
-$handleWidth: 20px;
-$handleHeight: 20px; // Only used for vertical handle, which is not currently used
+$handleWidth: 18px;
+$handleHeight: 18px; // Only used for vertical handle, which is not currently used
 
 // thickness of the join line
-$joinWeight: 20px;
+$joinWeight: 3px;
 
 // padding between the border and the handles
 $padding: 0;
@@ -69,17 +69,10 @@ $prefix: 'ngrs-';
 .#{$prefix}range-slider {
 
 	height: $joinWeight;
-
-	.is-sleeping & {
-		.#{$prefix}handle {
-			@include transform(scale(.3));
-
-			&::after {
-				opacity: 0;
-			}
-		}
+	
+	.is-sleeping &, .is-not-paused & {
 		.#{$prefix}join {
-			background: rgba(255,255,255,.3);
+			background: rgba(255,255,255,.2);
 		}
 	}
 
@@ -111,6 +104,7 @@ $prefix: 'ngrs-';
 		position: relative;
 		margin: 0;
 		height: 100%;
+		background: rgba(255,255,255,.1);
 	}
 
   /*------------------------------------*\
@@ -120,13 +114,14 @@ $prefix: 'ngrs-';
 	.#{$prefix}join {
 		position: absolute;
 		z-index: 1;
-		top: 45%;
+		top: 0;
 		left: 0;
 		right: 100%;
-		height: 3px;
+		height: $joinWeight;
 		margin: 0;
 		background-color: $base-blue;
-		//@include background-image(linear-gradient(lighten($base-blue, 10%), $base-blue)); // primary: #08c, #04c | alternative: #5bc0de, #2f96b4
+		@include transition-duration(1s);
+		@include transition-property(background);
 	}
 
   /*------------------------------------*\
@@ -135,8 +130,9 @@ $prefix: 'ngrs-';
 
 	.#{$prefix}handle {
 		position: absolute;
+		top: -$handleWidth*0.45;
 		z-index: 2;
-		height: 100%;
+		height: $handleWidth;
 		width: $handleWidth;
 		margin: 0 0 0 (-$handleWidth / 2);
 		background: #efefef;
@@ -144,17 +140,19 @@ $prefix: 'ngrs-';
 		@include border-radius(100px);
 		@include transition-duration(.2s);
 		@include transition-property(opacity transform);
-
+		
+		/*
 		&::after {
 			position: absolute;
 			content: '';
-			top: 20%;
-			right: 20%;
-			bottom: 20%;
-			left: 20%;
+			top: 16%;
+			right: 16%;
+			bottom: 16%;
+			left: 16%;
 			background: $base-blue;
 			@include border-radius(100px);
 		}
+		*/
 
     /*------------------------------------*\
         HANDLE ICON

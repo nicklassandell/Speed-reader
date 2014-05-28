@@ -180,23 +180,6 @@ a {
 	.dropdown {
 		top: 88%;
 	}
-
-	.timeline {
-		position: absolute;
-		top: calc(100% - 10px);
-		z-index: 20;
-		left: 0;
-		right: 0;
-		background: transparent;
-		opacity: 0;
-		overflow: hidden;
-		@include transition-duration($global-transition-duration);
-
-		.has-started & {
-			opacity: 1;
-		}
-		
-	}
 }
 
 
@@ -324,6 +307,22 @@ a {
 			top: 50%;
 			opacity: 1;
 			@include transform(translateY(-50px));
+		}
+	}
+
+
+	.timeline {
+		position: absolute;
+		top: 60%;
+		left: 33%;
+		right: 33%;
+		z-index: 20;
+		background: transparent;
+		opacity: 0;
+		@include transition-duration($global-transition-duration);
+
+		.has-started & {
+			opacity: 1;
 		}
 	}
 }

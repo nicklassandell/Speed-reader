@@ -53,6 +53,10 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		$scope.settings.pause_between_paragraphs = $scope.settings.pause_between_sentences;
 	});
 
+	angular.element('#timeline').on('mousedown', function() {
+		$scope.pauseRead();
+	});
+
 
 	/**
 	 * Loads saved data from localStorage if found
