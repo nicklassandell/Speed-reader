@@ -321,6 +321,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 				// Append word to array
 				words.push({
+					'type' : 'word',
 					'multiplier': multiplier,
 					'value': w,
 					'raw': highlighted
@@ -329,23 +330,23 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 				// Append space after word if it's the last word in a
 				// sentence, and the setting is on
 				spaceAfterSentence = false;
-				if($scope.settings.pause_between_sentences) {
-					if(lastChar === '.' || lastChar === '?' || lastChar === '!') {
-						words.push({
-							'multiplier': 2,
-							'value': '',
-							'raw' : {
-								'specialChar' : '(new line)'
-							}
-						});
-						spaceAfterSentence = true;
-					}
+				if(lastChar === '.' || lastChar === '?' || lastChar === '!') {
+					words.push({
+						'type' : 'pause',
+						'multiplier': 2,
+						'value': '',
+						'raw' : {
+							'specialChar' : '(new line)'
+						}
+					});
+					spaceAfterSentence = true;
 				}
 			}
 
 			// Add space between each paragraph
-			if($scope.settings.pause_between_paragraphs && !spaceAfterSentence) {
+			if(!spaceAfterSentence) {
 				words.push({
+					'type' : 'pause',
 					'multiplier': 3,
 					'value': '',
 					'raw' : {
@@ -388,9 +389,18 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 			return false;
 		}
 
+		var word = $scope.game.words[$scope.game.currentWord];
+
+		// If pause is disabled and the type is a pause, skip this word
+		if(!$scope.settings.pause_between_sentences && word.type == 'pause') {
+			$scope.game.currentWord += 1;
+			$scope.wordLoop();
+			return;
+		}
+
 		// Unless this is the last word, set timeout for next word
 		if ($scope.game.currentWord < $scope.game.words.length) {
-			var timeout = $scope.settings.wpm_ms() * $scope.game.words[$scope.game.currentWord].multiplier;
+			var timeout = $scope.settings.wpm_ms() * word.multiplier;
 
 			$timeout(function() {
 				// Todo: Clean dis' up
