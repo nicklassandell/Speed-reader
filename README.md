@@ -10,3 +10,7 @@ Mostly because all other speed reading applications i've found lack customizatio
 
 
 Released under the MIT License.
+
+** Known bugs **
+
+- It goes in turbo speed if you spam pause/continue for a bit

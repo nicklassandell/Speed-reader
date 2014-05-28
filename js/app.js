@@ -53,8 +53,16 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		$scope.settings.pause_between_paragraphs = $scope.settings.pause_between_sentences;
 	});
 
+
+	// Tried to put this in ng-mousedown, but no luck
 	angular.element('#timeline').on('mousedown', function() {
 		$scope.pauseRead();
+	});
+
+	angular.element(document).on('keyup', function(e) {
+		if(e.which === 32) {
+			$scope.togglePause();
+		}
 	});
 
 
@@ -134,7 +142,8 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	}
 
 	$scope.startCountdown = function() {
-		$timeout(function() {
+		$timeout.cancel($scope.loopTimeout);
+		$scope.loopTimeout = $timeout(function() {
 			$scope.wordLoop();
 		}, 800);
 	}

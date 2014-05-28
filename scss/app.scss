@@ -301,7 +301,7 @@ a {
 		margin: 0 auto;
 		text-align: center;
 		opacity: .2;
-		@include transform(translateY(100px) scale(.8));
+		@include transform(translateY(50px) scale(.8));
 		@include transition-duration($global-transition-duration);
 		@include transition-property(transform opacity);
 
@@ -321,7 +321,7 @@ a {
 
 	.timeline {
 		position: absolute;
-		top: 60%;
+		top: 63%;
 		left: 33%;
 		right: 33%;
 		z-index: 20;
