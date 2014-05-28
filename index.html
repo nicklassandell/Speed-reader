@@ -9,7 +9,7 @@
 <body ng-controller="MainCtrl" class="{{ game.paused ? 'is-paused' : 'is-not-paused' }}
                                       {{ game.has_started ? 'has-started' : 'has-not-started' }}
                                       {{ !settings.night_mode ? 'bright-mode' : '' }}
-                                      {{ settings.left_align_text ? 'left-align-text' : '' }}
+                                      {{ settings.highlight_focus_point ? 'highlight-focus-point' : '' }}
                                       {{ settings.sleep ? 'is-sleeping' : 'is-not-sleeping' }} ">
 
     <div class="top-bar">
@@ -73,10 +73,10 @@
                     <div class="form-row">
                         <div class="checkbox">
                             <div class="check">
-                                <input ng-model="settings.left_align_text" id="set-leftalign-chk" type="checkbox" save-on-change>
+                                <input ng-model="settings.highlight_focus_point" id="set-highlight-focus-point-chk" type="checkbox" save-on-change>
                                 <span></span>
                             </div>
-                            <label for="set-leftalign-chk">Left align text</label>
+                            <label for="set-highlight-focus-point-chk">Highlight focus point</label>
                         </div>
                     </div>
 
@@ -112,7 +112,11 @@
         </div>
         <div class="paused-screen">
             <p class="big">{{ game.percentComplete(true) }}% complete.</p>
-            <p><button style="margin-right: 20px;" ng-click="continueRead(); $event.stopPropagation();">Continue</button><button class="dark" ng-click="continueRead('last_sentence'); $event.stopPropagation();">Continue from last sentence.</button></p>
+            <p>
+                <button class="right-spacing" ng-click="continueRead(); $event.stopPropagation();">Continue <i class="fa fa-play"></i></button>
+                <button class="right-spacing dark" ng-click="goToPosition('last_sentence'); $event.stopPropagation();">Last sentence <i class="fa fa-step-backward"></i></button>
+                <button class="dark" ng-click="restartRead(); $event.stopPropagation();">Restart <i class="fa fa-undo"></i></button>
+            </p>
         </div>
     </div>
     

@@ -1,3 +1,7 @@
+
+// Todo: Add use strict and fix errors
+// "use strict";
+
 var app = angular.module('speedReadingApp', ['ui-rangeSlider']);
 
 app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
@@ -11,7 +15,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		'pause_between_sentences' : true,
 		'night_mode' : true,
 		'text' : '',
-		'left_align_text' : false,
+		'highlight_focus_point' : true,
 		'sleep' : false,
 		'toastDefault' : 'Paste text or URL below',
 		'toast' : '',
@@ -22,7 +26,6 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	$scope.game = {
 		'words' : [],
 		'currentWord' : 0,
-		'lastSentenceIndex' : 0,
 		'paused' : false,
 		'has_started' : false,
 		'percentComplete' : function(round) {
@@ -146,14 +149,18 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		$scope.game.currentWord = 0;
 	}
 
+	$scope.restartRead = function() {
+		$scope.pauseRead();
+		$scope.game.currentWord = 0;
+		$scope.continueRead();
+	}
+
 	$scope.pauseRead = function() {
 
 		// Bail if not started or already paused
 		if(!$scope.game.has_started || $scope.game.paused) {
 			return false;
 		}
-
-		$scope.game.lastSentenceIndex = $scope.findLastSentence();
 
 		$scope.game.paused = true;
 	}
@@ -168,16 +175,21 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 			return false;
 		}
 
-		var startPoint = $scope.game.currentWord;
-
-		if(offset == 'last_sentence') {
-			startPoint = $scope.game.lastSentenceIndex;
+		if(offset) {
+			$scope.goToPosition(offset);
 		}
 
-		$scope.game.currentWord = startPoint-1;
 		$scope.game.paused = false;
 		$scope.game.has_started = true;
-		$scope.wordLoop();
+		$scope.startCountdown();
+	}
+
+	$scope.goToPosition = function(pos) {
+		if(pos == 'last_sentence') {
+			pos = $scope.findLastSentence();
+		}
+
+		$scope.game.currentWord = pos;
 	}
 
 	$scope.togglePause = function() {
@@ -212,17 +224,10 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	$scope.findLastSentence = function() {
 		var possible = false,
 			currWord = $scope.game.currentWord,
+			currWord = currWord > 0 ? currWord-1 : currWord,
 			countDown = currWord;
 
 		for(; countDown >= 2; --countDown) {
-
-			/*
-			if(countDown > limit) {
-				console.log('returned');
-				return countDown;
-			}
-			*/
-
 			var word = $scope.game.words[countDown].value,
 				prevWord = $scope.game.words[countDown-1].value,
 				secondPrevWord = $scope.game.words[countDown-2].value;
@@ -235,6 +240,15 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	};
 
 	$scope.isBeginningOfSentence = function(word) {
+		// Strip whitespace
+		word = word.betterTrim().replace(/\s/, '');
+
+		// Cancel if empty (it's a pause)
+		if(word === '') {
+			return false;
+		}
+
+		// Check if first char is uppercase
 		if( word.charAt(0) === word.charAt(0).toUpperCase() ) {
 			return true;
 		}
@@ -243,6 +257,8 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 	$scope.isEndOfSentence = function(word) {
 		var lastChar = word.slice(-1);
+
+		// Check last char
 		if( lastChar === '!' || lastChar === '?' || lastChar === '.' ) {
 			return true;
 		}

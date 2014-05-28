@@ -279,9 +279,13 @@ a {
 			position: relative;
 			display: inline-block;
 			white-space: nowrap;
-
+			
 			.highlight {
-				color: $base-orange;
+				@include transition-duration(.3s);
+
+				.highlight-focus-point & {
+					color: $base-orange;
+				}
 			}
 
 			.before, .after {
@@ -436,6 +440,10 @@ button {
 		&:active {
 			background: darken($base-green, 15%);
 		}
+	}
+
+	&.right-spacing {
+		margin-right: 20px;
 	}
 }
 
