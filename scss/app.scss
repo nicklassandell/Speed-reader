@@ -271,6 +271,14 @@ a {
 				}
 			}
 
+			.special {
+				opacity: 0;
+
+				.is-paused & {
+					opacity: .1;
+				}
+			}
+
 			.before, .after {
 				position: absolute;
 				top: 0;

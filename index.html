@@ -101,9 +101,10 @@
     <div class="word-canvas" ng-click="pauseRead()">
         <div class="word-container">
             <div class="center-point">
-                <span class="before">{{ game.words[game.currentWord].raw.start }}</span>
-                <div class="highlight">{{ game.words[game.currentWord].raw.highlighted }}</div>
-                <span class="after">{{ game.words[game.currentWord].raw.end }}</span>
+                <span class="before">{{ game.words[game.currentWord].raw.start | unsafe }}</span>
+                <span class="{{ game.words[game.currentWord].raw.highlighted ? 'highlight' : '' }}">{{ game.words[game.currentWord].raw.highlighted | unsafe }}</span>
+                <span class="special">{{ game.words[game.currentWord].raw.specialChar | unsafe }}</span>
+                <span class="after">{{ game.words[game.currentWord].raw.end | unsafe }}</span>
             </div>
         </div>
         <div class="paused-screen">

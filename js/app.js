@@ -325,7 +325,9 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 						words.push({
 							'multiplier': 2,
 							'value': '',
-							'raw' : ' '
+							'raw' : {
+								'specialChar' : '(new line)'
+							}
 						});
 						spaceAfterSentence = true;
 					}
@@ -337,7 +339,9 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 				words.push({
 					'multiplier': 3,
 					'value': '',
-					'raw' : ' '
+					'raw' : {
+						'specialChar' : '(end paragraph)'
+					}
 				});
 			}
 		}
@@ -408,6 +412,12 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 });
 
 
+
+app.filter('unsafe', function($sce) {
+    return function(val) {
+        return $sce.trustAsHtml(val);
+    };
+});
 
 
 app.directive('toggleDropdown', function($timeout) {
