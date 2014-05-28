@@ -5,7 +5,7 @@ var app = angular.module('speedReadingApp', ['ui-rangeSlider']);
 app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 	$scope.settings = {
-		'wpm' : 350,
+		'wpm' : 300,
 		'wpm_ms' : function() {
 			return 60000 / $scope.settings.wpm;
 		},

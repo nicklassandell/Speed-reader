@@ -75,6 +75,11 @@ $prefix: 'ngrs-';
 			background: rgba(255,255,255,.2);
 		}
 	}
+	.bright-mode.is-sleeping &, .bright-mode.is-not-paused & {
+		.#{$prefix}join {
+			background: rgba(0,0,0,.2);
+		}
+	}
 
 
 	// RESETS
@@ -105,6 +110,10 @@ $prefix: 'ngrs-';
 		margin: 0;
 		height: 100%;
 		background: rgba(255,255,255,.1);
+
+		.bright-mode & {
+			background: rgba(0,0,0,.1);
+		}
 	}
 
   /*------------------------------------*\
@@ -141,18 +150,10 @@ $prefix: 'ngrs-';
 		@include transition-duration(.2s);
 		@include transition-property(opacity transform);
 		
-		/*
-		&::after {
-			position: absolute;
-			content: '';
-			top: 16%;
-			right: 16%;
-			bottom: 16%;
-			left: 16%;
-			background: $base-blue;
-			@include border-radius(100px);
+		.bright-mode & {
+			background: #444;
 		}
-		*/
+
 
     /*------------------------------------*\
         HANDLE ICON
