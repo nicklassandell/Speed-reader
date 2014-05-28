@@ -1,6 +1,4 @@
-
-// Todo: Add use strict and fix errors
-// "use strict";
+"use strict";
 
 var app = angular.module('speedReadingApp', ['ui-rangeSlider']);
 
@@ -64,7 +62,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 		var stored = JSON.parse(localStorage.spread);
 
-		for(model in stored) {
+		for(var model in stored) {
 			var modelValue = stored[model];
 
 			// For checkboxes
@@ -278,7 +276,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 			words = [];
 
 		// Loop through all paragraphs
-		for(i in paras) {
+		for(var i in paras) {
 			var para = paras[i],
 				paraWords = para.split(' '),
 				spaceAfterSentence = false;
