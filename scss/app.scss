@@ -323,8 +323,10 @@ a {
 	.timeline {
 		position: absolute;
 		top: 63%;
-		left: 33%;
-		right: 33%;
+		left: 0;
+		right: 0;
+		width: 600px;
+		margin: 0 auto;
 		z-index: 20;
 		background: transparent;
 		opacity: 0;
