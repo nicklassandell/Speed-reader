@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Speed read</title>
     <link rel="stylesheet" href="stylesheets/app.css" />
+
+    <script>
+        var base_url = '<?php $parsed = parse_url($_SERVER["REQUEST_URI"]); echo $parsed['path']; ?>';
+    </script>
 </head>
 <body ng-controller="MainCtrl" class="{{ game.paused ? 'is-paused' : 'is-not-paused' }}
                                       {{ game.has_started ? 'has-started' : 'has-not-started' }}
@@ -94,7 +98,7 @@
         </div> <!-- inner container -->
     </div> <!-- top bar -->
 
-    <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)" save-on-change></textarea>
+    <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)" save-on-change <?php if(!empty($_REQUEST['text'])) : ?> ng-init="settings.text='<?php echo htmlspecialchars($_REQUEST['text']); ?>'; startRead();" <?php endif; ?> ></textarea>
     
     <div class="word-canvas" ng-click="pauseRead()">
         <div class="word-container">

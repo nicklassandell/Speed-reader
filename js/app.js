@@ -219,7 +219,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 	$scope.extractFromUrl = function(url, callback) {
 		url = url.betterTrim();
-		$http.get(window.location.href + 'readability.php?url=' + encodeURIComponent(url)) .success(function(data, status) {
+		$http.get(window.base_url + 'readability.php?url=' + encodeURIComponent(url)) .success(function(data, status) {
 			callback(data);
 		}).error(function() {
 			callback(false);
