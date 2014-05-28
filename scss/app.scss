@@ -571,7 +571,6 @@ input, textarea, select {
 input[type=text], input[type=number], input[type=password], input[type=email], select {
 	padding: .4rem .6rem;
 	overflow: hidden;
-	text-transform: uppercase;
 	font-size: 13px;
 	outline: none;
 	border: 1px solid $base-grey;

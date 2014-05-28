@@ -15,7 +15,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		'text' : '',
 		'highlight_focus_point' : true,
 		'sleep' : false,
-		'toastDefault' : 'Paste text or URL below',
+		'toastDefault' : '',
 		'toast' : '',
 	};
 
@@ -127,14 +127,15 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 					$scope.startCountdown();
 					$scope.resetToast();
 				} else {
-					$scope.settings.toast = 'Error: Could not parse URL';
-					$timeout(function() {
-						$scope.resetToast();
-					}, 3*1000);
+					$scope.flashToast('Error: Could not parse URL');
 				}
 			});
 		} else {
 			$scope.game.words = $scope.splitToWords($scope.settings.text);
+			if($scope.game.words.length < 1) {
+				$scope.flashToast('Please enter something to read');
+				return false;
+			}
 			$scope.game.has_started = true;
 			$scope.game.paused = false;
 			$scope.startCountdown();
@@ -226,7 +227,11 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	}
 
 
-		
+	
+	$scope.flashToast = function(text) {
+		$scope.settings.toast = text;
+		$timeout($scope.resetToast, 3*1000);
+	}
 	$scope.resetToast = function() {
 		$scope.settings.toast = $scope.settings.toastDefault;
 	}
@@ -288,6 +293,10 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 			paras = text.split(/[\n]/),
 			words = [];
 
+		if(text.length < 1) {
+			return [];
+		}
+
 		// Loop through all paragraphs
 		for(var i in paras) {
 			var para = paras[i],
@@ -295,8 +304,8 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 				spaceAfterSentence = false;
 
 			// Loop through all words
-			for(w in paraWords) {
-				var w = paraWords[w],
+			for(var wi in paraWords) {
+				var w = paraWords[wi],
 					lastChar = w.slice(-1),
 					multiplier;
 
