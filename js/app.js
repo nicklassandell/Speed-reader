@@ -271,7 +271,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 			for(w in paraWords) {
 				var w = paraWords[w],
 					lastChar = w.slice(-1),
-					multiplier = '';
+					multiplier;
 
 				// Short
 				if (w.length <= 4) {
@@ -290,10 +290,13 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 					multiplier = 1.5;
 				}
 
+				var highlighted = $scope.highlightFocusPoint(w);
+
 				// Append word to array
 				words.push({
 					'multiplier': multiplier,
-					'value': w
+					'value': w,
+					'raw': highlighted
 				});
 
 				// Append space after word if it's the last word in a
@@ -303,7 +306,8 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 					if(lastChar === '.' || lastChar === '?' || lastChar === '!') {
 						words.push({
 							'multiplier': 2,
-							'value': ' '
+							'value': '',
+							'raw' : ' '
 						});
 						spaceAfterSentence = true;
 					}
@@ -314,7 +318,8 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 			if($scope.settings.pause_between_paragraphs && !spaceAfterSentence) {
 				words.push({
 					'multiplier': 3,
-					'value': ' '
+					'value': '',
+					'raw' : ' '
 				});
 			}
 		}
@@ -325,6 +330,20 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		}
 		
 		return words;
+	}
+
+	$scope.highlightFocusPoint = function(word) {
+		var breakpoint = .33,
+			length = word.length,
+			breakAt = Math.floor(length * breakpoint),
+
+			result = {
+				start : word.slice(0, breakAt),
+				highlighted : word.slice(breakAt, breakAt+1),
+				end : word.slice(breakAt+1)
+			};
+
+		return result;
 	}
 
 
@@ -342,7 +361,6 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		if ($scope.game.currentWord < $scope.game.words.length) {
 			var timeout = $scope.settings.wpm_ms() * $scope.game.words[$scope.game.currentWord].multiplier;
 
-			// Show next word and set timeout
 			$timeout(function() {
 				// Todo: Clean dis' up
 				if($scope.game.has_started === true && $scope.game.paused === false) {
@@ -391,6 +409,7 @@ app.directive('toggleDropdown', function($timeout) {
 /**
  * Directive to automatically save form field in localStorage.
  * The data saved in localStorage will be automatically set on load.
+ * Todo: Perhaps this should watch models instead of DOM elements?
  */
 app.directive('saveOnChange', function() {
 

@@ -9,6 +9,7 @@ $base-blue: #187986;
 $base-green: #437E35;
 $base-grey: #C8C0BB;
 $base-brown: #20201E;
+$base-orange: #FF8F00;
 $text-color: #D0D1CB;
 
 $top-bar-height: 80px;
@@ -260,25 +261,40 @@ a {
 	}
 
 	.word-container {
-		font-size: 58px;
 		position: absolute;
 		top: 45%;
 		left: 0;
 		right: 0;
+		width: 0;
+		margin: 0 auto;
 		text-align: center;
 		font-family: 'Roboto Slab', serif;
 		font-weight: 100;
+		font-size: 58px;
 		cursor: default;
 		@include transform(translateY(-50%));
 		@include transition-duration($global-transition-duration);
 		
-		.left-align-text & .center-point {
-			display: block;
-			height: 1em;
-			width: 1px;
-			margin: 0px auto;
-			text-indent: -65px;
+		.center-point {
+			position: relative;
+			display: inline-block;
 			white-space: nowrap;
+
+			.highlight {
+				color: $base-orange;
+			}
+
+			.before, .after {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+			}
+			.before {
+				right: 100%;
+			}
+			.after {
+				left: 100%;
+			}
 		}
 	}
 
