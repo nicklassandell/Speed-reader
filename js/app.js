@@ -6,14 +6,14 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 	$scope.settings = {
 		'wpm' : 300,
-		'wpm_ms' : function() {
+		'wpmMS' : function() {
 			return 60000 / $scope.settings.wpm;
 		},
-		'pause_between_paragraphs' : true,
-		'pause_between_sentences' : true,
-		'night_mode' : true,
+		'pauseBetweenParagraphs' : true,
+		'pauseBetweenSentences' : true,
+		'nightMode' : true,
 		'text' : '',
-		'highlight_focus_point' : true,
+		'highlightFocusPoint' : true,
 		'toastDefault' : '',
 		'toast' : '',
 		'useSerifFont' : true
@@ -24,7 +24,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		'words' : [],
 		'currentWord' : 0,
 		'paused' : false,
-		'has_started' : false,
+		'hasStarted' : false,
 		'percentComplete' : function(round) {
 			var perc = ($scope.game.currentWord / $scope.game.words.length) * 100,
 				ret = round ? perc.toFixed(1) : perc;
@@ -35,17 +35,17 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 	$scope.modelsToAutoSave = [
 		'settings.wpm',
-		'settings.pause_between_sentences',
-		'settings.night_mode',
+		'settings.pauseBetweenSentences',
+		'settings.nightMode',
 		'settings.text',
-		'settings.highlight_focus_point'
+		'settings.highlightFocusPoint'
 	];
 
 
 	// We merged these two settings, but let's keep them under the hood for now
 	// This makes sure the values stay the same
-	$scope.$watch('settings.pause_between_sentences', function() {
-		$scope.settings.pause_between_paragraphs = $scope.settings.pause_between_sentences;
+	$scope.$watch('settings.pauseBetweenSentences', function() {
+		$scope.settings.pauseBetweenParagraphs = $scope.settings.pauseBetweenSentences;
 	});
 
 
@@ -133,7 +133,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	$scope.startRead = function() {
 		
 		// Bail if already started
-		if($scope.game.has_started) {
+		if($scope.game.hasStarted) {
 			return false;
 		}
 
@@ -144,7 +144,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 					var text = res.result.betterTrim();
 					$scope.settings.text = $scope.makeTextReadable(text);
 					$scope.game.words = $scope.splitToWords(text);
-					$scope.game.has_started = true;
+					$scope.game.hasStarted = true;
 					$scope.game.paused = false;
 					$scope.startCountdown();
 					$scope.resetToast();
@@ -158,7 +158,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 				$scope.flashToast('Please enter something to read');
 				return false;
 			}
-			$scope.game.has_started = true;
+			$scope.game.hasStarted = true;
 			$scope.game.paused = false;
 			$scope.startCountdown();
 		}
@@ -174,11 +174,11 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	$scope.stopRead = function() {
 
 		// Bail if not started
-		if(!$scope.game.has_started) {
+		if(!$scope.game.hasStarted) {
 			return false;
 		}
 
-		$scope.game.has_started = false;
+		$scope.game.hasStarted = false;
 		$scope.game.paused = false;
 		$scope.game.currentWord = 0;
 	}
@@ -192,7 +192,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	$scope.pauseRead = function() {
 
 		// Bail if not started or already paused
-		if(!$scope.game.has_started || $scope.game.paused) {
+		if(!$scope.game.hasStarted || $scope.game.paused) {
 			return false;
 		}
 
@@ -205,7 +205,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	$scope.continueRead = function(offset) {
 
 		// Bail if we're not paused or not running
-		if(!$scope.game.has_started || !$scope.game.paused) {
+		if(!$scope.game.hasStarted || !$scope.game.paused) {
 			return false;
 		}
 
@@ -214,7 +214,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		}
 
 		$scope.game.paused = false;
-		$scope.game.has_started = true;
+		$scope.game.hasStarted = true;
 		$scope.startCountdown();
 	}
 
@@ -227,7 +227,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	}
 
 	$scope.togglePause = function() {
-		if(!$scope.game.has_started) {
+		if(!$scope.game.hasStarted) {
 			return false;
 		}
 
@@ -388,7 +388,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		}
 
 		// Remove last whitespace
-		if($scope.settings.pause_between_paragraphs) {
+		if($scope.settings.pauseBetweenParagraphs) {
 			words.pop();
 		}
 		
@@ -416,14 +416,14 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	$scope.wordLoop = function() {
 
 		// If reading is paused or not started, don't continue
-		if($scope.game.has_started === false || $scope.game.paused === true) {
+		if($scope.game.hasStarted === false || $scope.game.paused === true) {
 			return false;
 		}
 
 		var word = $scope.game.words[$scope.game.currentWord];
 
 		// If pause is disabled and the type is a pause, skip this word
-		if(!$scope.settings.pause_between_sentences && word.type == 'pause') {
+		if(!$scope.settings.pauseBetweenSentences && word.type == 'pause') {
 			$scope.game.currentWord += 1;
 			$scope.wordLoop();
 			return;
@@ -431,11 +431,11 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 		// Unless this is the last word, set timeout for next word
 		if ($scope.game.currentWord < $scope.game.words.length) {
-			var timeout = $scope.settings.wpm_ms() * word.multiplier;
+			var timeout = $scope.settings.wpmMS() * word.multiplier;
 
 			$timeout(function() {
 				// Todo: Clean dis' up
-				if($scope.game.has_started === true && $scope.game.paused === false) {
+				if($scope.game.hasStarted === true && $scope.game.paused === false) {
 					$scope.game.currentWord += 1;
 					$scope.wordLoop();
 				}

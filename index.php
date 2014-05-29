@@ -11,9 +11,9 @@
     </script>
 </head>
 <body ng-controller="MainCtrl" class="{{ game.paused ? 'is-paused' : 'is-not-paused' }}
-                                      {{ game.has_started ? 'has-started' : 'has-not-started' }}
-                                      {{ !settings.night_mode ? 'bright-mode' : '' }}
-                                      {{ settings.highlight_focus_point ? 'highlight-focus-point' : '' }}
+                                      {{ game.hasStarted ? 'has-started' : 'has-not-started' }}
+                                      {{ !settings.nightMode ? 'bright-mode' : '' }}
+                                      {{ settings.highlightFocusPoint ? 'highlight-focus-point' : '' }}
                                       {{ settings.useSerifFont ? 'serif-font' : '' }}">
 
     <div class="top-bar">
@@ -65,7 +65,7 @@
                     <div class="form-row">
                         <div class="checkbox">
                             <div class="check">
-                                <input ng-model="settings.pause_between_sentences" id="set-pause-sent-chk" type="checkbox">
+                                <input ng-model="settings.pauseBetweenSentences" id="set-pause-sent-chk" type="checkbox">
                                 <span></span>
                             </div>
                             <label for="set-pause-sent-chk">Pause between sentences</label>
@@ -75,7 +75,7 @@
                     <div class="form-row">
                         <div class="checkbox">
                             <div class="check">
-                                <input ng-model="settings.highlight_focus_point" id="set-highlight-focus-point-chk" type="checkbox">
+                                <input ng-model="settings.highlightFocusPoint" id="set-highlight-focus-point-chk" type="checkbox">
                                 <span></span>
                             </div>
                             <label for="set-highlight-focus-point-chk">Highlight focus point</label>
@@ -85,7 +85,7 @@
                     <div class="form-row">
                         <div class="checkbox">
                             <div class="check">
-                                <input ng-model="settings.night_mode" id="set-nm-chk" type="checkbox">
+                                <input ng-model="settings.nightMode" id="set-nm-chk" type="checkbox">
                                 <span></span>
                             </div>
                             <label for="set-nm-chk">Night mode</label>
