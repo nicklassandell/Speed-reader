@@ -120,7 +120,7 @@
             </div>
         </div>
         <div class="paused-screen">
-            <p class="big">{{ game.percentComplete(true) }}% complete.</p>
+            <p class="big">{{ game.percentComplete(true) }}% complete</p>
             <p>
                 <button class="right-spacing" ng-click="continueRead(); $event.stopPropagation();">Continue <i class="fa fa-play"></i></button>
                 <button class="right-spacing dark" ng-click="goToPosition('last_sentence'); $event.stopPropagation();">Last sentence <i class="fa fa-step-backward"></i></button>
@@ -137,6 +137,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
     <script src="js/angular.rangeSlider.js"></script>
+    <script src="js/nprogress.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

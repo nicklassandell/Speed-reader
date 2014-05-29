@@ -22,7 +22,8 @@ $global-transition-duration: .3s;
 $global-line-height: 1.3rem;
 $global-font-family: 'Lato', sans-serif;;
 
-@import "angular.rangeSlider.scss";
+@import "angular.rangeSlider";
+@import "nprogress";
 
 
 

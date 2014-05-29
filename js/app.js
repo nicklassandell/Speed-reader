@@ -16,7 +16,8 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		'highlightFocusPoint' : true,
 		'toastDefault' : '',
 		'toast' : '',
-		'useSerifFont' : true
+		'useSerifFont' : true,
+		'countDownDuration' : 2*1000
 	};
 	$scope.settings.toast = $scope.settings.toastDefault;
 
@@ -140,7 +141,9 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 		if($scope.isValidURL($scope.settings.text)) {
 			$scope.settings.toast = 'Extracting text from URL...';
+			NProgress.start();
 			$scope.extractFromUrl($scope.settings.text, function(res) {
+				NProgress.done();
 				if(res.status === 'success') {
 					var text = res.result.betterTrim();
 					$scope.settings.text = $scope.makeTextReadable(text);
@@ -169,7 +172,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		$timeout.cancel($scope.loopTimeout);
 		$scope.loopTimeout = $timeout(function() {
 			$scope.wordLoop();
-		}, 800);
+		}, $scope.settings.countDownDuration);
 	}
 
 	$scope.stopRead = function() {
