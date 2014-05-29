@@ -18,7 +18,7 @@ $data = json_decode($apiRes, true);
 
 if(!empty($apiRes) && !isset($data['error'])) {
 	$content = $data['content'];
-	$content = str_replace(array('</p>', '</h1>', '</h2>', '</h3>', '</h4>', '<br/>', '<br />'), "\r\n", $content);
+	$content = str_replace(['</p>', '</h1>', '</h2>', '</h3>', '</h4>', '<br/>', '<br />'], "\r\n", $content);
 	$content = strip_tags($content);
 
 	$result = array(
