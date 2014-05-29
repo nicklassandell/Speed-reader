@@ -13,7 +13,8 @@
 <body ng-controller="MainCtrl" class="{{ game.paused ? 'is-paused' : 'is-not-paused' }}
                                       {{ game.has_started ? 'has-started' : 'has-not-started' }}
                                       {{ !settings.night_mode ? 'bright-mode' : '' }}
-                                      {{ settings.highlight_focus_point ? 'highlight-focus-point' : '' }}">
+                                      {{ settings.highlight_focus_point ? 'highlight-focus-point' : '' }}
+                                      {{ settings.useSerifFont ? 'serif-font' : '' }}">
 
     <div class="top-bar">
         <div class="inner-container">
@@ -88,6 +89,16 @@
                                 <span></span>
                             </div>
                             <label for="set-nm-chk">Night mode</label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="checkbox">
+                            <div class="check">
+                                <input ng-model="settings.useSerifFont" id="set-serifFont-chk" type="checkbox">
+                                <span></span>
+                            </div>
+                            <label for="set-serifFont-chk">Use Serif font style</label>
                         </div>
                     </div>
 

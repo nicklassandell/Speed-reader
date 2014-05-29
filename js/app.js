@@ -15,7 +15,8 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		'text' : '',
 		'highlight_focus_point' : true,
 		'toastDefault' : '',
-		'toast' : ''
+		'toast' : '',
+		'useSerifFont' : true
 	};
 	$scope.settings.toast = $scope.settings.toastDefault;
 
@@ -37,11 +38,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		'settings.pause_between_sentences',
 		'settings.night_mode',
 		'settings.text',
-		'settings.highlight_focus_point',
-
-		'game.currentWord',
-		'game.paused',
-		'game.has_started'
+		'settings.highlight_focus_point'
 	];
 
 
