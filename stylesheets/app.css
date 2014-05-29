@@ -1,0 +1,1030 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,300|family=Lato);
+@import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
+/**
+ * 	Angular RangeSlider SCSS
+ * 
+ *	Version: 0.0.7
+ *
+ * 	Author: Daniel Crisp, danielcrisp.com
+ *
+ * 	The rangeSlider has been styled to match the default styling
+ * 	of form elements styled using Twitter's Bootstrap
+ * 
+ * 	Originally forked from https://github.com/leongersen/noUiSlider
+ *
+
+	This code is released under the MIT Licence - http://opensource.org/licenses/MIT
+
+	Copyright (c) 2013 Daniel Crisp
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+
+ */
+/*------------------------------------*\
+    COMPASS IMPORTS
+\*------------------------------------*/
+/*------------------------------------*\
+    SETTINGS
+\*------------------------------------*/
+/*------------------------------------*\
+    THE CSS
+\*------------------------------------*/
+/* line 69, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider {
+  height: 3px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  -webkit-transition: border linear, box-shadow linear, height ease-in;
+  -webkit-transition-delay: 0.2s, 0.2s, 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s, height ease-in 0.2s;
+  -o-transition: border linear 0.2s, box-shadow linear 0.2s, height ease-in 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s, height ease-in 0.2s;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /*------------------------------------*\
+      RUNNER
+  \*------------------------------------*/
+  /*------------------------------------*\
+      JOIN (connects the two handles)
+  \*------------------------------------*/
+  /*------------------------------------*\
+      HANDLE
+  \*------------------------------------*/
+  /*------------------------------------*\
+      HANDLE SPECIFICS
+  \*------------------------------------*/
+  /*------------------------------------*\
+      VALUE LABELS
+  \*------------------------------------*/
+  /*------------------------------------*\
+      ATTACHED VALUE RUNNER
+  \*------------------------------------*/
+  /*------------------------------------*\
+      VERTICAL SLIDER
+  \*------------------------------------*/
+  /*------------------------------------*\
+      FOCUS STATE
+  \*------------------------------------*/
+  /*------------------------------------*\
+      DISABLED STATE
+  \*------------------------------------*/
+}
+/* line 74, ../scss/angular.rangeSlider.scss */
+.is-sleeping .ngrs-range-slider .ngrs-join, .is-not-paused .ngrs-range-slider .ngrs-join {
+  background: rgba(255, 255, 255, 0.2);
+}
+/* line 79, ../scss/angular.rangeSlider.scss */
+.bright-mode.is-sleeping .ngrs-range-slider .ngrs-join, .bright-mode.is-not-paused .ngrs-range-slider .ngrs-join {
+  background: rgba(0, 0, 0, 0.2);
+}
+/* line 86, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider, .ngrs-range-slider * {
+  display: block;
+  cursor: default;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+/* line 108, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider .ngrs-runner {
+  position: relative;
+  margin: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+}
+/* line 114, ../scss/angular.rangeSlider.scss */
+.bright-mode .ngrs-range-slider .ngrs-runner {
+  background: rgba(0, 0, 0, 0.1);
+}
+/* line 123, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider .ngrs-join {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 100%;
+  height: 3px;
+  margin: 0;
+  background-color: #187986;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+  -webkit-transition-property: background;
+  -moz-transition-property: background;
+  -o-transition-property: background;
+  transition-property: background;
+}
+/* line 140, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider .ngrs-handle {
+  position: absolute;
+  top: -8.1px;
+  z-index: 2;
+  height: 18px;
+  width: 18px;
+  margin: 0 0 0 -9px;
+  background: #efefef;
+  cursor: pointer;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  -ms-border-radius: 100px;
+  -o-border-radius: 100px;
+  border-radius: 100px;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-transition-property: opacity, -webkit-transform;
+  -moz-transition-property: opacity, -moz-transform;
+  -o-transition-property: opacity, -o-transform;
+  transition-property: opacity transform;
+  /*------------------------------------*\
+      HANDLE ICON
+  \*------------------------------------*/
+}
+/* line 153, ../scss/angular.rangeSlider.scss */
+.bright-mode .ngrs-range-slider .ngrs-handle {
+  background: #444;
+}
+/* line 162, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider .ngrs-handle i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: no-repeat -9999px -9999px;
+  cursor: pointer;
+}
+/* line 172, ../scss/angular.rangeSlider.scss */
+.ngrs-no-touch .ngrs-range-slider .ngrs-handle:hover i, .ngrs-range-slider .ngrs-handle.ngrs-down i {
+  background-position: 50% 50%;
+}
+/* line 177, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider .ngrs-handle.ngrs-down {
+  -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+}
+/* line 205, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider .ngrs-value {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding: 5px 0 0 0;
+  font-size: 12px;
+  color: #999;
+}
+/* line 213, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider .ngrs-value.ngrs-value-max {
+  left: auto;
+  right: 0;
+  text-align: right;
+}
+/* line 221, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-handle-min-down .ngrs-value-min, .ngrs-range-slider.ngrs-handle-max-down .ngrs-value-max {
+  color: #333;
+}
+/* line 228, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider .ngrs-attached-handles {
+  margin: 0 9px;
+  position: relative;
+  /*------------------------------------*\
+      ATTACHED VALUE RUNNER LABELS
+  \*------------------------------------*/
+}
+/* line 235, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider .ngrs-attached-handles .ngrs-value-max {
+  text-align: left;
+}
+/* line 238, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider .ngrs-attached-handles .ngrs-value > div {
+  margin: 0 0 0 -50%;
+}
+/* line 247, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical {
+  width: 20px;
+  margin: 10px auto;
+  /*------------------------------------*\
+      RUNNER
+  \*------------------------------------*/
+  /*------------------------------------*\
+      ATTACHED VALUE RUNNER
+  \*------------------------------------*/
+  /*------------------------------------*\
+      JOIN
+  \*------------------------------------*/
+  /*------------------------------------*\
+      HANDLE
+  \*------------------------------------*/
+  /*------------------------------------*\
+      HANDLE SPECIFICS
+  \*------------------------------------*/
+  /*------------------------------------*\
+      VALUE LABELS
+  \*------------------------------------*/
+  /*------------------------------------*\
+      VERTICAL LEFT SLIDER
+  \*------------------------------------*/
+  /*------------------------------------*\
+      VERTICAL RIGHT SLIDER
+  \*------------------------------------*/
+}
+/* line 255, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical .ngrs-runner {
+  margin: 9px 0;
+  height: 300px;
+  width: 18px;
+}
+/* line 265, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical .ngrs-value-runner.ngrs-attached-handles {
+  padding: 0;
+  position: absolute;
+  top: 0;
+  margin: 9px 0;
+  height: 300px;
+  left: 100%;
+}
+/* line 279, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical .ngrs-join {
+  width: 3px;
+  height: auto;
+  top: 0;
+  bottom: 100%;
+  left: 50%;
+  right: auto;
+  margin: 0 0 0 -1.5px;
+}
+/* line 293, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical .ngrs-handle {
+  width: 100%;
+  height: 18px;
+  margin: -9px 0 0 0;
+}
+/* line 304, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical .ngrs-handle-min i {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFFJREFUeNpiYEAFPFAMB0xIbEYgdoJiRpggM5ICUyBWhZoA0vgMWYEsENsg6ZQE4ldA/AmkkguIHZGNhQKQGBfIBHcgFmTABCxALMJAMQAIMAAcNgVQJ7t7JQAAAABJRU5ErkJggg==");
+}
+/* line 311, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical .ngrs-handle-max i {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFZJREFUeNpiYKAUMAKxDxBL4ZB/xgQk9gHxDyySILF9zEDiNxC/A2JVNAW7gfgtM5TzCYhZgFgCyr8IxNdADGZk+4BYGoi/APEBIP6PzVE8UAwHAAEGAArIDvzRFIA6AAAAAElFTkSuQmCC");
+}
+/* line 321, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical .ngrs-value {
+  top: 0;
+  left: 100%;
+  padding: 0 0 0 5px;
+}
+/* line 326, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical .ngrs-value.ngrs-value-max {
+  top: auto;
+  bottom: 0;
+  right: auto;
+  text-align: left;
+}
+/* line 335, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical .ngrs-attached-handles .ngrs-value-max, .ngrs-range-slider.ngrs-vertical .ngrs-attached-handles .ngrs-value-min {
+  margin: -50% 0 0;
+}
+/* line 344, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical.ngrs-left {
+  margin: 10px 0;
+}
+/* line 352, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical.ngrs-right {
+  margin: 10px 0 10px auto;
+  /*------------------------------------*\
+      ATTACHED VALUE RUNNER
+  \*------------------------------------*/
+  /*------------------------------------*\
+      VALUE LABELS
+  \*------------------------------------*/
+}
+/* line 358, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical.ngrs-right .ngrs-attached-handles {
+  left: 0%;
+}
+/* line 366, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical.ngrs-right .ngrs-value {
+  left: auto;
+  right: 100%;
+  padding: 0 5px 0 0;
+  text-align: right;
+}
+/* line 372, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-vertical.ngrs-right .ngrs-value.ngrs-value-max {
+  text-align: right;
+}
+/* line 394, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-disabled, .ngrs-range-slider.ngrs-disabled.ngrs-focus {
+  border-color: #ddd;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+/* line 400, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-disabled .ngrs-handle {
+  background: #fff;
+  border-color: #ddd;
+}
+/* line 404, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-disabled .ngrs-handle i {
+  background: none !important;
+  cursor: default;
+}
+/* line 410, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-disabled .ngrs-join {
+  background: #ddd;
+}
+/* line 414, ../scss/angular.rangeSlider.scss */
+.ngrs-range-slider.ngrs-disabled .ngrs-value {
+  color: #ddd;
+}
+
+/*------------------------------------*\
+    TOUCH STATE
+\*------------------------------------*/
+/* line 426, ../scss/angular.rangeSlider.scss */
+body.ngrs-touching {
+  -ms-touch-action: none;
+}
+
+/* line 29, ../scss/app.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 32, ../scss/app.scss */
+body {
+  font-family: "Lato", sans-serif;
+  padding: 0;
+  margin: 0;
+  background: #20201e;
+  color: #d0d1cb;
+  line-height: 1.3rem;
+  -webkit-transition-property: color, background-color;
+  -moz-transition-property: color, background-color;
+  -o-transition-property: color, background-color;
+  transition-property: color background-color;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+/* line 43, ../scss/app.scss */
+body.bright-mode {
+  background: #E3E0DD;
+  color: #4A4A4A;
+}
+
+/* line 50, ../scss/app.scss */
+*, *.before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 55, ../scss/app.scss */
+::selection {
+  background: rgba(150, 150, 150, 0.2);
+}
+
+/* line 58, ../scss/app.scss */
+::-moz-selection {
+  background: rgba(150, 150, 150, 0.2);
+}
+
+/* line 64, ../scss/app.scss */
+p {
+  margin: 0 0 1rem 0;
+}
+
+/* line 68, ../scss/app.scss */
+a {
+  color: #187986;
+  text-decoration: none;
+}
+
+/* line 75, ../scss/app.scss */
+.right {
+  float: right;
+}
+
+/* line 78, ../scss/app.scss */
+.left {
+  float: left;
+}
+
+/* line 82, ../scss/app.scss */
+.relative {
+  position: relative;
+}
+
+/* line 91, ../scss/app.scss */
+.show-if-started {
+  position: absolute !important;
+  top: -1000000px;
+  left: -1000000px;
+}
+/* line 96, ../scss/app.scss */
+.has-started .show-if-started {
+  position: static !important;
+}
+
+/* line 101, ../scss/app.scss */
+.show-if-not-started {
+  position: absolute !important;
+  top: -1000000px;
+  left: -1000000px;
+}
+/* line 106, ../scss/app.scss */
+.has-not-started .show-if-not-started {
+  position: static !important;
+}
+
+/* line 111, ../scss/app.scss */
+.show-if-not-paused {
+  position: absolute !important;
+  top: -1000000px;
+  left: -1000000px;
+}
+/* line 116, ../scss/app.scss */
+.is-not-paused.has-started .show-if-not-paused {
+  position: static !important;
+}
+
+/* line 121, ../scss/app.scss */
+.show-if-paused {
+  position: absolute !important;
+  top: -1000000px;
+  left: -1000000px;
+}
+/* line 126, ../scss/app.scss */
+.is-paused.has-started .show-if-paused {
+  position: static !important;
+}
+
+/* line 136, ../scss/app.scss */
+.top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  line-height: 80px;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 20;
+  -webkit-box-shadow: 0 0 3px rgba(255, 255, 255, 0.1);
+  -moz-box-shadow: 0 0 3px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.1);
+}
+/* line 148, ../scss/app.scss */
+.bright-mode .top-bar {
+  background: rgba(0, 0, 0, 0.06);
+}
+/* line 152, ../scss/app.scss */
+.top-bar .inner-container {
+  max-width: 1104px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+/* line 158, ../scss/app.scss */
+.top-bar h1 {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 100;
+  margin: 0;
+}
+/* line 165, ../scss/app.scss */
+.top-bar .bar-item {
+  height: 80px;
+  margin-right: 40px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+/* line 172, ../scss/app.scss */
+.top-bar .bar-item:last-child {
+  margin-right: 0;
+}
+/* line 176, ../scss/app.scss */
+.top-bar .bar-item.small-gap {
+  margin-right: 20px;
+}
+/* line 181, ../scss/app.scss */
+.top-bar .dropdown {
+  top: 88%;
+}
+
+/* line 187, ../scss/app.scss */
+.editor {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  height: calc(100% - 80px);
+  z-index: 10;
+  width: 100%;
+  max-width: 1104px;
+  margin: 0 auto;
+  padding: 40px;
+  display: block;
+  background: transparent;
+  border: 0;
+  outline: none;
+  color: inherit;
+  resize: none;
+  font-size: 20px;
+  line-height: 2rem;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 100;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+/* line 210, ../scss/app.scss */
+.has-started .editor {
+  opacity: 0;
+}
+
+/* line 217, ../scss/app.scss */
+.word-canvas {
+  position: absolute;
+  top: -100000px;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 15;
+  opacity: 0;
+  overflow: hidden;
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+/* line 229, ../scss/app.scss */
+.has-started .word-canvas {
+  top: 0;
+  opacity: 1;
+}
+/* line 235, ../scss/app.scss */
+.is-paused .word-canvas .word-container {
+  -webkit-transform: translateY(-100px) scale(0.8);
+  -moz-transform: translateY(-100px) scale(0.8);
+  -ms-transform: translateY(-100px) scale(0.8);
+  -o-transform: translateY(-100px) scale(0.8);
+  transform: translateY(-100px) scale(0.8);
+  opacity: .5;
+}
+/* line 240, ../scss/app.scss */
+.is-paused .word-canvas .is-paused {
+  top: 50%;
+  opacity: 1;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+/* line 247, ../scss/app.scss */
+.word-canvas .word-container {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  width: 0;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 100;
+  font-size: 58px;
+  cursor: default;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+/* line 262, ../scss/app.scss */
+.word-canvas .word-container .center-point {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+/* line 267, ../scss/app.scss */
+.word-canvas .word-container .center-point .highlight {
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+/* line 270, ../scss/app.scss */
+.highlight-focus-point .word-canvas .word-container .center-point .highlight {
+  color: #ff8f00;
+}
+/* line 275, ../scss/app.scss */
+.word-canvas .word-container .center-point .special {
+  opacity: 0;
+}
+/* line 278, ../scss/app.scss */
+.is-paused .word-canvas .word-container .center-point .special {
+  opacity: .1;
+}
+/* line 283, ../scss/app.scss */
+.word-canvas .word-container .center-point .before, .word-canvas .word-container .center-point .after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+/* line 288, ../scss/app.scss */
+.word-canvas .word-container .center-point .before {
+  right: 100%;
+}
+/* line 291, ../scss/app.scss */
+.word-canvas .word-container .center-point .after {
+  left: 100%;
+}
+/* line 297, ../scss/app.scss */
+.word-canvas .paused-screen {
+  position: absolute;
+  top: -1000000px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+  opacity: .2;
+  -webkit-transform: translateY(50px) scale(0.8);
+  -moz-transform: translateY(50px) scale(0.8);
+  -ms-transform: translateY(50px) scale(0.8);
+  -o-transform: translateY(50px) scale(0.8);
+  transform: translateY(50px) scale(0.8);
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: -webkit-transform, opacity;
+  -moz-transition-property: -moz-transform, opacity;
+  -o-transition-property: -o-transform, opacity;
+  transition-property: transform opacity;
+}
+/* line 309, ../scss/app.scss */
+.word-canvas .paused-screen .big {
+  font-size: 22px;
+  font-weight: 100;
+  margin-bottom: 30px;
+}
+/* line 315, ../scss/app.scss */
+.is-paused .word-canvas .paused-screen {
+  top: 50%;
+  opacity: 1;
+  -webkit-transform: translateY(-50px);
+  -moz-transform: translateY(-50px);
+  -ms-transform: translateY(-50px);
+  -o-transform: translateY(-50px);
+  transform: translateY(-50px);
+}
+/* line 323, ../scss/app.scss */
+.word-canvas .timeline {
+  position: absolute;
+  top: 63%;
+  left: 0;
+  right: 0;
+  width: 600px;
+  margin: 0 auto;
+  z-index: 20;
+  background: transparent;
+  opacity: 0;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+/* line 335, ../scss/app.scss */
+.has-started .word-canvas .timeline {
+  opacity: 1;
+}
+
+/* line 348, ../scss/app.scss */
+.block-links, .block-links li {
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+/* line 354, ../scss/app.scss */
+.dropdown .block-links {
+  margin: -10px -20px;
+}
+/* line 358, ../scss/app.scss */
+.block-links li a {
+  display: block;
+  padding: 10px 20px;
+  font-size: .75rem;
+  text-transform: uppercase;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+/* line 365, ../scss/app.scss */
+.block-links li a:hover {
+  background: #dfdad7;
+  color: #187986;
+}
+
+/* line 375, ../scss/app.scss */
+.btn-group {
+  display: inline-block;
+  vertical-align: middle;
+}
+/* line 379, ../scss/app.scss */
+.btn-group button {
+  margin: 0;
+  display: block;
+  float: left;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  border-right: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+/* line 387, ../scss/app.scss */
+.btn-group button:first-of-type {
+  -webkit-border-radius: 4px 0 0 4px;
+  -moz-border-radius: 4px 0 0 4px;
+  -ms-border-radius: 4px 0 0 4px;
+  -o-border-radius: 4px 0 0 4px;
+  border-radius: 4px 0 0 4px;
+  border-left: 0;
+}
+/* line 391, ../scss/app.scss */
+.btn-group button:last-of-type {
+  -webkit-border-radius: 0 4px 4px 0;
+  -moz-border-radius: 0 4px 4px 0;
+  -ms-border-radius: 0 4px 4px 0;
+  -o-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+  border-right: 0;
+}
+
+/* line 399, ../scss/app.scss */
+label {
+  display: block;
+  line-height: 1.3rem;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* line 407, ../scss/app.scss */
+button {
+  background: #187986;
+  padding: 12px 16px;
+  margin: 0;
+  font-size: 1.2rem;
+  outline: none;
+  cursor: pointer;
+  border: 0;
+  color: #C4E2F4;
+  display: inline-block;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1em;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+/* line 424, ../scss/app.scss */
+button:hover {
+  background: #146570;
+  -webkit-transition-duration: 0.1s;
+  -moz-transition-duration: 0.1s;
+  -o-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+}
+/* line 428, ../scss/app.scss */
+button:active {
+  background: #0c3e45;
+}
+/* line 433, ../scss/app.scss */
+button.dark {
+  background: rgba(255, 255, 255, 0.05);
+}
+/* line 436, ../scss/app.scss */
+button.dark:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+/* line 439, ../scss/app.scss */
+button.dark:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* line 443, ../scss/app.scss */
+.bright-mode button.dark {
+  color: #444;
+  background: rgba(0, 0, 0, 0.2);
+}
+/* line 447, ../scss/app.scss */
+.bright-mode button.dark:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+/* line 450, ../scss/app.scss */
+.bright-mode button.dark:active {
+  background: rgba(0, 0, 0, 0.4);
+}
+/* line 456, ../scss/app.scss */
+button.green {
+  background: #437e35;
+}
+/* line 459, ../scss/app.scss */
+button.green:hover {
+  background: #396c2d;
+}
+/* line 462, ../scss/app.scss */
+button.green:active {
+  background: #26481e;
+}
+/* line 467, ../scss/app.scss */
+button.right-spacing {
+  margin-right: 20px;
+}
+
+/* line 472, ../scss/app.scss */
+.checkbox {
+  display: inline-block;
+}
+/* line 475, ../scss/app.scss */
+.checkbox:hover .check span {
+  border-color: #9a8c83;
+}
+/* line 479, ../scss/app.scss */
+.checkbox label {
+  cursor: pointer;
+  position: relative;
+  top: -1px;
+  display: block;
+  margin-left: 1.8rem;
+  line-height: 1.5rem;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+/* line 491, ../scss/app.scss */
+.checkbox .check {
+  height: 1.3rem;
+  width: 1.3rem;
+  position: relative;
+  display: block;
+  float: left;
+  cursor: pointer;
+}
+/* line 499, ../scss/app.scss */
+.checkbox .check span, .checkbox .check input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+}
+/* line 510, ../scss/app.scss */
+.checkbox .check span {
+  border: 1px solid #c8c0bb;
+  background-color: #FFF;
+  z-index: 2;
+  pointer-events: none;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpFMTQ4RTBGRERENzgxMUUyQjRDQjgwNThFRkM5NDA4QyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpFMTQ4RTBGRURENzgxMUUyQjRDQjgwNThFRkM5NDA4QyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkUxNDhFMEZCREQ3ODExRTJCNENCODA1OEVGQzk0MDhDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkUxNDhFMEZDREQ3ODExRTJCNENCODA1OEVGQzk0MDhDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+tQ76+gAAANdJREFUeNpi/P//PwO5gImBAkCRZhZkzu/fv8E0Kysrw+fPn+HiID4TE9NaIFOJjY3NkFSbY4E4iJGR8TWpzhZhZmbuBdLf/v37l43T2ciAl5eX4efPnyDn9gJjRBSIS4HCt1EUgaIKhn/9+rUfiBcD2cwg/o8fP1yBBvwH4lMwMWSMrvkQSDGQ7gfyuYDsu0D8C4h10DViaP727Zs0UONLqG0noXQDyPnEaGb4/v27M1DxH6jGy0BxNmwaQRhbaO8FSlQAo+UtECcD+b9wBSrj0EzbAAEGAF7M5hLMA2gMAAAAAElFTkSuQmCC");
+  background-repeat: no-repeat;
+  background-position: center -20px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: cubic-bezier(0.2, 1.4, 0.2, 1.2);
+  -moz-transition-timing-function: cubic-bezier(0.2, 1.4, 0.2, 1.2);
+  -o-transition-timing-function: cubic-bezier(0.2, 1.4, 0.2, 1.2);
+  transition-timing-function: cubic-bezier(0.2, 1.4, 0.2, 1.2);
+}
+/* line 523, ../scss/app.scss */
+.checkbox .check input {
+  opacity: 0;
+}
+/* line 526, ../scss/app.scss */
+.checkbox .check input:checked ~ span {
+  background-color: #187986;
+  background-position: center;
+  border-color: #187986;
+}
+
+/* line 537, ../scss/app.scss */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  z-index: 100;
+  right: 0;
+  width: 300px;
+  padding: 20px;
+  background: #FFF;
+  color: #666;
+  display: none;
+  line-height: 1.3rem;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+/* line 550, ../scss/app.scss */
+.dropdown.open {
+  display: block;
+}
+/* line 554, ../scss/app.scss */
+.dropdown::after {
+  position: absolute;
+  bottom: 100%;
+  right: 18.5%;
+  content: '';
+  border: 7px solid transparent;
+  border-top: 0;
+  border-bottom-color: #FFF;
+}
+
+/* line 567, ../scss/app.scss */
+input, textarea, select {
+  font-family: "Lato", sans-serif;
+}
+
+/* line 571, ../scss/app.scss */
+input[type=text], input[type=number], input[type=password], input[type=email], select {
+  padding: .4rem .6rem;
+  overflow: hidden;
+  font-size: 13px;
+  outline: none;
+  border: 1px solid #c8c0bb;
+  display: block;
+  width: 100%;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+/* line 581, ../scss/app.scss */
+input[type=text].expand, input[type=number].expand, input[type=password].expand, input[type=email].expand, select.expand {
+  display: block;
+  width: 100%;
+}
+
+/* line 588, ../scss/app.scss */
+.form-row {
+  display: block;
+  margin: 0 0 2rem 0;
+  line-height: 1.3rem;
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 594, ../scss/app.scss */
+.form-row:last-child {
+  margin-bottom: 0;
+}

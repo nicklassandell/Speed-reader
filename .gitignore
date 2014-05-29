@@ -1,4 +1,6 @@
 /bower_components/*
 /.sass-cache/*
 *.DS_Store
-/stylesheets/*
+/scss/*
+config.rb
+README.md
