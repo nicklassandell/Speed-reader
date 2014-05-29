@@ -2,7 +2,7 @@
 
 var app = angular.module('speedReadingApp', ['ui-rangeSlider']);
 
-app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
+app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http) {
 
 	$scope.settings = {
 		'wpm' : 300,
@@ -17,7 +17,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		'toastDefault' : '',
 		'toast' : '',
 		'useSerifFont' : true,
-		'countDownDuration' : 2*1000
+		'pauseCountdown' : 1
 	};
 	$scope.settings.toast = $scope.settings.toastDefault;
 
@@ -61,6 +61,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 			$scope.togglePause();
 		}
 	});
+
 
 
 
@@ -150,7 +151,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 					$scope.game.words = $scope.splitToWords(text);
 					$scope.game.hasStarted = true;
 					$scope.game.paused = false;
-					$scope.startCountdown();
+					$scope.startCountdown($scope.settings.pauseCountdown*2);
 					$scope.resetToast();
 				} else {
 					$scope.flashToast('Error: Could not parse URL');
@@ -164,15 +165,39 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 			}
 			$scope.game.hasStarted = true;
 			$scope.game.paused = false;
-			$scope.startCountdown();
+			$scope.startCountdown($scope.settings.pauseCountdown*2);
 		}
 	}
 
-	$scope.startCountdown = function() {
-		$timeout.cancel($scope.loopTimeout);
-		$scope.loopTimeout = $timeout(function() {
-			$scope.wordLoop();
-		}, $scope.settings.countDownDuration);
+	$scope.startCountdown = function(steps) {
+		var prog = angular.element('#countdown-bar'),
+			bar = prog.find('.progress'),
+
+			currStep = 1,
+
+			percentSteps = 100/steps;
+
+		prog.addClass('visible');
+
+		$timeout(function() {
+			bar.css('width', percentSteps + '%');
+
+			$scope.countDownTimeout = $interval(function() {
+				var percent = percentSteps * (currStep+1);
+				bar.css('width', percent + '%');
+
+				if(currStep >= steps) {
+					$scope.wordLoop();
+					$interval.cancel($scope.countDownTimeout);
+
+					prog.removeClass('visible');
+					bar.attr('style', '');
+
+					return false;
+				}
+				currStep += 1;
+			}, 1000);
+		}, 0);
 	}
 
 	$scope.stopRead = function() {
@@ -219,7 +244,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 		$scope.game.paused = false;
 		$scope.game.hasStarted = true;
-		$scope.startCountdown();
+		$scope.startCountdown($scope.settings.pauseCountdown);
 	}
 
 	$scope.goToPosition = function(pos) {

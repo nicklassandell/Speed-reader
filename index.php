@@ -106,6 +106,10 @@
             </div>
 
         </div> <!-- inner container -->
+
+        <div id="countdown-bar" class="countdown-bar">
+            <div class="progress"></div>
+        </div>
     </div> <!-- top bar -->
 
     <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)" <?php if(!empty($_REQUEST['text'])) : ?> ng-init="settings.text='<?php echo htmlspecialchars($_REQUEST['text']); ?>'; settings.loadedTextFromQueryParam = true;" <?php endif; ?> ></textarea>
