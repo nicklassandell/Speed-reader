@@ -234,7 +234,6 @@ a {
 	.is-paused & {
 		.word-container {
 			@include transform(translateY(-100px) scale(.8));
-			opacity: .5;
 		}
 
 		.is-paused {
@@ -253,7 +252,7 @@ a {
 		margin: 0 auto;
 		text-align: center;
 		font-weight: 100;
-		font-size: 58px;
+		font-size: 65px;
 		cursor: default;
 		@include transform(translateY(-50%));
 		@include transition-duration($global-transition-duration);
@@ -329,7 +328,7 @@ a {
 		top: 63%;
 		left: 0;
 		right: 0;
-		width: 600px;
+		width: 760px;
 		margin: 0 auto;
 		z-index: 20;
 		background: transparent;
