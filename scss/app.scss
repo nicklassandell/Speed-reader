@@ -403,6 +403,7 @@ a {
 label {
 	display: block;
 	line-height: $global-line-height;
+	font-family: $global-font-family;
 	font-size: .75rem;
 	text-transform: uppercase;
 	letter-spacing: 1px;
@@ -419,6 +420,7 @@ button {
 	color: #C4E2F4;
 	display: inline-block;
 	font-size: .75rem;
+	font-family: $global-font-family;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	line-height: 1em;
