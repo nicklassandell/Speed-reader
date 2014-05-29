@@ -14,11 +14,9 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		'night_mode' : true,
 		'text' : '',
 		'highlight_focus_point' : true,
-		'sleep' : false,
 		'toastDefault' : '',
-		'toast' : '',
+		'toast' : ''
 	};
-
 	$scope.settings.toast = $scope.settings.toastDefault;
 
 	$scope.game = {
@@ -34,17 +32,17 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		}
 	};
 
-	// Clean below and move to directive
-	var sleepTimer;
-	angular.element('body').bind('mousemove', function() {
-		$scope.settings.sleep = false;
-		$scope.$apply();
-		$timeout.cancel(sleepTimer);
-		sleepTimer = $timeout(function() {
-			$scope.settings.sleep = true;
-			$scope.$apply();
-		}, 1000);
-	});
+	$scope.modelsToAutoSave = [
+		'settings.wpm',
+		'settings.pause_between_sentences',
+		'settings.night_mode',
+		'settings.text',
+		'settings.highlight_focus_point',
+
+		'game.currentWord',
+		'game.paused',
+		'game.has_started'
+	];
 
 
 	// We merged these two settings, but let's keep them under the hood for now
@@ -59,6 +57,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 		$scope.pauseRead();
 	});
 
+	// Pause on space
 	angular.element(document).on('keyup', function(e) {
 		if(e.which === 32) {
 			$scope.togglePause();
@@ -66,43 +65,69 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 	});
 
 
-	/**
-	 * Loads saved data from localStorage if found
-	 */
-	$scope.loadFromSessionStorage = function() {
-		if(!localStorage.spread) return false;
+	// Handles auto saving of models
+	$scope.autoSave = {
 
-		var stored = JSON.parse(localStorage.spread);
+		// Runs on page load. Will restore saved values.
+		loadAll : function() {
+			if(!localStorage.spread) return false;
 
-		for(var model in stored) {
-			var modelValue = stored[model];
+			var stored = JSON.parse(localStorage.spread);
 
-			// For checkboxes
-			if(modelValue === 'on') {
-				modelValue = true;
-			}
-			if(modelValue === 'off') {
-				modelValue = false;
-			}
+			for(var model in stored) {
+				var modelValue = stored[model];
 
-			// Make numbers actual numbers
-			if(modelValue == parseInt(modelValue)) {
-				modelValue = parseInt(modelValue);
-			}
-
-			// Split model name by dot, loop through each level and update
-			// the corresponding value in $scope
-			model.split('.').reduce(function(result, key, index, array) {
-				if(index === array.length-1) {
-					result[key] = modelValue;
+				// For checkboxes
+				if(modelValue === 'on') {
+					modelValue = true;
 				}
-				return result[key];
-			}, $scope);
+				if(modelValue === 'off') {
+					modelValue = false;
+				}
+
+				// Make numbers actual numbers
+				if(modelValue == parseInt(modelValue)) {
+					modelValue = parseInt(modelValue);
+				}
+
+				// Split model name by dot, loop through each level and update
+				// the corresponding value in $scope
+				model.split('.').reduce(function(result, key, index, array) {
+					if(index === array.length-1) {
+						result[key] = modelValue;
+					}
+					return result[key];
+				}, $scope);
+			}
+		},
+
+		// Save key-value pair
+		save : function(model, val) {
+
+			// Read local storage
+	    	var currStored = localStorage.spread ? JSON.parse(localStorage.spread) : {};
+
+	    	// Set new value
+	    	currStored[model] = val;
+
+	    	// Save to local storage
+	    	localStorage.spread = JSON.stringify(currStored);
+		},
+
+		// Setup watchers for models to autosave
+		setup : function() {
+			for(var mindex in $scope.modelsToAutoSave) {
+				var modelName = $scope.modelsToAutoSave[mindex];
+
+				$scope.$watch(modelName, function(newValue) {
+					$scope.autoSave.save(this.exp, newValue);
+				});
+			}
 		}
+	};
 
-	}
-
-	$scope.loadFromSessionStorage();
+	$scope.autoSave.loadAll();
+	$scope.autoSave.setup();
 
 
 	/**
@@ -429,7 +454,7 @@ app.controller('MainCtrl', function($scope, $timeout, $window, $http) {
 
 
 	$scope.makeTextReadable = function(text) {
-		return text.betterTrim().replace(/(\r\n|\n|\r)+/gm, '\r\n\r\n'); //.replace(/[\r\n]+/gm, '\r\n\r\n');
+		return text.betterTrim().replace(/(\r\n|\n|\r)+/gm, '\r\n\r\n');
 	}
 
 
@@ -462,52 +487,7 @@ app.directive('toggleDropdown', function($timeout) {
 });
 
 
-/**
- * Directive to automatically save form field in localStorage.
- * The data saved in localStorage will be automatically set on load.
- * Todo: Perhaps this should watch models instead of DOM elements?
- */
-app.directive('saveOnChange', function() {
-
-	// Check support for localStorage before we attempt to save anything
-	if(typeof window.localStorage !== void(0)) {
-	    return {
-	        require: 'ngModel',
-	        link: function(scope, elem) {
-	        	var elem = angular.element(elem[0]);
-
-	        	// If the element is not bound to a model, do nothing
-	        	if(!elem.attr('ng-model')) {
-	        		return false;
-	        	}
-	            
-	            // Watch for change and keyup events
-	            elem.on('change keyup', function() {
-	            	var elem = angular.element(this),
-	            		model = elem.attr('ng-model'),
-	            		currStored = localStorage.spread ? JSON.parse(localStorage.spread) : {};
-
-	            	// Checkboxes need some special treatment
-	            	if(elem[0].tagName === 'INPUT' && elem[0].type === 'checkbox') {
-	            		var val = elem[0].checked ? true : false;
-	            	} else {
-	            		var val = elem.val();
-	            	}
-
-	            	currStored[model] = val;
-	            	localStorage.spread = JSON.stringify(currStored);
-	            });
-	        }
-	    };
-
-	// No localStorage support, do nothing
-	} else {
-		return {};
-	}
-
-
-});
-
+// Removes all double whitespace. Also trims beginning and end.
 String.prototype.betterTrim = function() {
 	return this.replace(/\s+(?=\s)/g, '').trim();
 };

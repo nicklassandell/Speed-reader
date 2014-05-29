@@ -13,8 +13,7 @@
 <body ng-controller="MainCtrl" class="{{ game.paused ? 'is-paused' : 'is-not-paused' }}
                                       {{ game.has_started ? 'has-started' : 'has-not-started' }}
                                       {{ !settings.night_mode ? 'bright-mode' : '' }}
-                                      {{ settings.highlight_focus_point ? 'highlight-focus-point' : '' }}
-                                      {{ settings.sleep ? 'is-sleeping' : 'is-not-sleeping' }} ">
+                                      {{ settings.highlight_focus_point ? 'highlight-focus-point' : '' }}">
 
     <div class="top-bar">
         <div class="inner-container">
@@ -49,7 +48,7 @@
                 <div id="drop-settings" class="dropdown">
                     <div class="form-row">
                         <label for="set-wpm-sel">Words per minute:</label>
-                        <select ng-model="settings.wpm" id="set-wpm-sel" save-on-change>
+                        <select ng-model="settings.wpm" id="set-wpm-sel">
                             <option value="200">100 WPM</option>
                             <option value="200">150 WPM</option>
                             <option value="200">200 WPM</option>
@@ -65,7 +64,7 @@
                     <div class="form-row">
                         <div class="checkbox">
                             <div class="check">
-                                <input ng-model="settings.pause_between_sentences" id="set-pause-sent-chk" type="checkbox" save-on-change>
+                                <input ng-model="settings.pause_between_sentences" id="set-pause-sent-chk" type="checkbox">
                                 <span></span>
                             </div>
                             <label for="set-pause-sent-chk">Pause between sentences</label>
@@ -75,7 +74,7 @@
                     <div class="form-row">
                         <div class="checkbox">
                             <div class="check">
-                                <input ng-model="settings.highlight_focus_point" id="set-highlight-focus-point-chk" type="checkbox" save-on-change>
+                                <input ng-model="settings.highlight_focus_point" id="set-highlight-focus-point-chk" type="checkbox">
                                 <span></span>
                             </div>
                             <label for="set-highlight-focus-point-chk">Highlight focus point</label>
@@ -85,7 +84,7 @@
                     <div class="form-row">
                         <div class="checkbox">
                             <div class="check">
-                                <input ng-model="settings.night_mode" id="set-nm-chk" type="checkbox" save-on-change>
+                                <input ng-model="settings.night_mode" id="set-nm-chk" type="checkbox">
                                 <span></span>
                             </div>
                             <label for="set-nm-chk">Night mode</label>
@@ -98,7 +97,7 @@
         </div> <!-- inner container -->
     </div> <!-- top bar -->
 
-    <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)" save-on-change <?php if(!empty($_REQUEST['text'])) : ?> ng-init="settings.text='<?php echo htmlspecialchars($_REQUEST['text']); ?>'; startRead();" <?php endif; ?> ></textarea>
+    <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)" <?php if(!empty($_REQUEST['text'])) : ?> ng-init="settings.text='<?php echo htmlspecialchars($_REQUEST['text']); ?>'; settings.loadedTextFromQueryParam = true;" <?php endif; ?> ></textarea>
     
     <div class="word-canvas" ng-click="pauseRead()">
         <div class="word-container">
