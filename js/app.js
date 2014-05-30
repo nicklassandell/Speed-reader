@@ -506,10 +506,34 @@ app.filter('unsafe', function($sce) {
 app.directive('toggleDropdown', function($timeout) {
 	return {
 		link: function(scope, elem, attr) {
-			angular.element(elem[0]).on('click', function() {
-				var dropdown = angular.element(document.getElementById(attr.toggleDropdown));
-				if(dropdown.length > 0) {
-					dropdown.toggleClass('open');
+
+			var closeDropdown = function(e) {
+				// If click was NOT inside dropdown
+				if(!angular.element(e.target).closest('.dropdown.open').length > 0) {
+					angular.element('.dropdown.open').removeClass('open');
+					angular.element(document).off('click.closeDropdown');
+				}
+			};
+
+			// Watch for dropdown triggers
+			angular.element(elem[0]).on('click', function(e) {
+				var dropdown = angular.element(document.getElementById(attr.toggleDropdown)),
+					allOpenDropdowns = angular.element('.dropdown.open');
+
+				// If a dropdown is already open, make sure to close it first
+				if(allOpenDropdowns.length) {
+					closeDropdown(e);
+					return false;
+				}
+
+				// Attempt to open dropdown
+				if(dropdown.length > 0 && !dropdown.is('.open')) {
+					dropdown.addClass('open');
+
+					// When you click anywhere outside dropdown, close it
+					$timeout(function() {
+						angular.element(document).on('click.closeDropdown', closeDropdown);
+					}, 0);
 				}
 			});
 		}
