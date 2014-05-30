@@ -173,8 +173,9 @@ a {
 		vertical-align: top;
 		position: relative;
 
-		&:last-child {
+		&.right {
 			margin-right: 0;
+			margin-left: 10px;
 		}
 
 		&.small-gap {
@@ -228,7 +229,7 @@ a {
 	margin: 0 auto;
 	padding: $center-container-padding;
 	display: block;
-	background: transparent;
+	background: #FFF;
 	border: 0;
 	outline: none;
 	color: inherit;
@@ -269,13 +270,58 @@ a {
 		opacity: 1;
 	}
 
+
+	.top-controls, .word-container, .timeline {
+		max-width: $center-container-width;
+	}
+
+
+	
+	$top-controls-height: 40px;
+	.top-controls {
+		position: absolute;
+		top: 26%;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		height: $top-controls-height;
+		line-height: $top-controls-height;
+		
+		.left, .right {
+			position: relative;
+			z-index: 2;
+		}
+
+		.left {
+			float: left;
+		}
+
+		.right {
+			float: right;
+		}
+
+		.center {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 100%;
+			text-align: center;
+			z-index: 1;
+		}
+
+		.icon-button {
+			margin-right: 10px;
+		}
+	}
+
+
 	.word-container {
 		position: absolute;
 		top: 45%;
 		left: 0;
 		right: 0;
 		height: 100px;
-		width: $center-container-width;
 		margin: 0 auto;
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-left: 0;
@@ -342,45 +388,6 @@ a {
 			}
 		}
 	}
-	
-	$top-controls-height: 40px;
-	.top-controls {
-		position: absolute;
-		top: 26%;
-		left: 0;
-		right: 0;
-		width: $center-container-width;
-		margin: 0 auto;
-		height: $top-controls-height;
-		line-height: $top-controls-height;
-		
-		.left, .right {
-			position: relative;
-			z-index: 2;
-		}
-
-		.left {
-			float: left;
-		}
-
-		.right {
-			float: right;
-		}
-
-		.center {
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			height: 100%;
-			text-align: center;
-			z-index: 1;
-		}
-
-		.icon-button {
-			margin-right: 10px;
-		}
-	}
 
 
 	.timeline {
@@ -388,7 +395,6 @@ a {
 		top: 63%;
 		left: 0;
 		right: 0;
-		width: $center-container-width;
 		margin: 0 auto;
 		z-index: 20;
 		background: transparent;

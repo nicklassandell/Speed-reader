@@ -163,17 +163,6 @@ $prefix: 'ngrs-';
 			cursor: pointer;
 		}
 
-		.ngrs-no-touch &:hover,
-		&.#{$prefix}down {
-			i {
-				background-position: 50% 50%;
-			}
-		}
-
-		&.#{$prefix}down {
-			@include box-shadow(0 0 $padding rgba(0, 0, 0, 0.2));
-		}
-
 	}
 
   /*------------------------------------*\
