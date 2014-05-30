@@ -5,12 +5,10 @@
 @import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 
 
+$base-red: #e55454;
 $base-blue: #187986;
-$base-green: #437E35;
-$base-grey: #C8C0BB;
-$base-brown: #20201E;
-$base-orange: #FF8F00;
-$text-color: #D0D1CB;
+$base-light-grey: #C8C0BB; 
+$base-grey: #202020;
 
 $top-bar-height: 80px;
 $progress-bar-height: 2px;
@@ -36,17 +34,12 @@ body {
 	font-family: $global-font-family;
 	padding: 0;
 	margin: 0;
-	background: $base-brown;
-	color: $text-color;
 	line-height: $global-line-height;
+	background: #F7F7F7;
+	color: #4A4A4A;
 
 	@include transition-property(color background-color);
 	@include transition-duration($global-transition-duration);
-
-	&.bright-mode {
-		background: #E3E0DD;
-		color: #4A4A4A;
-	}
 }
 
 
@@ -84,6 +77,7 @@ a {
 
 .relative {
 	position: relative;
+	display: inline;
 }
 
 
@@ -146,9 +140,16 @@ a {
 	background: rgba(0,0,0,.2);
 	z-index: 20;
 	@include box-shadow(0 0 3px rgba(255,255,255,.1));
+	@include transition-duration($global-transition-duration);
+	background: #1EA5AC;
 
-	.bright-mode & {
-		background: rgba(0,0,0,.06);
+	.has-started & {
+		.csstransforms & {
+			@include transform(translateY(-$top-bar-height));
+		}
+		.no-csstransforms & {
+			top: -$top-bar-height;
+		}
 	}
 
 	.inner-container {
@@ -162,13 +163,14 @@ a {
 		font-size: 1.5rem;
 		font-weight: 100;
 		margin: 0;
+		color: #FFF;
 	}
 
 	.bar-item {
 		height: $top-bar-height; // Might not need
 		margin-right: 40px;
 		display: inline-block;
-		vertical-align: middle;
+		vertical-align: top;
 		position: relative;
 
 		&:last-child {
@@ -206,9 +208,9 @@ a {
 			left: 0;
 			right: 0;
 			margin: 0 auto;
-			background: $base-orange;
+			background: $base-red;
 			width: 1%;
-			@include transition-duration($global-transition-duration);
+			@include transition-duration(.75s);
 		}
 	}
 }
@@ -253,24 +255,18 @@ a {
 	z-index: 15;
 	opacity: 0;
 	overflow: hidden;
-	@include transition-property(opacity);
+	color: #444;
+	@include transition-property(opacity background);
 	@include transition-duration($global-transition-duration);
+	
+	.dark-mode & {
+		background: $base-grey;
+		color: #DADBD5;
+	}
 
 	.has-started & {
 		top: 0;
 		opacity: 1;
-	}
-
-	.is-paused & {
-		.word-container {
-			@include transform(translateY(-100px) scale(.8));
-		}
-
-		.is-paused {
-			top: 50%;
-			opacity: 1;
-			@include transform(translateY(-50%));
-		}
 	}
 
 	.word-container {
@@ -278,11 +274,16 @@ a {
 		top: 45%;
 		left: 0;
 		right: 0;
-		width: 0;
+		height: 100px;
+		width: $center-container-width;
 		margin: 0 auto;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-left: 0;
+		border-right: 0;
 		text-align: center;
 		font-weight: 100;
 		font-size: 65px;
+		line-height: 100px;
 		cursor: default;
 		@include transform(translateY(-50%));
 		@include transition-duration($global-transition-duration);
@@ -296,12 +297,27 @@ a {
 			position: relative;
 			display: inline-block;
 			white-space: nowrap;
+
+			.highlight-focus-point & {
+				&:before, &:after {
+					position: absolute;
+					left: 0;
+					width: 1px;
+					height: 10px;
+					background: rgba(255, 255, 255, .1);
+					content: '';
+				}
+				&:before {
+					top: 0;
+				}
+				&:after {
+					bottom: 0;
+				}
+			}
 			
 			.highlight {
-				@include transition-duration(.3s);
-
 				.highlight-focus-point & {
-					color: $base-orange;
+					color: $base-red;
 				}
 			}
 
@@ -326,29 +342,43 @@ a {
 			}
 		}
 	}
-
-	.paused-screen {
+	
+	$top-controls-height: 40px;
+	.top-controls {
 		position: absolute;
-		top: -1000000px;
+		top: 26%;
 		left: 0;
 		right: 0;
+		width: $center-container-width;
 		margin: 0 auto;
-		text-align: center;
-		opacity: .2;
-		@include transform(translateY(50px) scale(.8));
-		@include transition-duration($global-transition-duration);
-		@include transition-property(transform opacity);
-
-		.big {
-			font-size: 22px;
-			font-weight: 100;
-			margin-bottom: 30px;
+		height: $top-controls-height;
+		line-height: $top-controls-height;
+		
+		.left, .right {
+			position: relative;
+			z-index: 2;
 		}
 
-		.is-paused & {
-			top: 50%;
-			opacity: 1;
-			@include transform(translateY(-50px));
+		.left {
+			float: left;
+		}
+
+		.right {
+			float: right;
+		}
+
+		.center {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 100%;
+			text-align: center;
+			z-index: 1;
+		}
+
+		.icon-button {
+			margin-right: 10px;
 		}
 	}
 
@@ -358,7 +388,7 @@ a {
 		top: 63%;
 		left: 0;
 		right: 0;
-		width: 760px;
+		width: $center-container-width;
 		margin: 0 auto;
 		z-index: 20;
 		background: transparent;
@@ -396,7 +426,7 @@ a {
 		@include transition-duration(.3s);
 
 		&:hover {
-			background: lighten($base-grey, 10%);
+			background: lighten($base-light-grey, 10%);
 			color: $base-blue;
 		}
 	}
@@ -404,7 +434,7 @@ a {
 
 
 
-
+/*
 .btn-group {
 	display: inline-block;
 	vertical-align: middle;
@@ -427,6 +457,7 @@ a {
 		}
 	}
 }
+*/
 
 
 label {
@@ -438,23 +469,24 @@ label {
 	letter-spacing: 1px;
 }
 
-button {
+.button {
 	background: $base-blue;
-	padding: 12px 16px;
+	padding: 15px 20px;
 	margin: 0;
 	font-size: 1.2rem;
 	outline: none;
 	cursor: pointer;
 	border: 0;
-	color: #C4E2F4;
+	color: #FFF;
 	display: inline-block;
 	font-size: .75rem;
 	font-family: $global-font-family;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	line-height: 1em;
-	@include border-radius($global-radius);
+	border: 4px solid #FFF;
 	@include transition-duration(.3s);
+	@include border-radius(2px);
 
 	&:hover {
 		background: darken($base-blue, 5%);
@@ -466,36 +498,36 @@ button {
 
 
 	&.dark {
-		background: rgba(255,255,255,.05);
+		color: #444;
+		background: rgba(0,0,0,.1);
 
 		&:hover {
-			background: rgba(255,255,255,.08);
+			background: rgba(0,0,0,.2);
 		}
 		&:active {
-			background: rgba(255,255,255,.1);
+			background: rgba(0,0,0,.3);
 		}
 
-		.bright-mode & {
-			color: #444;
-			background: rgba(0,0,0,.2);
+		.dark-mode & {
+			background: rgba(255,255,255,.05);
 
 			&:hover {
-				background: rgba(0,0,0,.25);
+				background: rgba(255,255,255,.08);
 			}
 			&:active {
-				background: rgba(0,0,0,.4);
+				background: rgba(255,255,255,.1);
 			}
 		}
 	}
 
-	&.green {
-		background: $base-green;
+	&.red {
+		background: $base-red;
 
 		&:hover {
-			background: darken($base-green, 5%);
+			background: darken($base-red, 5%);
 		}
 		&:active {
-			background: darken($base-green, 15%);
+			background: darken($base-red, 15%);
 		}
 	}
 
@@ -504,11 +536,41 @@ button {
 	}
 }
 
+.icon-button {
+	display: inline-block;
+	font-size: 1.5em;
+	height: 40px;
+	width: 40px;
+	line-height: 35px;
+	text-align: center;
+	color: #FFF;
+	background: transparent;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	outline: none;
+	cursor: pointer;
+	@include transition-duration($global-transition-duration);
+
+	&:hover {
+		color: $base-red;
+		background: rgba(255,255,255,.1);
+	}
+
+	&:active {
+		color: darken($base-red, 10%);
+	}
+}
+
 .checkbox {
 	display: inline-block;
 
 	&:hover .check span {
-		border-color: darken($base-grey, 20%);
+		border-color: darken($base-light-grey, 20%);
+	}
+
+	&:hover .check input:checked ~ span {
+		background-color: lighten($base-blue, 5%);
 	}
 
 	label {
@@ -543,7 +605,7 @@ button {
 		}
 
 		span {
-			border: 1px solid $base-grey;
+			border: 1px solid $base-light-grey;
 			background-color: #FFF;
 			z-index: 2;
 			pointer-events: none;
@@ -572,6 +634,7 @@ button {
 .dropdown {
 	position: absolute;
 	top: 100%;
+	top: calc(100% + 15px);
 	z-index: 100;
 	right: 0;
 	width: 300px;
@@ -580,6 +643,7 @@ button {
 	color: #666;
 	display: none;
 	line-height: $global-line-height;
+	@include box-shadow(0 0 3px rgba(0, 0, 0, 0.22));
 	@include border-radius($global-radius);
 
 	&.open {
@@ -589,7 +653,7 @@ button {
 	&::after {
 		position: absolute;
 		bottom: 100%;
-		right: 18.5%;
+		right: 7.5%;
 		content: '';
 		border: 7px solid transparent;
 		border-top: 0;
@@ -608,7 +672,7 @@ input[type=text], input[type=number], input[type=password], input[type=email], s
 	overflow: hidden;
 	font-size: 13px;
 	outline: none;
-	border: 1px solid $base-grey;
+	border: 1px solid $base-light-grey;
 	display: block;
 	width: 100%;
 	@include border-radius($global-radius);

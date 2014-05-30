@@ -67,20 +67,7 @@ $prefix: 'ngrs-';
 \*------------------------------------*/
 
 .#{$prefix}range-slider {
-
 	height: $joinWeight;
-	
-	.is-sleeping &, .is-not-paused & {
-		.#{$prefix}join {
-			background: rgba(255,255,255,.2);
-		}
-	}
-	.bright-mode.is-sleeping &, .bright-mode.is-not-paused & {
-		.#{$prefix}join {
-			background: rgba(0,0,0,.2);
-		}
-	}
-
 
 	// RESETS
 	&, * {
@@ -128,9 +115,17 @@ $prefix: 'ngrs-';
 		right: 100%;
 		height: $joinWeight;
 		margin: 0;
-		background-color: $base-blue;
+		background: rgba(0,0,0,.3);
 		@include transition-duration(1s);
 		@include transition-property(background);
+		
+		.dark-mode & {
+			background: rgba(255,255,255,.3);
+		}
+
+		.is-paused & {
+			background-color: $base-blue;
+		}
 	}
 
   /*------------------------------------*\
@@ -146,6 +141,7 @@ $prefix: 'ngrs-';
 		margin: 0 0 0 (-$handleWidth / 2);
 		background: #efefef;
 		cursor: pointer;
+		@include box-shadow(0 0 0 3px $base-grey);
 		@include border-radius(100px);
 		@include transition-duration(.2s);
 		@include transition-property(opacity transform);

@@ -11,7 +11,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 		},
 		'pauseBetweenParagraphs' : true,
 		'pauseBetweenSentences' : true,
-		'nightMode' : true,
+		'nightMode' : false,
 		'text' : '',
 		'highlightFocusPoint' : true,
 		'toastDefault' : '',
@@ -151,8 +151,10 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 					$scope.game.words = $scope.splitToWords(text);
 					$scope.game.hasStarted = true;
 					$scope.game.paused = false;
-					$scope.startCountdown($scope.settings.pauseCountdown*2);
 					$scope.resetToast();
+					$timeout(function() {
+						$scope.startCountdown($scope.settings.pauseCountdown*2);
+					}, 300);
 				} else {
 					$scope.flashToast('Error: Could not parse URL');
 				}
@@ -165,7 +167,9 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 			}
 			$scope.game.hasStarted = true;
 			$scope.game.paused = false;
-			$scope.startCountdown($scope.settings.pauseCountdown*2);
+			$timeout(function() {
+				$scope.startCountdown($scope.settings.pauseCountdown*2);
+			}, 300);
 		}
 	}
 
