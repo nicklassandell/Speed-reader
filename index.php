@@ -7,11 +7,17 @@ $settingsDropdown = <<<EOT
             <option value="200">150 WPM</option>
             <option value="200">200 WPM</option>
             <option value="250">250 WPM</option>
-            <option value="300">300 WPM - Default speed</option>
+            <option value="300">300 WPM</option>
             <option value="350">350 WPM</option>
-            <option value="400">400 WPM</option>
+            <option value="400">400 WPM - Default speed</option>
             <option value="450">450 WPM</option>
             <option value="500">500 WPM</option>
+            <option value="550">550 WPM</option>
+            <option value="600">600 WPM</option>
+            <option value="650">650 WPM</option>
+            <option value="700">700 WPM</option>
+            <option value="750">750 WPM</option>
+            <option value="800">800 WPM</option>
         </select>
     </div>
     
