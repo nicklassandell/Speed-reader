@@ -326,11 +326,11 @@ a {
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-left: 0;
 		border-right: 0;
-		text-align: center;
 		font-weight: 100;
 		font-size: 65px;
 		line-height: 100px;
 		cursor: default;
+		text-align: center;
 		@include transform(translateY(-50%));
 		@include transition-duration($global-transition-duration);
 		
@@ -338,13 +338,22 @@ a {
 		.serif-font & {
 			font-family: 'Roboto Slab', serif;
 		}
+
+		.center-focus-point & {
+			text-align: left;
+		}
 		
-		.center-point {
-			position: relative;
+		.focus-point {
+			position: static;
 			display: inline-block;
 			white-space: nowrap;
 
-			.highlight-focus-point & {
+			.center-focus-point & {
+				position: relative;
+				left: 50%;
+			}
+
+			.center-focus-point & {
 				&:before, &:after {
 					position: absolute;
 					left: 0;
@@ -362,7 +371,7 @@ a {
 			}
 			
 			.highlight {
-				.highlight-focus-point & {
+				.highlight-focus-point.center-focus-point & {
 					color: $base-red;
 				}
 			}
@@ -376,9 +385,12 @@ a {
 			}
 
 			.before, .after {
-				position: absolute;
-				top: 0;
-				bottom: 0;
+
+				.center-focus-point & {
+					position: absolute;
+					top: 0;
+					bottom: 0;
+				}
 			}
 			.before {
 				right: 100%;
@@ -690,13 +702,26 @@ input[type=text], input[type=number], input[type=password], input[type=email], s
 }
 
 
-.form-row {
+.form-row, .form-group {
 	display: block;
-	margin: 0 0 2rem 0;
+	margin: 0 0 1.5rem 0;
 	line-height: $global-line-height;
 	@include clearfix;
 
 	&:last-child {
 		margin-bottom: 0;
 	}
+
+	&.disabled {
+		opacity: .5;
+	}
 }
+
+/*
+.form-group {
+	border: 1px solid #999;
+	border-left: 0;
+	border-right: 0;
+	padding: 1rem 0;
+}
+*/

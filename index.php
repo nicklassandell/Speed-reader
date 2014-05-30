@@ -25,13 +25,25 @@ $settingsDropdown = <<<EOT
         </div>
     </div>
     
-    <div class="form-row">
-        <div class="checkbox">
-            <div class="check">
-                <input ng-model="settings.highlightFocusPoint" id="set-highlight-focus-point-chk" type="checkbox">
-                <span></span>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="checkbox">
+                <div class="check">
+                    <input ng-model="settings.centerFocusPoint" id="set-center-focus-point-chk" type="checkbox">
+                    <span></span>
+                </div>
+                <label for="set-center-focus-point-chk">Center focus point</label>
             </div>
-            <label for="set-highlight-focus-point-chk">Highlight focus point</label>
+        </div>
+        
+        <div class="form-row {{ !settings.centerFocusPoint ? 'disabled' : '' }}">
+            <div class="checkbox">
+                <div class="check">
+                    <input ng-model="settings.highlightFocusPoint" id="set-highlight-focus-point-chk" type="checkbox">
+                    <span></span>
+                </div>
+                <label for="set-highlight-focus-point-chk">Highlight focus point</label>
+            </div>
         </div>
     </div>
 
@@ -77,7 +89,8 @@ EOT;
                                       {{ game.hasStarted ? 'has-started' : 'has-not-started' }}
                                       {{ settings.nightMode ? 'dark-mode' : 'bright-mode' }}
                                       {{ settings.highlightFocusPoint ? 'highlight-focus-point' : '' }}
-                                      {{ settings.useSerifFont ? 'serif-font' : '' }}">
+                                      {{ settings.useSerifFont ? 'serif-font' : '' }}
+                                      {{ settings.centerFocusPoint ? 'center-focus-point' : '' }}">
 
     <div class="top-bar">
         <div class="inner-container">
@@ -151,11 +164,11 @@ EOT;
         </div>
 
         <div class="word-container">
-            <div class="center-point">
-                <span class="before">{{ game.words[game.currentWord].raw.start | unsafe }}</span>
-                <span class="{{ game.words[game.currentWord].raw.highlighted ? 'highlight' : '' }}">{{ game.words[game.currentWord].raw.highlighted | unsafe }}</span>
-                <span class="special">{{ game.words[game.currentWord].raw.specialChar | unsafe }}</span>
-                <span class="after">{{ game.words[game.currentWord].raw.end | unsafe }}</span>
+            <div class="focus-point">
+                <span class="before">{{ game.words[game.currentWord].raw.start | unsafe }}</span><!--
+                --><span class="{{ game.words[game.currentWord].raw.highlighted ? 'highlight' : '' }}">{{ game.words[game.currentWord].raw.highlighted | unsafe }}</span><!--
+                --><span class="special">{{ game.words[game.currentWord].raw.specialChar | unsafe }}</span><!--
+                --><span class="after">{{ game.words[game.currentWord].raw.end | unsafe }}</span>
             </div>
         </div>
 

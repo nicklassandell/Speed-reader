@@ -14,6 +14,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 		'nightMode' : false,
 		'text' : '',
 		'highlightFocusPoint' : true,
+		'centerFocusPoint' : true,
 		'toastDefault' : '',
 		'toast' : '',
 		'useSerifFont' : true,
@@ -39,7 +40,9 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 		'settings.pauseBetweenSentences',
 		'settings.nightMode',
 		'settings.text',
-		'settings.highlightFocusPoint'
+		'settings.highlightFocusPoint',
+		'settings.centerFocusPoint',
+		'settings.useSerifFont'
 	];
 
 
