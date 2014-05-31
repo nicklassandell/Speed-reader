@@ -172,7 +172,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 			});
 		} else {
 			$scope.game.words = $scope.splitToWords($scope.settings.text);
-			if($scope.game.words.length < 1) {
+			if($scope.game.words.length < 2) {
 				$scope.flashToast('Please enter something to read');
 				return false;
 			}
