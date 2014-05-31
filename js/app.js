@@ -42,7 +42,11 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 		'settings.text',
 		'settings.highlightFocusPoint',
 		'settings.centerFocusPoint',
-		'settings.useSerifFont'
+		'settings.useSerifFont',
+
+		'game.words',
+		'game.currentWord',
+		'game.hasStarted'
 	];
 
 
@@ -131,6 +135,11 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 
 	$scope.autoSave.loadAll();
 	$scope.autoSave.setup();
+
+	// If game has started when page loads (saved from last sess), pause the game
+	if($scope.game.hasStarted) {
+		$scope.game.paused = true;
+	}
 
 
 	/**
