@@ -1,8 +1,7 @@
-"use strict";
-
 var app = angular.module('speedReadingApp', ['ui-rangeSlider']);
 
 app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http) {
+	"use strict";
 
 	$scope.settings = {
 		'wpm' : 400,
@@ -51,6 +50,35 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 	];
 
 
+	// Pause
+	Mousetrap.bind('space', function() {
+		$scope.togglePause();
+		$scope.$apply();
+	});
+
+	// Previous word
+	Mousetrap.bind(['left', 'a'], function() {
+		$scope.pauseRead();
+		$scope.goToPosition('previous');
+		$scope.$apply();
+	});
+
+	// Next word
+	Mousetrap.bind(['right', 'd'], function() {
+		$scope.pauseRead();
+		$scope.goToPosition('next');
+		$scope.$apply();
+	});
+
+	// Previous sentence
+	Mousetrap.bind(['ctrl+left'], function() {
+		$scope.pauseRead();
+		$scope.goToPosition('last_sentence');
+		$scope.$apply();
+	});
+
+
+
 	// We merged these two settings, but let's keep them under the hood for now
 	// This makes sure the values stay the same
 	$scope.$watch('settings.pauseBetweenSentences', function() {
@@ -61,13 +89,6 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 	// Tried to put this in ng-mousedown, but no luck
 	angular.element('#timeline').on('mousedown', function() {
 		$scope.pauseRead();
-	});
-
-	// Pause on space
-	angular.element(document).on('keyup', function(e) {
-		if(e.which === 32) {
-			$scope.togglePause();
-		}
 	});
 
 
@@ -273,11 +294,21 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 	}
 
 	$scope.goToPosition = function(pos) {
-		if(pos == 'last_sentence') {
-			pos = $scope.findLastSentence();
+		if(pos === 'last_sentence') {
+			var goTo = $scope.findLastSentence();
+		} else if(pos === 'previous') {
+			if($scope.game.currentWord > 0) {
+				var goTo = $scope.game.currentWord-1;
+			}
+		} else if(pos === 'next') {
+			if($scope.game.currentWord < $scope.game.words.length) {
+				var goTo = $scope.game.currentWord+1;
+			}
 		}
 
-		$scope.game.currentWord = pos;
+		if(!isNaN(goTo)) {
+			$scope.game.currentWord = goTo;
+		}
 	}
 
 	$scope.togglePause = function() {

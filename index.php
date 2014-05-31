@@ -114,18 +114,18 @@ EOT;
             </div>
             
             <div class="bar-item right">
-                <button title="Show keyboard shortcuts" class="icon-button" toggle-dropdown="top-bar-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></button>
-        
-                <div id="top-bar-keyboard-dropdown" class="dropdown">
-                    <?php echo $keyboardDropdown; ?>
-                </div>
-            </div>
-            
-            <div class="bar-item right">
                 <button title="Show settings" class="icon-button" toggle-dropdown="top-bar-drop-settings"><i class="fa fa-gear"></i></button>
         
                 <div id="top-bar-drop-settings" class="dropdown">
                     <?php echo $settingsDropdown; ?>
+                </div>
+            </div>
+            
+            <div class="bar-item right">
+                <button title="Show keyboard shortcuts" class="icon-button" toggle-dropdown="top-bar-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></button>
+        
+                <div id="top-bar-keyboard-dropdown" class="dropdown">
+                    <?php echo $keyboardDropdown; ?>
                 </div>
             </div>
 
@@ -142,7 +142,7 @@ EOT;
                     <button class="icon-button right-spacing show-if-paused" ng-click="continueRead(); $event.stopPropagation();" title="Continue"><i class="fa fa-play"></i></button>
                     <button class="icon-button right-spacing show-if-not-paused" ng-click="pauseRead(); $event.stopPropagation();" title="Pause"><i class="fa fa-pause"></i></button>
 
-                    <button class="icon-button right-spacing" ng-click="goToPosition('last_sentence'); $event.stopPropagation();" title="Last sentence"><i class="fa fa-step-backward"></i></button>
+                    <button class="icon-button right-spacing" ng-click="goToPosition('last_sentence'); $event.stopPropagation();" title="Previous sentence"><i class="fa fa-step-backward"></i></button>
                     <button class="icon-button right-spacing" ng-click="restartRead(); $event.stopPropagation();" title="Restart"><i class="fa fa-undo"></i></button>
                     <button class="icon-button" ng-click="stopRead(); $event.stopPropagation();" title="Stop"><i class="fa fa-stop"></i></button>
                 </div>
@@ -194,7 +194,7 @@ EOT;
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
     <script src="js/angular.rangeSlider.js"></script>
-    <script src="js/nprogress.js"></script>
+    <script src="js/mousetrap.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
