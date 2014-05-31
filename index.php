@@ -149,12 +149,12 @@ EOT;
 
             <div class="top-controls">
                 <div class="left">
-                    <a href="#" class="icon-button right-spacing show-if-paused" ng-click="continueRead(); $event.stopPropagation();" title="Continue"><i class="fa fa-play"></i></a>
-                    <a href="#" class="icon-button right-spacing show-if-not-paused" ng-click="pauseRead(); $event.stopPropagation();" title="Pause"><i class="fa fa-pause"></i></a>
+                    <a href="#" class="icon-button right-spacing show-if-paused" ng-click="continueRead();" title="Continue"><i class="fa fa-play"></i></a>
+                    <a href="#" class="icon-button right-spacing show-if-not-paused" ng-click="pauseRead();" title="Pause"><i class="fa fa-pause"></i></a>
 
-                    <a href="#" class="icon-button right-spacing" ng-click="goToPosition('last_sentence'); $event.stopPropagation();" title="Previous sentence"><i class="fa fa-step-backward"></i></a>
-                    <a href="#" class="icon-button right-spacing" ng-click="restartRead(); $event.stopPropagation();" title="Restart"><i class="fa fa-undo"></i></a>
-                    <a href="#" class="icon-button" ng-click="stopRead(); $event.stopPropagation();" title="Stop"><i class="fa fa-stop"></i></a>
+                    <a href="#" class="icon-button right-spacing" ng-click="goToPosition('last_sentence');" title="Previous sentence"><i class="fa fa-step-backward"></i></a>
+                    <a href="#" class="icon-button right-spacing" ng-click="restartRead();" title="Restart"><i class="fa fa-undo"></i></a>
+                    <a href="#" class="icon-button" ng-click="stopRead();" title="Stop"><i class="fa fa-stop"></i></a>
                 </div>
 
                 <div class="right">
