@@ -422,7 +422,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 
 				// Short
 				if (w.length <= 4) {
-					multiplier = .8;
+					multiplier = .7;
 
 				// Normal
 				} else if (w.length <= 8) {
@@ -470,7 +470,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 					'multiplier': 3,
 					'value': '',
 					'raw' : {
-						'specialChar' : '(end paragraph)'
+						'specialChar' : '(new paragraph)'
 					}
 				});
 			}
