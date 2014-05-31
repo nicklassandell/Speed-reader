@@ -462,7 +462,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 				if(lastChar === '.' || lastChar === '?' || lastChar === '!') {
 					words.push({
 						'type' : 'pause',
-						'multiplier': 2,
+						'multiplier': 1.5,
 						'value': '',
 						'raw' : {
 							'specialChar' : '(new line)'
@@ -476,7 +476,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 			if(!spaceAfterSentence) {
 				words.push({
 					'type' : 'pause',
-					'multiplier': 3,
+					'multiplier': 1.5,
 					'value': '',
 					'raw' : {
 						'specialChar' : '(new paragraph)'
