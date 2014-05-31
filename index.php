@@ -66,6 +66,16 @@ $settingsDropdown = <<<EOT
     <div class="form-row">
         <div class="checkbox">
             <div class="check">
+                <input ng-model="settings.enableMultiplier" id="set-enable-multiplier-chk" type="checkbox">
+                <span></span>
+            </div>
+            <label for="set-enable-multiplier-chk" title="Slow down or speed up words based on their length.">Smart speed (?)</label>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="checkbox">
+            <div class="check">
                 <input ng-model="settings.useSerifFont" id="set-serifFont-chk" type="checkbox">
                 <span></span>
             </div>

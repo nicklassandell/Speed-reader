@@ -10,6 +10,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 		},
 		'pauseBetweenParagraphs' : true,
 		'pauseBetweenSentences' : true,
+		'enableMultiplier' : true,
 		'nightMode' : false,
 		'text' : '',
 		'highlightFocusPoint' : true,
@@ -38,6 +39,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 	$scope.modelsToAutoSave = [
 		'settings.wpm',
 		'settings.pauseBetweenSentences',
+		'enableMultiplier',
 		'settings.nightMode',
 		'settings.text',
 		'settings.highlightFocusPoint',
@@ -518,7 +520,13 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 
 		// Unless this is the last word, set timeout for next word
 		if ($scope.game.currentWord < $scope.game.words.length-1) {
-			var timeout = $scope.settings.wpmMS() * word.multiplier;
+			var ms = $scope.settings.wpmMS(),
+				multiplier = word.multiplier,
+				timeout = ms;
+
+			if($scope.settings.enableMultiplier) {
+				var timeout = ms * multiplier;
+			}
 
 			$timeout.cancel($scope.wordLoopTimeout);
 			$scope.wordLoopTimeout = $timeout(function() {
