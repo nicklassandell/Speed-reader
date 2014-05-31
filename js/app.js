@@ -33,6 +33,15 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 				ret = round ? perc.toFixed(1) : perc;
 
 			return ret;
+		},
+		'timeToComplete' : function() {
+			var wordsLeft = $scope.game.words.length - $scope.game.currentWord,
+				min = wordsLeft/$scope.settings.wpm,
+				round = Math.round(min);
+
+			console.log(min);
+
+			return min < 1 ? '< 1' : round;
 		}
 	};
 

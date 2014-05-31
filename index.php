@@ -176,7 +176,7 @@ EOT;
                 </div>
 
                 <div class="center">
-                    {{ game.percentComplete(true) }}% complete
+                    {{ game.percentComplete(true) }}% complete &nbsp;&nbsp;&nbsp;&nbsp; {{ game.timeToComplete() }} min
                 </div>
             </div>
 
