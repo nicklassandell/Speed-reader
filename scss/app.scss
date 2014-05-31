@@ -210,6 +210,8 @@ a {
 	line-height: 2rem;
 	font-family: 'Roboto Slab', serif;
 	font-weight: 100;
+	overflow: scroll;
+	overflow-x: hidden;
 	@include transition-duration($global-transition-duration);
 
 	.has-started & {
