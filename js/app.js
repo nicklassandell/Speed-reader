@@ -196,7 +196,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 					$scope.game.paused = false;
 					$scope.resetToast();
 					$timeout(function() {
-						$scope.startCountdown($scope.settings.pauseCountdown*2);
+						$scope.startCountdown($scope.settings.pauseCountdown*3);
 					}, 300);
 				} else {
 					$scope.flashToast('Error: Could not parse URL');
@@ -211,7 +211,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 			$scope.game.hasStarted = true;
 			$scope.game.paused = false;
 			$timeout(function() {
-				$scope.startCountdown($scope.settings.pauseCountdown*2);
+				$scope.startCountdown($scope.settings.pauseCountdown*3);
 			}, 300);
 		}
 	}
