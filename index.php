@@ -108,6 +108,10 @@ EOT;
             <div class="bar-item">
                 <button class="button red" ng-click="startRead()">Start read <i class="fa fa-play"></i></button>
             </div>
+
+            <div class="bar-item">
+                <p>{{ settings.toast }}</p>
+            </div>
             
             <div class="bar-item right">
                 <button title="Show keyboard shortcuts" class="icon-button" toggle-dropdown="top-bar-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></button>

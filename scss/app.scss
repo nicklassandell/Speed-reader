@@ -145,6 +145,7 @@ a {
 	@include box-shadow(0 0 3px rgba(255,255,255,.1));
 	@include transition-duration($global-transition-duration);
 	background: #1EA5AC;
+	color: #FFF;
 
 	.has-started & {
 		.csstransforms & {
