@@ -149,8 +149,8 @@ EOT;
 
             <div class="top-controls">
                 <div class="left">
-                    <a href="#" class="icon-button right-spacing show-if-paused" ng-click="continueRead();" title="Continue"><i class="fa fa-play"></i></a>
-                    <a href="#" class="icon-button right-spacing show-if-not-paused" ng-click="pauseRead();" title="Pause"><i class="fa fa-pause"></i></a>
+                    <a style="width: 128px;" href="#" class="icon-button outlined has-text right-spacing show-if-paused" ng-click="continueRead();" title="Continue"><i class="fa fa-play"></i>Continue</a>
+                    <a style="width: 128px;" href="#" class="icon-button outlined has-text right-spacing show-if-not-paused" ng-click="pauseRead();" title="Pause"><i class="fa fa-pause"></i>Pause</a>
 
                     <a href="#" class="icon-button right-spacing" ng-click="goToPosition('last_sentence');" title="Previous sentence"><i class="fa fa-step-backward"></i></a>
                     <a href="#" class="icon-button right-spacing" ng-click="restartRead();" title="Restart"><i class="fa fa-undo"></i></a>
@@ -159,7 +159,7 @@ EOT;
 
                 <div class="right">
                     <div class="relative">
-                        <a href="#" title="Show keyboard shortcuts" data-toggle-dropdown="in-read-keyboard-dropdown" class="icon-button"><i class="fa fa-keyboard-o"></i></a>
+                        <a href="#" class="icon-button outlined" title="Show keyboard shortcuts" data-toggle-dropdown="in-read-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></a>
                 
                         <div id="in-read-keyboard-dropdown" class="dropdown">
                             <?php echo $keyboardDropdown; ?>
@@ -167,7 +167,7 @@ EOT;
                     </div>
 
                     <div class="relative">
-                        <a href="#" title="Show settings" data-toggle-dropdown="in-read-drop-settings" class="icon-button"><i class="fa fa-gear"></i></a>
+                        <a href="#" class="icon-button outlined" title="Show settings" data-toggle-dropdown="in-read-drop-settings"><i class="fa fa-gear"></i></a>
                 
                         <div id="in-read-drop-settings" class="dropdown">
                             <?php echo $settingsDropdown; ?>

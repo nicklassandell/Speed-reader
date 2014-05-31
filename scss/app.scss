@@ -6,7 +6,7 @@
 
 
 $base-red: #e55454;
-$base-blue: #187986;
+$base-blue: #1EA5AC;
 $base-light-grey: #C8C0BB; 
 $base-grey: #202020;
 
@@ -144,7 +144,7 @@ a {
 	z-index: 20;
 	@include box-shadow(0 0 3px rgba(255,255,255,.1));
 	@include transition-duration($global-transition-duration);
-	background: #1EA5AC;
+	background: $base-blue;
 	color: #FFF;
 
 	.has-started & {
@@ -184,6 +184,10 @@ a {
 
 		&.small-gap {
 			margin-right: 20px;
+		}
+
+		.icon-button {
+			color: #FFF;
 		}
 	}
 
@@ -256,8 +260,9 @@ a {
 		bottom: 0;
 		right: 0;
 		margin: auto;
-		height: 310px;
+		height: 380px;
 		max-width: $center-container-width;
+		padding: 0 30px;
 	}
 
 
@@ -301,9 +306,13 @@ a {
 			text-align: center;
 			z-index: 1;
 		}
-
+		
+		.right .icon-button {
+			margin-right: 0;
+			margin-left: 5px;
+		}
 		.icon-button {
-			margin-right: 10px;
+			margin-right: 5px;
 		}
 	}
 
@@ -320,7 +329,7 @@ a {
 		font-size: 65px;
 		cursor: default;
 		text-align: center;
-		margin: 50px 0 70px 0;
+		margin: 90px 0 100px 0;
 		@include transition-duration($global-transition-duration);
 		
 		font-family: $global-font-family;
@@ -337,6 +346,7 @@ a {
 			display: inline-block;
 			white-space: nowrap;
 			z-index: 2;
+			height: 100%;
 
 			.center-focus-point & {
 				position: relative;
@@ -586,26 +596,41 @@ label {
 
 .icon-button {
 	display: inline-block;
-	font-size: 1.5em;
 	height: 40px;
-	width: 40px;
+	min-width: 40px;
 	line-height: 35px;
 	text-align: center;
 	background: transparent;
-	border: 0;
+	text-transform: uppercase;
 	margin: 0;
-	padding: 0;
+	padding: 0 15px;
 	outline: none;
 	cursor: pointer;
+	font-size: .9em;
+	border: 1px solid transparent;
+	color: rgba(255,255,255,.5);
 	@include transition-duration($global-transition-duration);
 
 	&:hover {
-		color: $base-red;
-		background: rgba(255,255,255,.1);
+		color: rgba(255,255,255,.7);
+		background: rgba(255,255,255,.06);
+		border-color: rgba(255,255,255,.1);
 	}
 
 	&:active {
-		color: darken($base-red, 10%);
+		color: $base-blue;
+	}
+
+	&.outlined {
+		border-color: rgba(255,255,255,.1);
+	}
+
+	.fa {
+		font-size: 1em;
+	}
+
+	&.has-text .fa {
+		margin-right: 10px;
 	}
 }
 
@@ -681,7 +706,7 @@ label {
 .dropdown {
 	position: absolute;
 	top: 100%;
-	top: calc(100% + 15px);
+	top: calc(100% + 20px);
 	z-index: 100;
 	right: 0;
 	width: 300px;
@@ -691,7 +716,7 @@ label {
 	display: none;
 	line-height: $global-line-height;
 	border: 1px solid #E4E4E4;
-	@include box-shadow(0 0 3px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.05));
+	@include box-shadow(0 0 3px rgba(0, 0, 0, .15), 0 0 30px rgba(0, 0, 0, .1));
 	@include border-radius($global-radius);
 
 	&.open {
@@ -701,7 +726,7 @@ label {
 	&::after {
 		position: absolute;
 		bottom: 100%;
-		right: 7.5%;
+		right: 6%;
 		content: '';
 		border: 7px solid transparent;
 		border-top: 0;
