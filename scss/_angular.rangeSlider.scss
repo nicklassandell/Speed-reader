@@ -148,6 +148,7 @@ $prefix: 'ngrs-';
 		
 		.bright-mode & {
 			background: #444;
+			@include box-shadow(0 0 0 3px $light-background-color);
 		}
 
 
