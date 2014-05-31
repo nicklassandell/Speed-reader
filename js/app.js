@@ -271,6 +271,8 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 			return false;
 		}
 
+		angular.element('#countdown-bar').removeClass('visible');
+
 		$scope.game.paused = true;
 	}
 
