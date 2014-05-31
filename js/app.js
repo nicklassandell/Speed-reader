@@ -184,6 +184,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 		}
 	}
 
+	// Todo: Clean this mess up
 	$scope.startCountdown = function(steps) {
 
 		if($scope.settings.countDownInProgress) {
@@ -221,7 +222,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 				}
 				currStep += 1;
 			}, 1000);
-		}, 0);
+		}, 10);
 	}
 
 	$scope.stopRead = function() {

@@ -248,7 +248,14 @@ a {
 	}
 
 
-	.top-controls, .word-container, .timeline {
+	.inner-content {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		margin: auto;
+		height: 310px;
 		max-width: $center-container-width;
 	}
 
@@ -256,11 +263,7 @@ a {
 	
 	$top-controls-height: 40px;
 	.top-controls {
-		position: absolute;
-		top: 26%;
-		left: 0;
-		right: 0;
-		margin: 0 auto;
+		position: relative;
 		z-index: 25;
 		height: $top-controls-height;
 		line-height: $top-controls-height;
@@ -306,21 +309,17 @@ a {
 	
 	$word-container-height: 130px;
 	.word-container {
-		position: absolute;
-		top: 45%;
-		left: 0;
-		right: 0;
+		position: relative;
 		height: $word-container-height;
-		margin: 0 auto;
+		line-height: $word-container-height;
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-left: 0;
 		border-right: 0;
 		font-weight: 100;
 		font-size: 65px;
-		line-height: $word-container-height;
 		cursor: default;
 		text-align: center;
-		@include transform(translateY(-50%));
+		margin: 50px 0 70px 0;
 		@include transition-duration($global-transition-duration);
 		
 		font-family: $global-font-family;
@@ -437,11 +436,7 @@ a {
 
 
 	.timeline {
-		position: absolute;
-		top: 63%;
-		left: 0;
-		right: 0;
-		margin: 0 auto;
+		position: relative;
 		z-index: 20;
 		background: transparent;
 		opacity: 0;

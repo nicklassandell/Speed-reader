@@ -131,55 +131,58 @@ EOT;
     <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)" <?php if(!empty($_REQUEST['text'])) : ?> ng-init="settings.text='<?php echo htmlspecialchars($_REQUEST['text']); ?>'; startRead();" <?php endif; ?> ></textarea>
     
     <div class="word-canvas">
+        <div class="inner-content">
 
-        <div class="top-controls">
-            <div class="left">
-                <button class="icon-button right-spacing show-if-paused" ng-click="continueRead(); $event.stopPropagation();" title="Continue"><i class="fa fa-play"></i></button>
-                <button class="icon-button right-spacing show-if-not-paused" ng-click="pauseRead(); $event.stopPropagation();" title="Pause"><i class="fa fa-pause"></i></button>
+            <div class="top-controls">
+                <div class="left">
+                    <button class="icon-button right-spacing show-if-paused" ng-click="continueRead(); $event.stopPropagation();" title="Continue"><i class="fa fa-play"></i></button>
+                    <button class="icon-button right-spacing show-if-not-paused" ng-click="pauseRead(); $event.stopPropagation();" title="Pause"><i class="fa fa-pause"></i></button>
 
-                <button class="icon-button right-spacing" ng-click="goToPosition('last_sentence'); $event.stopPropagation();" title="Last sentence"><i class="fa fa-step-backward"></i></button>
-                <button class="icon-button right-spacing" ng-click="restartRead(); $event.stopPropagation();" title="Restart"><i class="fa fa-undo"></i></button>
-                <button class="icon-button" ng-click="stopRead(); $event.stopPropagation();" title="Stop"><i class="fa fa-stop"></i></button>
-            </div>
+                    <button class="icon-button right-spacing" ng-click="goToPosition('last_sentence'); $event.stopPropagation();" title="Last sentence"><i class="fa fa-step-backward"></i></button>
+                    <button class="icon-button right-spacing" ng-click="restartRead(); $event.stopPropagation();" title="Restart"><i class="fa fa-undo"></i></button>
+                    <button class="icon-button" ng-click="stopRead(); $event.stopPropagation();" title="Stop"><i class="fa fa-stop"></i></button>
+                </div>
 
-            <div class="right">
-                <div class="relative">
-                    <button title="Show keyboard shortcuts" data-toggle-dropdown="in-read-keyboard-dropdown" class="icon-button"><i class="fa fa-keyboard-o"></i></button>
-            
-                    <div id="in-read-keyboard-dropdown" class="dropdown">
-                        <?php echo $keyboardDropdown; ?>
+                <div class="right">
+                    <div class="relative">
+                        <button title="Show keyboard shortcuts" data-toggle-dropdown="in-read-keyboard-dropdown" class="icon-button"><i class="fa fa-keyboard-o"></i></button>
+                
+                        <div id="in-read-keyboard-dropdown" class="dropdown">
+                            <?php echo $keyboardDropdown; ?>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <button title="Show settings" data-toggle-dropdown="in-read-drop-settings" class="icon-button"><i class="fa fa-gear"></i></button>
+                
+                        <div id="in-read-drop-settings" class="dropdown">
+                            <?php echo $settingsDropdown; ?>
+                        </div>
                     </div>
                 </div>
 
-                <div class="relative">
-                    <button title="Show settings" data-toggle-dropdown="in-read-drop-settings" class="icon-button"><i class="fa fa-gear"></i></button>
-            
-                    <div id="in-read-drop-settings" class="dropdown">
-                        <?php echo $settingsDropdown; ?>
-                    </div>
+                <div class="center">
+                    {{ game.percentComplete(true) }}% complete
                 </div>
             </div>
 
-            <div class="center">
-                {{ game.percentComplete(true) }}% complete
-            </div>
-        </div>
+            <div class="word-container">
+                <div class="focus-point">
+                    <span class="before">{{ game.words[game.currentWord].raw.start | unsafe }}</span><!--
+                    --><span class="{{ game.words[game.currentWord].raw.highlighted ? 'highlight' : '' }}">{{ game.words[game.currentWord].raw.highlighted | unsafe }}</span><!--
+                    --><span class="special">{{ game.words[game.currentWord].raw.specialChar | unsafe }}</span><!--
+                    --><span class="after">{{ game.words[game.currentWord].raw.end | unsafe }}</span>
+                </div>
 
-        <div class="word-container">
-            <div class="focus-point">
-                <span class="before">{{ game.words[game.currentWord].raw.start | unsafe }}</span><!--
-                --><span class="{{ game.words[game.currentWord].raw.highlighted ? 'highlight' : '' }}">{{ game.words[game.currentWord].raw.highlighted | unsafe }}</span><!--
-                --><span class="special">{{ game.words[game.currentWord].raw.specialChar | unsafe }}</span><!--
-                --><span class="after">{{ game.words[game.currentWord].raw.end | unsafe }}</span>
+                <div id="countdown-bar" class="countdown-bar">
+                    <div class="progress"></div>
+                </div>
             </div>
 
-            <div id="countdown-bar" class="countdown-bar">
-                <div class="progress"></div>
+            <div id="timeline" class="timeline">
+                <div range-slider min="0" max="game.words.length" model-max="game.currentWord" pin-handle="min" show-values="false"></div>
             </div>
-        </div>
-
-        <div id="timeline" class="timeline">
-            <div range-slider min="0" max="game.words.length" model-max="game.currentWord" pin-handle="min" show-values="false"></div>
+            
         </div>
     </div>
     
