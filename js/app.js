@@ -18,7 +18,8 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 		'toastDefault' : '',
 		'toast' : '',
 		'useSerifFont' : true,
-		'pauseCountdown' : 1
+		'pauseCountdown' : 1,
+		'countDownInProgress' : false
 	};
 	$scope.settings.toast = $scope.settings.toastDefault;
 
@@ -184,6 +185,13 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 	}
 
 	$scope.startCountdown = function(steps) {
+
+		if($scope.settings.countDownInProgress) {
+			return false;
+		}
+
+		$scope.settings.countDownInProgress = true;
+
 		var prog = angular.element('#countdown-bar'),
 			bar = prog.find('.progress'),
 
@@ -206,6 +214,8 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 
 					prog.removeClass('visible');
 					bar.attr('style', '');
+
+					$scope.settings.countDownInProgress = false;
 
 					return false;
 				}
@@ -476,7 +486,8 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 		if ($scope.game.currentWord < $scope.game.words.length) {
 			var timeout = $scope.settings.wpmMS() * word.multiplier;
 
-			$timeout(function() {
+			$timeout.cancel($scope.wordLoopTimeout);
+			$scope.wordLoopTimeout = $timeout(function() {
 				// Todo: Clean dis' up
 				if($scope.game.hasStarted === true && $scope.game.paused === false) {
 					$scope.game.currentWord += 1;
