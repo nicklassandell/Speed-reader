@@ -154,9 +154,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 
 		if($scope.isValidURL($scope.settings.text)) {
 			$scope.settings.toast = 'Extracting text from URL...';
-			NProgress.start();
 			$scope.extractFromUrl($scope.settings.text, function(res) {
-				NProgress.done();
 				if(res.status === 'success') {
 					var text = res.result.betterTrim();
 					$scope.settings.text = $scope.makeTextReadable(text);

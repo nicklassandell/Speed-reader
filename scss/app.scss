@@ -186,34 +186,6 @@ a {
 	.dropdown {
 		top: 88%;
 	}
-
-
-	.countdown-bar {
-		position: absolute;
-		top: $top-bar-height;
-		left: 0;
-		right: 0;
-		height: $progress-bar-height;
-		pointer-events: none;
-		display: none;
-		overflow: hidden;
-
-		&.visible {
-			display: block;
-		}
-
-		.progress {
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			margin: 0 auto;
-			background: $base-red;
-			width: 1%;
-			@include transition-duration(.75s);
-		}
-	}
 }
 
 
@@ -348,6 +320,7 @@ a {
 			position: static;
 			display: inline-block;
 			white-space: nowrap;
+			z-index: 2;
 
 			.center-focus-point & {
 				position: relative;
@@ -398,6 +371,50 @@ a {
 			}
 			.after {
 				left: 100%;
+			}
+		}
+
+
+		.countdown-bar {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 1;
+			display: none;
+			overflow: hidden;
+
+			&.visible {
+				display: block;
+			}
+
+			.progress {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: 0 auto;
+				width: 1%;
+				@include transition-duration(.75s);
+
+				&:before, &:after {
+					position: absolute;
+					left: 0;
+					right: 0;
+					height: 1px;
+					background: $base-red;
+					display: block;
+					content: '';
+				}
+				&:before {
+					top: 0;
+				}
+
+				&:after {
+					bottom: 0;
+				}
 			}
 		}
 	}
