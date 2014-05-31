@@ -180,9 +180,9 @@ EOT;
             </div>
 
             <div id="timeline" class="timeline">
-                <div range-slider min="0" max="game.words.length" model-max="game.currentWord" pin-handle="min" show-values="false"></div>
+                <div range-slider min="0" max="game.words.length-1" model-max="game.currentWord" pin-handle="min" show-values="false"></div>
             </div>
-            
+
         </div>
     </div>
     

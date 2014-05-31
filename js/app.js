@@ -441,7 +441,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 			}
 		}
 
-		// Remove last whitespace
+		// Hack, remove last whitespace
 		if($scope.settings.pauseBetweenParagraphs) {
 			words.pop();
 		}
@@ -484,7 +484,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 		}
 
 		// Unless this is the last word, set timeout for next word
-		if ($scope.game.currentWord < $scope.game.words.length) {
+		if ($scope.game.currentWord < $scope.game.words.length-1) {
 			var timeout = $scope.settings.wpmMS() * word.multiplier;
 
 			$timeout.cancel($scope.wordLoopTimeout);
@@ -528,7 +528,6 @@ app.filter('unsafe', function($sce) {
 app.directive('toggleDropdown', function($timeout) {
 	return {
 		link: function(scope, elem, attr) {
-
 			var closeDropdown = function(e) {
 				// If click was NOT inside dropdown
 				if(!angular.element(e.target).closest('.dropdown.open').length > 0) {
