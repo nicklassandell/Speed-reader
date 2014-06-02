@@ -586,7 +586,6 @@ app.directive('toggleDropdown', ['$timeout', function($timeout) {
 		link: function(scope, elem, attr) {
 			var closeDropdown = function(e) {
 				// If click was NOT inside dropdown
-				console.log(angular.element(e.target).closest('.dropdown').length, e.target);
 				if(!angular.element(e.target).closest('.dropdown').length > 0) {
 					angular.element('.dropdown').removeClass('open');
 					angular.element(document).off('click.closeDropdown');
