@@ -1,6 +1,6 @@
 var app = angular.module('speedReadingApp', ['ui-rangeSlider']);
 
-app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http) {
+app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http', function($scope, $timeout, $interval, $window, $http) {
 	"use strict";
 
 	$scope.settings = {
@@ -570,18 +570,18 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 		return text.betterTrim().match(/^\bhttps?:\/\/?[-A-Za-z0-9+&@#\/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]$/);
 	}
 
-});
+}]);
 
 
 
-app.filter('unsafe', function($sce) {
+app.filter('unsafe', ['$sce', function($sce) {
     return function(val) {
         return $sce.trustAsHtml(val);
     };
-});
+}]);
 
 
-app.directive('toggleDropdown', function($timeout) {
+app.directive('toggleDropdown', ['$timeout', function($timeout) {
 	return {
 		link: function(scope, elem, attr) {
 			var closeDropdown = function(e) {
@@ -616,7 +616,7 @@ app.directive('toggleDropdown', function($timeout) {
 			});
 		}
 	}
-});
+}]);
 
 
 // Removes all double whitespace. Also trims beginning and end.

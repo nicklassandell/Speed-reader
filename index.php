@@ -94,7 +94,7 @@ EOT;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Speed read</title>
-    <link rel="stylesheet" href="stylesheets/app.css" />
+    <link rel="stylesheet" href="css/app.css" />
     
     <script src="js/modernizr.js"></script>
     <script>
@@ -209,8 +209,6 @@ EOT;
     <!-- jQuery only used for range slider support -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
-    <script src="js/angular.rangeSlider.js"></script>
-    <script src="js/mousetrap.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/min/app.js"></script>
 </body>
 </html>
