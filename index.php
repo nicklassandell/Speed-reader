@@ -151,8 +151,8 @@ EOT;
 
             <div class="top-controls">
                 <div class="left">
-                    <a style="width: 128px;" href="#" class="icon-button outlined has-text right-spacing show-if-paused" ng-click="continueRead();" title="Continue"><i class="fa fa-play"></i>Continue</a>
-                    <a style="width: 128px;" href="#" class="icon-button outlined has-text right-spacing show-if-not-paused" ng-click="pauseRead();" title="Pause"><i class="fa fa-pause"></i>Pause</a>
+                    <a style="width: 132px;" href="#" class="icon-button outlined has-text right-spacing show-if-paused" ng-click="continueRead();" title="Continue"><i class="fa fa-play"></i>Continue</a>
+                    <a style="width: 132px;" href="#" class="icon-button outlined has-text right-spacing show-if-not-paused" ng-click="pauseRead();" title="Pause"><i class="fa fa-pause"></i>Pause</a>
 
                     <a href="#" class="icon-button right-spacing" ng-click="goToPosition('last_sentence');" title="Previous sentence"><i class="fa fa-step-backward"></i></a>
                     <a href="#" class="icon-button right-spacing" ng-click="restartRead();" title="Restart"><i class="fa fa-undo"></i></a>
