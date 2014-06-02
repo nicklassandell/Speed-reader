@@ -19,7 +19,9 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 		'toast' : '',
 		'useSerifFont' : true,
 		'pauseCountdown' : 1,
-		'countDownInProgress' : false
+		'countDownInProgress' : false,
+		'showLoadingOverlay' : false,
+		'init' : false
 	};
 	$scope.settings.toast = $scope.settings.toastDefault;
 
@@ -38,8 +40,6 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 			var wordsLeft = $scope.game.words.length - $scope.game.currentWord,
 				min = wordsLeft/$scope.settings.wpm,
 				round = Math.round(min);
-
-			console.log(min);
 
 			return min < 1 ? '< 1' : round;
 		}
@@ -101,6 +101,10 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 	angular.element('#timeline').on('mousedown', function() {
 		$scope.pauseRead();
 	});
+
+
+	$scope.settings.init = true;
+	window.settings = $scope.settings;
 
 
 
@@ -179,14 +183,14 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 	 * Prepares for reading then fires off wordLoop
 	 */
 	$scope.startRead = function() {
-		
+
 		// Bail if already started
 		if($scope.game.hasStarted) {
 			return false;
 		}
 
 		if($scope.isValidURL($scope.settings.text)) {
-			$scope.settings.toast = 'Extracting text from URL...';
+			$scope.settings.showLoadingOverlay = true;
 			$scope.extractFromUrl($scope.settings.text, function(res) {
 				if(res.status === 'success') {
 					var text = res.result.betterTrim();
@@ -196,9 +200,11 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 					$scope.game.paused = false;
 					$scope.resetToast();
 					$timeout(function() {
+						$scope.settings.showLoadingOverlay = false;
 						$scope.startCountdown($scope.settings.pauseCountdown*3);
 					}, 300);
 				} else {
+					$scope.settings.showLoadingOverlay = false;
 					$scope.flashToast('Error: Could not parse URL');
 				}
 			});
@@ -254,7 +260,7 @@ app.controller('MainCtrl', function($scope, $timeout, $interval, $window, $http)
 				}
 				currStep += 1;
 			}, 1000);
-		}, 10);
+		}, 50);
 	}
 
 	$scope.stopRead = function() {

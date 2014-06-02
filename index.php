@@ -106,6 +106,8 @@ EOT;
                                       {{ settings.nightMode ? 'dark-mode' : 'bright-mode' }}
                                       {{ settings.highlightFocusPoint ? 'highlight-focus-point' : '' }}
                                       {{ settings.useSerifFont ? 'serif-font' : '' }}
+                                      {{ settings.showLoadingOverlay ? 'is-loading' : '' }}
+                                      {{ settings.init ? 'init' : '' }}
                                       {{ settings.centerFocusPoint ? 'center-focus-point' : '' }}">
 
     <div class="top-bar">
@@ -144,7 +146,7 @@ EOT;
 
     <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)" <?php if(!empty($_REQUEST['text'])) : ?> ng-init="settings.text='<?php echo htmlspecialchars($_REQUEST['text']); ?>'; startRead();" <?php endif; ?> ></textarea>
     
-    <div class="word-canvas">
+    <div class="read-canvas">
         <div class="inner-content">
 
             <div class="top-controls">
@@ -198,6 +200,10 @@ EOT;
             </div>
 
         </div>
+    </div>
+
+    <div class="loading-screen">
+        <div class="icon">Loading</div>
     </div>
     
     <!-- jQuery only used for range slider support -->

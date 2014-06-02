@@ -40,6 +40,11 @@ body {
 	line-height: $global-line-height;
 	background: $light-background-color;
 	color: #4A4A4A;
+	display: none;
+
+	&.init {
+		display: block;
+	}
 
 	@include transition-property(color background-color);
 	@include transition-duration($global-transition-duration);
@@ -147,7 +152,7 @@ a {
 	background: $base-blue;
 	color: #FFF;
 
-	.has-started & {
+	.has-started &, .is-loading & {
 		.csstransforms & {
 			@include transform(translateY(-$top-bar-height));
 		}
@@ -220,7 +225,6 @@ a {
 	font-weight: 100;
 	overflow: scroll;
 	overflow-x: hidden;
-	@include transition-duration($global-transition-duration);
 
 	.has-started & {
 		opacity: 0;
@@ -229,7 +233,7 @@ a {
 
 
 
-.word-canvas {
+.read-canvas {
 	position: absolute;
 	top: -100000px;
 	left: 0;
@@ -456,6 +460,40 @@ a {
 		.has-started & {
 			opacity: 1;
 		}
+	}
+}
+
+
+
+.loading-screen {
+	position: absolute;
+	top: -10000px;
+	left: 0;
+	right: 0;
+	height: 0;
+	overflow: hidden;
+	z-index: 20;
+	background: $base-grey;
+	opacity: 0;
+	@include transition-duration($global-transition-duration);
+	@include transition-property(opacity);
+
+	.is-loading & {
+		top: 0;
+		height: 100%;
+		opacity: 1;
+	}
+
+	.icon {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		right: 0;
+		text-align: center;
+		font-size: 50px;
+		font-weight: 100;
+		text-transform: uppercase;
+		@include transform(translateY(-50%));
 	}
 }
 
