@@ -118,7 +118,7 @@ EOT;
             </div>
             
             <div class="bar-item">
-                <a href="#" class="button red" ng-click="startRead()">Start read <i class="fa fa-play"></i></a>
+                <a class="button red" ng-click="startRead()">Start read <i class="fa fa-play"></i></a>
             </div>
 
             <div class="bar-item">
@@ -126,7 +126,7 @@ EOT;
             </div>
             
             <div class="bar-item right">
-                <a href="#" title="Show settings" class="icon-button" toggle-dropdown="top-bar-drop-settings"><i class="fa fa-gear"></i></a>
+                <a title="Show settings" class="icon-button" toggle-dropdown="top-bar-drop-settings"><i class="fa fa-gear"></i></a>
         
                 <div id="top-bar-drop-settings" class="dropdown">
                     <?php echo $settingsDropdown; ?>
@@ -134,7 +134,7 @@ EOT;
             </div>
             
             <div class="bar-item right">
-                <a href="#" title="Show keyboard shortcuts" class="icon-button" toggle-dropdown="top-bar-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></a>
+                <a title="Show keyboard shortcuts" class="icon-button" toggle-dropdown="top-bar-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></a>
         
                 <div id="top-bar-keyboard-dropdown" class="dropdown">
                     <?php echo $keyboardDropdown; ?>
@@ -144,24 +144,24 @@ EOT;
         </div> <!-- inner container -->
     </div> <!-- top bar -->
 
-    <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)" <?php if(!empty($_REQUEST['text'])) : ?> ng-init="settings.text='<?php echo htmlspecialchars($_REQUEST['text']); ?>'; startRead();" <?php endif; ?> ></textarea>
+    <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)" <?php if(!empty($_REQUEST['text'])) : ?> ng-init="settings.text='<?php echo htmlspecialchars(addslashes($_REQUEST['text'])); ?>'; startRead();" <?php endif; ?> ></textarea>
     
     <div class="read-canvas">
         <div class="inner-content">
 
             <div class="top-controls">
                 <div class="left">
-                    <a style="width: 132px;" href="#" class="icon-button outlined has-text right-spacing show-if-paused" ng-click="continueRead();" title="Continue"><i class="fa fa-play"></i>Continue</a>
-                    <a style="width: 132px;" href="#" class="icon-button outlined has-text right-spacing show-if-not-paused" ng-click="pauseRead();" title="Pause"><i class="fa fa-pause"></i>Pause</a>
+                    <a style="width: 132px;" class="icon-button outlined has-text right-spacing show-if-paused" ng-click="continueRead();" title="Continue"><i class="fa fa-play"></i>Continue</a>
+                    <a style="width: 132px;" class="icon-button outlined has-text right-spacing show-if-not-paused" ng-click="pauseRead();" title="Pause"><i class="fa fa-pause"></i>Pause</a>
 
-                    <a href="#" class="icon-button right-spacing" ng-click="goToPosition('last_sentence');" title="Previous sentence"><i class="fa fa-step-backward"></i></a>
-                    <a href="#" class="icon-button right-spacing" ng-click="restartRead();" title="Restart"><i class="fa fa-undo"></i></a>
-                    <a href="#" class="icon-button" ng-click="stopRead();" title="Stop"><i class="fa fa-stop"></i></a>
+                    <a class="icon-button right-spacing" ng-click="goToPosition('last_sentence');" title="Previous sentence"><i class="fa fa-step-backward"></i></a>
+                    <a class="icon-button right-spacing" ng-click="restartRead();" title="Restart"><i class="fa fa-undo"></i></a>
+                    <a class="icon-button" ng-click="stopRead();" title="Stop"><i class="fa fa-stop"></i></a>
                 </div>
 
                 <div class="right">
                     <div class="relative">
-                        <a href="#" class="icon-button outlined" title="Show keyboard shortcuts" data-toggle-dropdown="in-read-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></a>
+                        <a class="icon-button outlined" title="Show keyboard shortcuts" data-toggle-dropdown="in-read-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></a>
                 
                         <div id="in-read-keyboard-dropdown" class="dropdown">
                             <?php echo $keyboardDropdown; ?>
@@ -169,7 +169,7 @@ EOT;
                     </div>
 
                     <div class="relative">
-                        <a href="#" class="icon-button outlined" title="Show settings" data-toggle-dropdown="in-read-drop-settings"><i class="fa fa-gear"></i></a>
+                        <a class="icon-button outlined" title="Show settings" data-toggle-dropdown="in-read-drop-settings"><i class="fa fa-gear"></i></a>
                 
                         <div id="in-read-drop-settings" class="dropdown">
                             <?php echo $settingsDropdown; ?>
