@@ -61,6 +61,27 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	];
 
 
+
+	// Is called at bottom of controller
+	$scope.init = function() {
+		$scope.autoSave.loadAll();
+		$scope.autoSave.setup();
+
+		if(window.location.hash.match(/^#text:/)) {
+			var url = window.location.hash,
+				url = url.replace(/^#text:/, '');
+
+			window.location.hash = '';
+			$scope.stopRead();
+			$scope.settings.text = url;
+			$scope.startRead();
+		}
+
+		// Lastly, init
+		$scope.settings.init = true;
+	}
+
+
 	// Handles auto saving of models
 	$scope.autoSave = {
 
@@ -563,23 +584,8 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	});
 
 
-
-
-	$scope.autoSave.loadAll();
-	$scope.autoSave.setup();
-
-	if(window.location.hash.match(/^#text:/)) {
-		var url = window.location.hash,
-			url = url.replace(/^#text:/, '');
-
-		window.location.hash = '';
-		$scope.stopRead();
-		$scope.settings.text = url;
-		$scope.startRead();
-	}
-
-	// Lastly, init
-	$scope.settings.init = true;
+	// Lastly, run app
+	$scope.init();
 
 }]);
 

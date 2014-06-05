@@ -450,7 +450,7 @@ var app = angular.module("speedReadingApp", [ "ui-rangeSlider" ]);
 
 app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$http", function($scope, $timeout, $interval, $window, $http) {
     "use strict";
-    if ($scope.settings = {
+    $scope.settings = {
         wpm: 400,
         wpmMS: function() {
             return 6e4 / $scope.settings.wpm;
@@ -483,7 +483,15 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
             return 1 > min ? "< 1" : round;
         }
     }, $scope.modelsToAutoSave = [ "settings.wpm", "settings.pauseBetweenSentences", "enableMultiplier", "settings.nightMode", "settings.text", "settings.highlightFocusPoint", "settings.centerFocusPoint", "settings.useSerifFont", "game.words", "game.currentWord", "game.hasStarted" ], 
-    // Handles auto saving of models
+    // Is called at bottom of controller
+    $scope.init = function() {
+        if ($scope.autoSave.loadAll(), $scope.autoSave.setup(), window.location.hash.match(/^#text:/)) {
+            var url = window.location.hash, url = url.replace(/^#text:/, "");
+            window.location.hash = "", $scope.stopRead(), $scope.settings.text = url, $scope.startRead();
+        }
+        // Lastly, init
+        $scope.settings.init = !0;
+    }, // Handles auto saving of models
     $scope.autoSave = {
         // Runs on page load. Will restore saved values.
         loadAll: function() {
@@ -708,12 +716,8 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
     }), // Tried to put this in ng-mousedown, but no luck
     angular.element("#timeline").on("mousedown", function() {
         $scope.pauseRead();
-    }), $scope.autoSave.loadAll(), $scope.autoSave.setup(), window.location.hash.match(/^#text:/)) {
-        var url = window.location.hash, url = url.replace(/^#text:/, "");
-        window.location.hash = "", $scope.stopRead(), $scope.settings.text = url, $scope.startRead();
-    }
-    // Lastly, init
-    $scope.settings.init = !0;
+    }), // Lastly, run app
+    $scope.init();
 } ]), app.filter("unsafe", [ "$sce", function($sce) {
     return function(val) {
         return $sce.trustAsHtml(val);
