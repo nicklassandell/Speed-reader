@@ -486,8 +486,8 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
     // Is called at bottom of controller
     $scope.init = function() {
         if ($scope.autoSave.loadAll(), $scope.autoSave.setup(), window.location.hash.match(/^#text:/)) {
-            var url = window.location.hash, url = url.replace(/^#text:/, "");
-            window.location.hash = "", $scope.stopRead(), $scope.settings.text = url, $scope.startRead();
+            var text = window.location.hash, text = text.replace(/^#text:/, ""), text = decodeURIComponent(text);
+            window.location.hash = "", $scope.stopRead(), $scope.settings.text = text, $scope.startRead();
         }
         // Lastly, init
         $scope.settings.init = !0;

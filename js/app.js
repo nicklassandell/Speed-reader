@@ -68,12 +68,13 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		$scope.autoSave.setup();
 
 		if(window.location.hash.match(/^#text:/)) {
-			var url = window.location.hash,
-				url = url.replace(/^#text:/, '');
+			var text = window.location.hash,
+				text = text.replace(/^#text:/, ''),
+				text = decodeURIComponent(text);
 
 			window.location.hash = '';
 			$scope.stopRead();
-			$scope.settings.text = url;
+			$scope.settings.text = text;
 			$scope.startRead();
 		}
 
