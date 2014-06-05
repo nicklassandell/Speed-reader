@@ -485,12 +485,33 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
     }, $scope.modelsToAutoSave = [ "settings.wpm", "settings.pauseBetweenSentences", "enableMultiplier", "settings.nightMode", "settings.text", "settings.highlightFocusPoint", "settings.centerFocusPoint", "settings.useSerifFont", "game.words", "game.currentWord", "game.hasStarted" ], 
     // Is called at bottom of controller
     $scope.init = function() {
-        if ($scope.autoSave.loadAll(), $scope.autoSave.setup(), window.location.hash.match(/^#text:/)) {
-            var text = window.location.hash, text = text.replace(/^#text:/, ""), text = decodeURIComponent(text);
-            window.location.hash = "", $scope.stopRead(), $scope.settings.text = text, $scope.startRead();
-        }
-        // Lastly, init
+        $scope.autoSave.loadAll(), $scope.autoSave.setup();
+        var cookieText = $scope.cookie.get("READ_TEXT");
+        cookieText.length > 0 && (// Remove cookie
+        $scope.cookie.set("READ_TEXT", "", -1), // Start reading cookie text
+        $scope.stopRead(), $scope.settings.text = decodeURIComponent(cookieText), $scope.startRead()), 
+        // Lastly, init app
         $scope.settings.init = !0;
+    }, $scope.cookie = {
+        set: function(name, value, days) {
+            var expires;
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + 24 * days * 60 * 60 * 1e3), expires = "; expires=" + date.toGMTString();
+            } else expires = "";
+            document.cookie = name + "=" + value + expires + "; path=/";
+        },
+        get: function(c_name) {
+            if (document.cookie.length > 0) {
+                var c_start = document.cookie.indexOf(c_name + "=");
+                if (-1 != c_start) {
+                    c_start = c_start + c_name.length + 1;
+                    var c_end = document.cookie.indexOf(";", c_start);
+                    return -1 == c_end && (c_end = document.cookie.length), unescape(document.cookie.substring(c_start, c_end));
+                }
+            }
+            return "";
+        }
     }, // Handles auto saving of models
     $scope.autoSave = {
         // Runs on page load. Will restore saved values.

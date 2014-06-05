@@ -67,20 +67,52 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		$scope.autoSave.loadAll();
 		$scope.autoSave.setup();
 
-		if(window.location.hash.match(/^#text:/)) {
-			var text = window.location.hash,
-				text = text.replace(/^#text:/, ''),
-				text = decodeURIComponent(text);
+		var cookieText = $scope.cookie.get('READ_TEXT');
+		if(cookieText.length > 0) {
+			
+			// Remove cookie
+			$scope.cookie.set('READ_TEXT', '', -1);
 
-			window.location.hash = '';
+			// Start reading cookie text
 			$scope.stopRead();
-			$scope.settings.text = text;
+			$scope.settings.text = decodeURIComponent(cookieText);
 			$scope.startRead();
 		}
 
-		// Lastly, init
+		// Lastly, init app
 		$scope.settings.init = true;
 	}
+
+	$scope.cookie = {
+		set : function(name, value, days) {
+		    var expires;
+		    if (days) {
+		        var date = new Date();
+		        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+		        expires = "; expires=" + date.toGMTString();
+		    }
+		    else {
+		        expires = "";
+		    }
+		    document.cookie = name + "=" + value + expires + "; path=/";
+		},
+
+		get : function(c_name) {
+		    if (document.cookie.length > 0) {
+		        var c_start = document.cookie.indexOf(c_name + "=");
+		        if (c_start != -1) {
+		            c_start = c_start + c_name.length + 1;
+		            var c_end = document.cookie.indexOf(";", c_start);
+		            if (c_end == -1) {
+		                c_end = document.cookie.length;
+		            }
+		            return unescape(document.cookie.substring(c_start, c_end));
+		        }
+		    }
+		    return "";
+		}
+	};
+
 
 
 	// Handles auto saving of models
