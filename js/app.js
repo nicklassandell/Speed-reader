@@ -61,54 +61,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	];
 
 
-	// Pause
-	Mousetrap.bind('space', function() {
-		$scope.togglePause();
-		$scope.$apply();
-	});
-
-	// Previous word
-	Mousetrap.bind(['left', 'a'], function() {
-		$scope.pauseRead();
-		$scope.goToPosition('previous');
-		$scope.$apply();
-	});
-
-	// Next word
-	Mousetrap.bind(['right', 'd'], function() {
-		$scope.pauseRead();
-		$scope.goToPosition('next');
-		$scope.$apply();
-	});
-
-	// Previous sentence
-	Mousetrap.bind(['ctrl+left'], function() {
-		$scope.pauseRead();
-		$scope.goToPosition('last_sentence');
-		$scope.$apply();
-	});
-
-
-
-	// We merged these two settings, but let's keep them under the hood for now
-	// This makes sure the values stay the same
-	$scope.$watch('settings.pauseBetweenSentences', function() {
-		$scope.settings.pauseBetweenParagraphs = $scope.settings.pauseBetweenSentences;
-	});
-
-
-	// Tried to put this in ng-mousedown, but no luck
-	angular.element('#timeline').on('mousedown', function() {
-		$scope.pauseRead();
-	});
-
-
-	$scope.settings.init = true;
-	window.settings = $scope.settings;
-
-
-
-
 	// Handles auto saving of models
 	$scope.autoSave = {
 
@@ -169,14 +121,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			}
 		}
 	};
-
-	$scope.autoSave.loadAll();
-	$scope.autoSave.setup();
-
-	// If game has started when page loads (saved from last sess), pause the game
-	if($scope.game.hasStarted) {
-		$scope.game.paused = true;
-	}
 
 
 	/**
@@ -266,9 +210,11 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	$scope.stopRead = function() {
 
 		// Bail if not started
+		/*
 		if(!$scope.game.hasStarted) {
 			return false;
 		}
+		*/
 
 		$scope.game.hasStarted = false;
 		$scope.game.paused = false;
@@ -569,6 +515,73 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	$scope.isValidURL = function(text) {
 		return text.betterTrim().match(/^\bhttps?:\/\/?[-A-Za-z0-9+&@#\/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]$/);
 	}
+
+
+
+
+
+
+	// Pause
+	Mousetrap.bind('space', function() {
+		$scope.togglePause();
+		$scope.$apply();
+	});
+
+	// Previous word
+	Mousetrap.bind(['left', 'a'], function() {
+		$scope.pauseRead();
+		$scope.goToPosition('previous');
+		$scope.$apply();
+	});
+
+	// Next word
+	Mousetrap.bind(['right', 'd'], function() {
+		$scope.pauseRead();
+		$scope.goToPosition('next');
+		$scope.$apply();
+	});
+
+	// Previous sentence
+	Mousetrap.bind(['ctrl+left'], function() {
+		$scope.pauseRead();
+		$scope.goToPosition('last_sentence');
+		$scope.$apply();
+	});
+
+
+
+	// We merged these two settings, but let's keep them under the hood for now
+	// This makes sure the values stay the same
+	$scope.$watch('settings.pauseBetweenSentences', function() {
+		$scope.settings.pauseBetweenParagraphs = $scope.settings.pauseBetweenSentences;
+	});
+
+
+	// Tried to put this in ng-mousedown, but no luck
+	angular.element('#timeline').on('mousedown', function() {
+		$scope.pauseRead();
+	});
+
+
+
+
+	$scope.autoSave.loadAll();
+	$scope.autoSave.setup();
+
+	if(window.location.hash.match(/#url:/)) {
+		var url = window.location.hash,
+			url = url.replace(/^#url:/, '');
+
+		if($scope.isValidURL(url)) {
+			window.location.hash = '';
+			$scope.stopRead();
+			$scope.settings.text = url;
+			$scope.startRead();
+		}
+	}
+
+	// Lastly, init
+	$scope.settings.init = true;
 
 }]);
 

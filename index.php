@@ -144,7 +144,7 @@ EOT;
         </div> <!-- inner container -->
     </div> <!-- top bar -->
 
-    <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)" <?php if(!empty($_REQUEST['text'])) : ?> ng-init="settings.text='<?php echo htmlspecialchars(addslashes($_REQUEST['text'])); ?>'; startRead();" <?php endif; ?> ></textarea>
+    <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)"></textarea>
     
     <div class="read-canvas">
         <div class="inner-content">

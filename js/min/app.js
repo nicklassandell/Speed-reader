@@ -450,7 +450,7 @@ var app = angular.module("speedReadingApp", [ "ui-rangeSlider" ]);
 
 app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$http", function($scope, $timeout, $interval, $window, $http) {
     "use strict";
-    $scope.settings = {
+    if ($scope.settings = {
         wpm: 400,
         wpmMS: function() {
             return 6e4 / $scope.settings.wpm;
@@ -483,26 +483,7 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
             return 1 > min ? "< 1" : round;
         }
     }, $scope.modelsToAutoSave = [ "settings.wpm", "settings.pauseBetweenSentences", "enableMultiplier", "settings.nightMode", "settings.text", "settings.highlightFocusPoint", "settings.centerFocusPoint", "settings.useSerifFont", "game.words", "game.currentWord", "game.hasStarted" ], 
-    // Pause
-    Mousetrap.bind("space", function() {
-        $scope.togglePause(), $scope.$apply();
-    }), // Previous word
-    Mousetrap.bind([ "left", "a" ], function() {
-        $scope.pauseRead(), $scope.goToPosition("previous"), $scope.$apply();
-    }), // Next word
-    Mousetrap.bind([ "right", "d" ], function() {
-        $scope.pauseRead(), $scope.goToPosition("next"), $scope.$apply();
-    }), // Previous sentence
-    Mousetrap.bind([ "ctrl+left" ], function() {
-        $scope.pauseRead(), $scope.goToPosition("last_sentence"), $scope.$apply();
-    }), // We merged these two settings, but let's keep them under the hood for now
-    // This makes sure the values stay the same
-    $scope.$watch("settings.pauseBetweenSentences", function() {
-        $scope.settings.pauseBetweenParagraphs = $scope.settings.pauseBetweenSentences;
-    }), // Tried to put this in ng-mousedown, but no luck
-    angular.element("#timeline").on("mousedown", function() {
-        $scope.pauseRead();
-    }), $scope.settings.init = !0, window.settings = $scope.settings, // Handles auto saving of models
+    // Handles auto saving of models
     $scope.autoSave = {
         // Runs on page load. Will restore saved values.
         loadAll: function() {
@@ -537,8 +518,7 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
                 });
             }
         }
-    }, $scope.autoSave.loadAll(), $scope.autoSave.setup(), // If game has started when page loads (saved from last sess), pause the game
-    $scope.game.hasStarted && ($scope.game.paused = !0), /**
+    }, /**
 	 * Prepares for reading then fires off wordLoop
 	 */
     $scope.startRead = function() {
@@ -575,9 +555,12 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
         }, 50);
     }, $scope.stopRead = function() {
         // Bail if not started
-        // Bail if not started
-        return $scope.game.hasStarted ? ($scope.game.hasStarted = !1, $scope.game.paused = !1, 
-        void ($scope.game.currentWord = 0)) : !1;
+        /*
+		if(!$scope.game.hasStarted) {
+			return false;
+		}
+		*/
+        $scope.game.hasStarted = !1, $scope.game.paused = !1, $scope.game.currentWord = 0;
     }, $scope.restartRead = function() {
         $scope.pauseRead(), $scope.game.currentWord = 0, $scope.continueRead();
     }, $scope.pauseRead = function() {
@@ -706,7 +689,32 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
         return text.betterTrim().replace(/(\r\n|\n|\r)+/gm, "\r\n\r\n");
     }, $scope.isValidURL = function(text) {
         return text.betterTrim().match(/^\bhttps?:\/\/?[-A-Za-z0-9+&@#\/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]$/);
-    };
+    }, // Pause
+    Mousetrap.bind("space", function() {
+        $scope.togglePause(), $scope.$apply();
+    }), // Previous word
+    Mousetrap.bind([ "left", "a" ], function() {
+        $scope.pauseRead(), $scope.goToPosition("previous"), $scope.$apply();
+    }), // Next word
+    Mousetrap.bind([ "right", "d" ], function() {
+        $scope.pauseRead(), $scope.goToPosition("next"), $scope.$apply();
+    }), // Previous sentence
+    Mousetrap.bind([ "ctrl+left" ], function() {
+        $scope.pauseRead(), $scope.goToPosition("last_sentence"), $scope.$apply();
+    }), // We merged these two settings, but let's keep them under the hood for now
+    // This makes sure the values stay the same
+    $scope.$watch("settings.pauseBetweenSentences", function() {
+        $scope.settings.pauseBetweenParagraphs = $scope.settings.pauseBetweenSentences;
+    }), // Tried to put this in ng-mousedown, but no luck
+    angular.element("#timeline").on("mousedown", function() {
+        $scope.pauseRead();
+    }), $scope.autoSave.loadAll(), $scope.autoSave.setup(), window.location.hash.match(/#url:/)) {
+        var url = window.location.hash, url = url.replace(/^#url:/, "");
+        $scope.isValidURL(url) && (window.location.hash = "", $scope.stopRead(), $scope.settings.text = url, 
+        $scope.startRead());
+    }
+    // Lastly, init
+    $scope.settings.init = !0;
 } ]), app.filter("unsafe", [ "$sce", function($sce) {
     return function(val) {
         return $sce.trustAsHtml(val);
