@@ -708,10 +708,9 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
     }), // Tried to put this in ng-mousedown, but no luck
     angular.element("#timeline").on("mousedown", function() {
         $scope.pauseRead();
-    }), $scope.autoSave.loadAll(), $scope.autoSave.setup(), window.location.hash.match(/#url:/)) {
-        var url = window.location.hash, url = url.replace(/^#url:/, "");
-        $scope.isValidURL(url) && (window.location.hash = "", $scope.stopRead(), $scope.settings.text = url, 
-        $scope.startRead());
+    }), $scope.autoSave.loadAll(), $scope.autoSave.setup(), window.location.hash.match(/^#text:/)) {
+        var url = window.location.hash, url = url.replace(/^#text:/, "");
+        window.location.hash = "", $scope.stopRead(), $scope.settings.text = url, $scope.startRead();
     }
     // Lastly, init
     $scope.settings.init = !0;

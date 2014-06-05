@@ -568,16 +568,14 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	$scope.autoSave.loadAll();
 	$scope.autoSave.setup();
 
-	if(window.location.hash.match(/#url:/)) {
+	if(window.location.hash.match(/^#text:/)) {
 		var url = window.location.hash,
-			url = url.replace(/^#url:/, '');
+			url = url.replace(/^#text:/, '');
 
-		if($scope.isValidURL(url)) {
-			window.location.hash = '';
-			$scope.stopRead();
-			$scope.settings.text = url;
-			$scope.startRead();
-		}
+		window.location.hash = '';
+		$scope.stopRead();
+		$scope.settings.text = url;
+		$scope.startRead();
 	}
 
 	// Lastly, init
