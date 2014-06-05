@@ -12,6 +12,7 @@ curl_setopt($ch, CURLOPT_HEADER, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 $apiRes = curl_exec($ch);
+//var_dump(curl_error($ch));
 curl_close($ch);
 
 $data = json_decode($apiRes, true);
@@ -28,7 +29,7 @@ if(!empty($apiRes) && !isset($data['error'])) {
 } else {
 	$result = array(
 		'status' => 'error',
-		'result' => ''
+		'result' => $data['messages']
 	);
 }
 

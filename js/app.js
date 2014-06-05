@@ -205,13 +205,13 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 					}, 300);
 				} else {
 					$scope.settings.showLoadingOverlay = false;
-					$scope.flashToast('Error: Could not parse URL');
+					$scope.flashToast("Sorry, i couldn't parse that URL.");
 				}
 			});
 		} else {
 			$scope.game.words = $scope.splitToWords($scope.settings.text);
 			if($scope.game.words.length < 2) {
-				$scope.flashToast('Please enter something to read');
+				$scope.flashToast('Please enter something to read.');
 				return false;
 			}
 			$scope.game.hasStarted = true;

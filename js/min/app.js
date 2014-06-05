@@ -552,9 +552,9 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
                 $scope.game.hasStarted = !0, $scope.game.paused = !1, $scope.resetToast(), $timeout(function() {
                     $scope.settings.showLoadingOverlay = !1, $scope.startCountdown(3 * $scope.settings.pauseCountdown);
                 }, 300);
-            } else $scope.settings.showLoadingOverlay = !1, $scope.flashToast("Error: Could not parse URL");
+            } else $scope.settings.showLoadingOverlay = !1, $scope.flashToast("Sorry, i couldn't parse that URL.");
         }); else {
-            if ($scope.game.words = $scope.splitToWords($scope.settings.text), $scope.game.words.length < 2) return $scope.flashToast("Please enter something to read"), 
+            if ($scope.game.words = $scope.splitToWords($scope.settings.text), $scope.game.words.length < 2) return $scope.flashToast("Please enter something to read."), 
             !1;
             $scope.game.hasStarted = !0, $scope.game.paused = !1, $timeout(function() {
                 $scope.startCountdown(3 * $scope.settings.pauseCountdown);
