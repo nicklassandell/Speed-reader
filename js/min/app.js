@@ -487,11 +487,18 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
     $scope.init = function() {
         $scope.autoSave.loadAll(), $scope.autoSave.setup();
         var cookieText = $scope.cookie.get("READ_TEXT");
-        cookieText.length > 0 && (// Remove cookie
-        $scope.cookie.set("READ_TEXT", "", -1), // Start reading cookie text
-        $scope.stopRead(), $scope.settings.text = decodeURIComponent(cookieText), $scope.startRead()), 
+        if (cookieText.length > 0) {
+            // Remove cookie
+            $scope.cookie.set("READ_TEXT", "", -1);
+            var text = $scope.makeTextReadable($scope.decodeURI(cookieText));
+            // Start reading cookie text
+            $scope.stopRead(), $scope.settings.text = text, $scope.startRead();
+        }
         // Lastly, init app
         $scope.settings.init = !0;
+    }, $scope.decodeURI = function(text) {
+        var text = decodeURI(text), text = text.replaceAll("%0A", "\r\n");
+        return text;
     }, $scope.cookie = {
         set: function(name, value, days) {
             var expires;
@@ -563,7 +570,8 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
                 }, 300);
             } else $scope.settings.showLoadingOverlay = !1, $scope.flashToast("Sorry, i couldn't parse that URL.");
         }); else {
-            if ($scope.game.words = $scope.splitToWords($scope.settings.text), $scope.game.words.length < 2) return $scope.flashToast("Please enter something to read."), 
+            if (console.log("not a url", $scope.settings.text), $scope.game.words = $scope.splitToWords($scope.settings.text), 
+            $scope.game.words.length < 2) return $scope.flashToast("Please enter something to read."), 
             !1;
             $scope.game.hasStarted = !0, $scope.game.paused = !1, $timeout(function() {
                 $scope.startCountdown(3 * $scope.settings.pauseCountdown);
@@ -717,7 +725,7 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
     }, $scope.makeTextReadable = function(text) {
         return text.betterTrim().replace(/(\r\n|\n|\r)+/gm, "\r\n\r\n");
     }, $scope.isValidURL = function(text) {
-        return text.betterTrim().match(/^\bhttps?:\/\/?[-A-Za-z0-9+&@#\/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]$/);
+        return text.betterTrim().match(/^https?:\/\/[^\s]*$/);
     }, // Pause
     Mousetrap.bind("space", function() {
         $scope.togglePause(), $scope.$apply();
@@ -768,4 +776,9 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
 } ]), // Removes all double whitespace. Also trims beginning and end.
 String.prototype.betterTrim = function() {
     return this.replace(/\s+(?=\s)/g, "").trim();
+}, String.prototype.replaceAll = function(stringToFind, stringToReplace) {
+    if (stringToFind === stringToReplace) return this;
+    for (var temp = this, index = temp.indexOf(stringToFind); -1 != index; ) temp = temp.replace(stringToFind, stringToReplace), 
+    index = temp.indexOf(stringToFind);
+    return temp;
 };

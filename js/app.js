@@ -73,15 +73,24 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			// Remove cookie
 			$scope.cookie.set('READ_TEXT', '', -1);
 
+			var text = $scope.makeTextReadable($scope.decodeURI(cookieText));
+
 			// Start reading cookie text
 			$scope.stopRead();
-			$scope.settings.text = decodeURIComponent(cookieText);
+			$scope.settings.text = text;
 			$scope.startRead();
 		}
 
 		// Lastly, init app
 		$scope.settings.init = true;
 	}
+
+	$scope.decodeURI = function(text) {
+		var text = decodeURI(text),
+			text = text.replaceAll('%0A', "\r\n");
+
+		return text;
+	};
 
 	$scope.cookie = {
 		set : function(name, value, days) {
@@ -207,6 +216,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 				}
 			});
 		} else {
+			console.log('not a url', $scope.settings.text);
 			$scope.game.words = $scope.splitToWords($scope.settings.text);
 			if($scope.game.words.length < 2) {
 				$scope.flashToast('Please enter something to read.');
@@ -567,7 +577,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 
 	$scope.isValidURL = function(text) {
-		return text.betterTrim().match(/^\bhttps?:\/\/?[-A-Za-z0-9+&@#\/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]$/);
+		return text.betterTrim().match(/^https?:\/\/[^\s]*$/);
 	}
 
 
@@ -671,4 +681,15 @@ app.directive('toggleDropdown', ['$timeout', function($timeout) {
 // Removes all double whitespace. Also trims beginning and end.
 String.prototype.betterTrim = function() {
 	return this.replace(/\s+(?=\s)/g, '').trim();
+};
+
+String.prototype.replaceAll = function (stringToFind, stringToReplace) {
+    if (stringToFind === stringToReplace) return this;
+    var temp = this;
+    var index = temp.indexOf(stringToFind);
+    while (index != -1) {
+        temp = temp.replace(stringToFind, stringToReplace);
+        index = temp.indexOf(stringToFind);
+    }
+    return temp;
 };
