@@ -570,8 +570,7 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
                 }, 300);
             } else $scope.settings.showLoadingOverlay = !1, $scope.flashToast("Sorry, i couldn't parse that URL.");
         }); else {
-            if (console.log("not a url", $scope.settings.text), $scope.game.words = $scope.splitToWords($scope.settings.text), 
-            $scope.game.words.length < 2) return $scope.flashToast("Please enter something to read."), 
+            if ($scope.game.words = $scope.splitToWords($scope.settings.text), $scope.game.words.length < 2) return $scope.flashToast("Please enter something to read."), 
             !1;
             $scope.game.hasStarted = !0, $scope.game.paused = !1, $timeout(function() {
                 $scope.startCountdown(3 * $scope.settings.pauseCountdown);
@@ -727,6 +726,9 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
     }, $scope.isValidURL = function(text) {
         return text.betterTrim().match(/^https?:\/\/[^\s]*$/);
     }, // Pause
+    Mousetrap.bind("ctrl+enter", function() {
+        $scope.startRead(), $scope.$apply();
+    }), // Pause
     Mousetrap.bind("space", function() {
         $scope.togglePause(), $scope.$apply();
     }), // Previous word

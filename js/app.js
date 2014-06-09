@@ -216,7 +216,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 				}
 			});
 		} else {
-			console.log('not a url', $scope.settings.text);
 			$scope.game.words = $scope.splitToWords($scope.settings.text);
 			if($scope.game.words.length < 2) {
 				$scope.flashToast('Please enter something to read.');
@@ -584,6 +583,12 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 
 
+
+	// Pause
+	Mousetrap.bind('ctrl+enter', function() {
+		$scope.startRead();
+		$scope.$apply();
+	});
 
 	// Pause
 	Mousetrap.bind('space', function() {

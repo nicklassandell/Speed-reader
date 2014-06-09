@@ -142,7 +142,7 @@ EOT;
         </div> <!-- inner container -->
     </div> <!-- top bar -->
 
-    <textarea ng-model="settings.text" class="editor" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)"></textarea>
+    <textarea ng-model="settings.text" class="editor mousetrap" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)"></textarea>
     
     <div class="read-canvas">
         <div class="inner-content">
