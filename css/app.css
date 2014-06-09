@@ -598,30 +598,34 @@ a {
 /* line 179, ../scss/app.scss */
 .top-bar .bar-item {
   height: 80px;
-  margin-right: 40px;
+  margin-right: 20px;
   display: inline-block;
   vertical-align: top;
   position: relative;
 }
 /* line 186, ../scss/app.scss */
+.top-bar .bar-item.logo {
+  margin-right: 40px;
+}
+/* line 190, ../scss/app.scss */
 .top-bar .bar-item.right {
   margin-right: 0;
   margin-left: 10px;
 }
-/* line 191, ../scss/app.scss */
+/* line 195, ../scss/app.scss */
 .top-bar .bar-item.small-gap {
   margin-right: 20px;
 }
-/* line 195, ../scss/app.scss */
+/* line 199, ../scss/app.scss */
 .top-bar .bar-item .icon-button {
   color: #FFF;
 }
-/* line 200, ../scss/app.scss */
+/* line 204, ../scss/app.scss */
 .top-bar .dropdown {
   top: 88%;
 }
 
-/* line 206, ../scss/app.scss */
+/* line 210, ../scss/app.scss */
 .editor {
   position: absolute;
   top: 80px;
@@ -646,12 +650,12 @@ a {
   overflow: scroll;
   overflow-x: hidden;
 }
-/* line 230, ../scss/app.scss */
+/* line 234, ../scss/app.scss */
 .has-started .editor {
   opacity: 0;
 }
 
-/* line 237, ../scss/app.scss */
+/* line 241, ../scss/app.scss */
 .read-canvas {
   position: absolute;
   top: -100000px;
@@ -671,17 +675,17 @@ a {
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
-/* line 250, ../scss/app.scss */
+/* line 254, ../scss/app.scss */
 .dark-mode .read-canvas {
   background: #202020;
   color: #DADBD5;
 }
-/* line 255, ../scss/app.scss */
+/* line 259, ../scss/app.scss */
 .has-started .read-canvas {
   top: 0;
   opacity: 1;
 }
-/* line 261, ../scss/app.scss */
+/* line 265, ../scss/app.scss */
 .read-canvas .inner-content {
   position: absolute;
   top: 0;
@@ -693,35 +697,35 @@ a {
   max-width: 1024px;
   padding: 0 30px;
 }
-/* line 276, ../scss/app.scss */
+/* line 280, ../scss/app.scss */
 .read-canvas .top-controls {
   position: relative;
   z-index: 25;
   height: 40px;
   line-height: 40px;
 }
-/* line 282, ../scss/app.scss */
+/* line 286, ../scss/app.scss */
 .read-canvas .top-controls, .read-canvas .top-controls button {
   color: #202020;
 }
-/* line 287, ../scss/app.scss */
+/* line 291, ../scss/app.scss */
 .dark-mode .read-canvas .top-controls, .dark-mode .read-canvas .top-controls button {
   color: #B6B6B6;
 }
-/* line 292, ../scss/app.scss */
+/* line 296, ../scss/app.scss */
 .read-canvas .top-controls .left, .read-canvas .top-controls .right {
   position: relative;
   z-index: 2;
 }
-/* line 297, ../scss/app.scss */
+/* line 301, ../scss/app.scss */
 .read-canvas .top-controls .left {
   float: left;
 }
-/* line 301, ../scss/app.scss */
+/* line 305, ../scss/app.scss */
 .read-canvas .top-controls .right {
   float: right;
 }
-/* line 305, ../scss/app.scss */
+/* line 309, ../scss/app.scss */
 .read-canvas .top-controls .center {
   position: absolute;
   top: 0;
@@ -731,16 +735,16 @@ a {
   text-align: center;
   z-index: 1;
 }
-/* line 315, ../scss/app.scss */
+/* line 319, ../scss/app.scss */
 .read-canvas .top-controls .right .icon-button {
   margin-right: 0;
   margin-left: 5px;
 }
-/* line 319, ../scss/app.scss */
+/* line 323, ../scss/app.scss */
 .read-canvas .top-controls .icon-button {
   margin-right: 5px;
 }
-/* line 326, ../scss/app.scss */
+/* line 330, ../scss/app.scss */
 .read-canvas .word-container {
   position: relative;
   height: 130px;
@@ -759,15 +763,15 @@ a {
   transition-duration: 0.3s;
   font-family: "Lato", sans-serif;
 }
-/* line 341, ../scss/app.scss */
+/* line 345, ../scss/app.scss */
 .serif-font .read-canvas .word-container {
   font-family: 'Roboto Slab', serif;
 }
-/* line 345, ../scss/app.scss */
+/* line 349, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container {
   text-align: left;
 }
-/* line 349, ../scss/app.scss */
+/* line 353, ../scss/app.scss */
 .read-canvas .word-container .focus-point {
   position: static;
   display: inline-block;
@@ -775,12 +779,12 @@ a {
   z-index: 2;
   height: 100%;
 }
-/* line 356, ../scss/app.scss */
+/* line 360, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container .focus-point {
   position: relative;
   left: 50%;
 }
-/* line 362, ../scss/app.scss */
+/* line 366, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container .focus-point:before, .center-focus-point .read-canvas .word-container .focus-point:after {
   position: absolute;
   left: 0;
@@ -789,41 +793,41 @@ a {
   background: rgba(255, 255, 255, 0.1);
   content: '';
 }
-/* line 370, ../scss/app.scss */
+/* line 374, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container .focus-point:before {
   top: 0;
 }
-/* line 373, ../scss/app.scss */
+/* line 377, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container .focus-point:after {
   bottom: 0;
 }
-/* line 379, ../scss/app.scss */
+/* line 383, ../scss/app.scss */
 .highlight-focus-point.center-focus-point .read-canvas .word-container .focus-point .highlight {
   color: #e55454;
 }
-/* line 384, ../scss/app.scss */
+/* line 388, ../scss/app.scss */
 .read-canvas .word-container .focus-point .special {
   opacity: 0;
 }
-/* line 387, ../scss/app.scss */
+/* line 391, ../scss/app.scss */
 .is-paused .read-canvas .word-container .focus-point .special {
   opacity: .1;
 }
-/* line 394, ../scss/app.scss */
+/* line 398, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container .focus-point .before, .center-focus-point .read-canvas .word-container .focus-point .after {
   position: absolute;
   top: 0;
   bottom: 0;
 }
-/* line 400, ../scss/app.scss */
+/* line 404, ../scss/app.scss */
 .read-canvas .word-container .focus-point .before {
   right: 100%;
 }
-/* line 403, ../scss/app.scss */
+/* line 407, ../scss/app.scss */
 .read-canvas .word-container .focus-point .after {
   left: 100%;
 }
-/* line 409, ../scss/app.scss */
+/* line 413, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar {
   position: absolute;
   top: 0;
@@ -834,11 +838,11 @@ a {
   display: none;
   overflow: hidden;
 }
-/* line 419, ../scss/app.scss */
+/* line 423, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar.visible {
   display: block;
 }
-/* line 423, ../scss/app.scss */
+/* line 427, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar .progress {
   position: absolute;
   top: 0;
@@ -852,7 +856,7 @@ a {
   -o-transition-duration: 0.75s;
   transition-duration: 0.75s;
 }
-/* line 433, ../scss/app.scss */
+/* line 437, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar .progress:before, .read-canvas .word-container .countdown-bar .progress:after {
   position: absolute;
   left: 0;
@@ -862,15 +866,15 @@ a {
   display: block;
   content: '';
 }
-/* line 442, ../scss/app.scss */
+/* line 446, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar .progress:before {
   top: 0;
 }
-/* line 446, ../scss/app.scss */
+/* line 450, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar .progress:after {
   bottom: 0;
 }
-/* line 454, ../scss/app.scss */
+/* line 458, ../scss/app.scss */
 .read-canvas .timeline {
   position: relative;
   z-index: 20;
@@ -881,12 +885,12 @@ a {
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
-/* line 461, ../scss/app.scss */
+/* line 465, ../scss/app.scss */
 .has-started .read-canvas .timeline {
   opacity: 1;
 }
 
-/* line 469, ../scss/app.scss */
+/* line 473, ../scss/app.scss */
 .loading-screen {
   position: absolute;
   top: -10000px;
@@ -906,13 +910,13 @@ a {
   -o-transition-property: opacity;
   transition-property: opacity;
 }
-/* line 482, ../scss/app.scss */
+/* line 486, ../scss/app.scss */
 .is-loading .loading-screen {
   top: 0;
   height: 100%;
   opacity: 1;
 }
-/* line 488, ../scss/app.scss */
+/* line 492, ../scss/app.scss */
 .loading-screen .icon {
   position: absolute;
   top: 50%;
@@ -929,17 +933,17 @@ a {
   transform: translateY(-50%);
 }
 
-/* line 508, ../scss/app.scss */
+/* line 512, ../scss/app.scss */
 .block-links, .block-links li {
   padding: 0;
   margin: 0;
   display: block;
 }
-/* line 514, ../scss/app.scss */
+/* line 518, ../scss/app.scss */
 .dropdown .block-links {
   margin: -10px -20px;
 }
-/* line 518, ../scss/app.scss */
+/* line 522, ../scss/app.scss */
 .block-links li a {
   display: block;
   padding: 10px 20px;
@@ -950,7 +954,7 @@ a {
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
-/* line 525, ../scss/app.scss */
+/* line 529, ../scss/app.scss */
 .block-links li a:hover {
   background: #dfdad7;
   color: #1ea5ac;
@@ -980,7 +984,7 @@ a {
 	}
 }
 */
-/* line 560, ../scss/app.scss */
+/* line 564, ../scss/app.scss */
 label {
   display: block;
   line-height: 1.3rem;
@@ -990,7 +994,7 @@ label {
   letter-spacing: 1px;
 }
 
-/* line 569, ../scss/app.scss */
+/* line 573, ../scss/app.scss */
 .button {
   background: #1ea5ac;
   padding: 15px 20px;
@@ -1017,7 +1021,7 @@ label {
   -o-border-radius: 2px;
   border-radius: 2px;
 }
-/* line 588, ../scss/app.scss */
+/* line 592, ../scss/app.scss */
 .button:hover {
   background: #1a9096;
   -webkit-transition-duration: 0.1s;
@@ -1025,53 +1029,53 @@ label {
   -o-transition-duration: 0.1s;
   transition-duration: 0.1s;
 }
-/* line 592, ../scss/app.scss */
+/* line 596, ../scss/app.scss */
 .button:active {
   background: #13676b;
 }
-/* line 597, ../scss/app.scss */
+/* line 601, ../scss/app.scss */
 .button.dark {
   color: #444;
   background: rgba(0, 0, 0, 0.1);
 }
-/* line 601, ../scss/app.scss */
+/* line 605, ../scss/app.scss */
 .button.dark:hover {
   background: rgba(0, 0, 0, 0.2);
 }
-/* line 604, ../scss/app.scss */
+/* line 608, ../scss/app.scss */
 .button.dark:active {
   background: rgba(0, 0, 0, 0.3);
 }
-/* line 608, ../scss/app.scss */
+/* line 612, ../scss/app.scss */
 .dark-mode .button.dark {
   background: rgba(255, 255, 255, 0.05);
 }
-/* line 611, ../scss/app.scss */
+/* line 615, ../scss/app.scss */
 .dark-mode .button.dark:hover {
   background: rgba(255, 255, 255, 0.08);
 }
-/* line 614, ../scss/app.scss */
+/* line 618, ../scss/app.scss */
 .dark-mode .button.dark:active {
   background: rgba(255, 255, 255, 0.1);
 }
-/* line 620, ../scss/app.scss */
+/* line 624, ../scss/app.scss */
 .button.red {
   background: #e55454;
 }
-/* line 623, ../scss/app.scss */
+/* line 627, ../scss/app.scss */
 .button.red:hover {
   background: #e23e3e;
 }
-/* line 626, ../scss/app.scss */
+/* line 630, ../scss/app.scss */
 .button.red:active {
   background: #cd1f1f;
 }
-/* line 631, ../scss/app.scss */
+/* line 635, ../scss/app.scss */
 .button.right-spacing {
   margin-right: 20px;
 }
 
-/* line 636, ../scss/app.scss */
+/* line 640, ../scss/app.scss */
 .icon-button {
   display: inline-block;
   height: 40px;
@@ -1092,42 +1096,42 @@ label {
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
-/* line 653, ../scss/app.scss */
+/* line 657, ../scss/app.scss */
 .icon-button:hover {
   color: rgba(255, 255, 255, 0.7);
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.1);
 }
-/* line 659, ../scss/app.scss */
+/* line 663, ../scss/app.scss */
 .icon-button:active {
   color: #1ea5ac;
 }
-/* line 663, ../scss/app.scss */
+/* line 667, ../scss/app.scss */
 .icon-button.outlined {
   border-color: rgba(255, 255, 255, 0.1);
 }
-/* line 667, ../scss/app.scss */
+/* line 671, ../scss/app.scss */
 .icon-button .fa {
   font-size: 1em;
 }
-/* line 671, ../scss/app.scss */
+/* line 675, ../scss/app.scss */
 .icon-button.has-text .fa {
   margin-right: 10px;
 }
 
-/* line 676, ../scss/app.scss */
+/* line 680, ../scss/app.scss */
 .checkbox {
   display: inline-block;
 }
-/* line 679, ../scss/app.scss */
+/* line 683, ../scss/app.scss */
 .checkbox:hover .check span {
   border-color: #9a8c83;
 }
-/* line 683, ../scss/app.scss */
+/* line 687, ../scss/app.scss */
 .checkbox:hover .check input:checked ~ span {
   background-color: #22bac2;
 }
-/* line 687, ../scss/app.scss */
+/* line 691, ../scss/app.scss */
 .checkbox label {
   cursor: pointer;
   position: relative;
@@ -1139,7 +1143,7 @@ label {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-/* line 699, ../scss/app.scss */
+/* line 703, ../scss/app.scss */
 .checkbox .check {
   height: 1.3rem;
   width: 1.3rem;
@@ -1148,7 +1152,7 @@ label {
   float: left;
   cursor: pointer;
 }
-/* line 707, ../scss/app.scss */
+/* line 711, ../scss/app.scss */
 .checkbox .check span, .checkbox .check input {
   position: absolute;
   top: 0;
@@ -1159,7 +1163,7 @@ label {
   margin: 0;
   padding: 0;
 }
-/* line 718, ../scss/app.scss */
+/* line 722, ../scss/app.scss */
 .checkbox .check span {
   border: 1px solid #c8c0bb;
   background-color: #FFF;
@@ -1182,18 +1186,18 @@ label {
   -o-transition-timing-function: cubic-bezier(0.2, 1.4, 0.2, 1.2);
   transition-timing-function: cubic-bezier(0.2, 1.4, 0.2, 1.2);
 }
-/* line 731, ../scss/app.scss */
+/* line 735, ../scss/app.scss */
 .checkbox .check input {
   opacity: 0;
 }
-/* line 734, ../scss/app.scss */
+/* line 738, ../scss/app.scss */
 .checkbox .check input:checked ~ span {
   background-color: #1ea5ac;
   background-position: center;
   border-color: #1ea5ac;
 }
 
-/* line 745, ../scss/app.scss */
+/* line 749, ../scss/app.scss */
 .dropdown {
   position: absolute;
   top: 100%;
@@ -1216,11 +1220,11 @@ label {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 761, ../scss/app.scss */
+/* line 765, ../scss/app.scss */
 .dropdown.open {
   display: block;
 }
-/* line 765, ../scss/app.scss */
+/* line 769, ../scss/app.scss */
 .dropdown::after {
   position: absolute;
   bottom: 100%;
@@ -1231,12 +1235,12 @@ label {
   border-bottom-color: #FFF;
 }
 
-/* line 778, ../scss/app.scss */
+/* line 782, ../scss/app.scss */
 input, textarea, select {
   font-family: "Lato", sans-serif;
 }
 
-/* line 782, ../scss/app.scss */
+/* line 786, ../scss/app.scss */
 input[type=text], input[type=number], input[type=password], input[type=email], select {
   padding: .4rem .6rem;
   overflow: hidden;
@@ -1251,13 +1255,13 @@ input[type=text], input[type=number], input[type=password], input[type=email], s
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 792, ../scss/app.scss */
+/* line 796, ../scss/app.scss */
 input[type=text].expand, input[type=number].expand, input[type=password].expand, input[type=email].expand, select.expand {
   display: block;
   width: 100%;
 }
 
-/* line 799, ../scss/app.scss */
+/* line 803, ../scss/app.scss */
 .form-row, .form-group {
   display: block;
   margin: 0 0 1.5rem 0;
@@ -1265,11 +1269,11 @@ input[type=text].expand, input[type=number].expand, input[type=password].expand,
   overflow: hidden;
   *zoom: 1;
 }
-/* line 805, ../scss/app.scss */
+/* line 809, ../scss/app.scss */
 .form-row:last-child, .form-group:last-child {
   margin-bottom: 0;
 }
-/* line 809, ../scss/app.scss */
+/* line 813, ../scss/app.scss */
 .form-row.disabled, .form-group.disabled {
   opacity: .5;
 }
@@ -1282,7 +1286,7 @@ input[type=text].expand, input[type=number].expand, input[type=password].expand,
 	padding: 1rem 0;
 }
 */
-/* line 824, ../scss/app.scss */
+/* line 828, ../scss/app.scss */
 .key {
   background: rgba(0, 0, 0, 0.07);
   padding: 4px 7px;

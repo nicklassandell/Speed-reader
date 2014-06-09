@@ -178,10 +178,14 @@ a {
 
 	.bar-item {
 		height: $top-bar-height; // Might not need
-		margin-right: 40px;
+		margin-right: 20px;
 		display: inline-block;
 		vertical-align: top;
 		position: relative;
+
+		&.logo {
+			margin-right: 40px;
+		}
 
 		&.right {
 			margin-right: 0;

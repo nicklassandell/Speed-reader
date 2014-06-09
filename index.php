@@ -119,7 +119,7 @@ EOT;
     <div class="top-bar">
         <div class="inner-container">
             
-            <div class="bar-item">
+            <div class="bar-item logo">
                 <h1>Speed reader</h1>
             </div>
             
@@ -127,23 +127,15 @@ EOT;
                 <a class="button red" ng-click="startRead()">Start read <i class="fa fa-play"></i></a>
             </div>
 
-            <div class="bar-item">
+            <div class="bar-item" ng-show="settings.toast">
                 <p>{{ settings.toast }}</p>
             </div>
             
-            <div class="bar-item right">
+            <div class="bar-item">
                 <a title="Show settings" class="icon-button" toggle-dropdown="top-bar-drop-settings"><i class="fa fa-gear"></i></a>
         
                 <div id="top-bar-drop-settings" class="dropdown">
                     <?php echo $settingsDropdown; ?>
-                </div>
-            </div>
-            
-            <div class="bar-item right">
-                <a title="Show keyboard shortcuts" class="icon-button" toggle-dropdown="top-bar-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></a>
-        
-                <div id="top-bar-keyboard-dropdown" class="dropdown">
-                    <?php echo $keyboardDropdown; ?>
                 </div>
             </div>
 
