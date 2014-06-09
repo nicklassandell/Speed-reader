@@ -52,7 +52,8 @@ $settingsDropdown = <<<EOT
             </div>
         </div>
     </div>
-
+    
+    <!--
     <div class="form-row">
         <div class="checkbox">
             <div class="check">
@@ -62,6 +63,7 @@ $settingsDropdown = <<<EOT
             <label for="set-nm-chk">Night mode</label>
         </div>
     </div>
+    -->
 
     <div class="form-row">
         <div class="checkbox">
@@ -86,6 +88,10 @@ EOT;
 
 $keyboardDropdown = <<<EOT
     <p>Here are some shortcuts for you!</p>
+    <p><span class="key">space</span> to pause/continue</p>
+    <p><span class="key">left</span> or <span class="key">a</span> for previous word</p>
+    <p><span class="key">right</span> or <span class="key">d</span> for next word</p>
+    <p><span class="key">ctrl+left</span> for previous sentence</p>
 EOT;
 
 ?><!doctype html>
