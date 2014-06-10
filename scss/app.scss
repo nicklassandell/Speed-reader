@@ -158,6 +158,7 @@ a {
 		color: #FFF;
 
 		.inner-container {
+			position: relative;
 			max-width: $center-container-width + ($center-container-padding*2);
 			margin: 0 auto;
 			padding: 0 $center-container-padding;
@@ -170,6 +171,16 @@ a {
 			position: relative;
 			top: 7px;
 			width: 200px;
+		}
+
+		.toast {
+			position: absolute;
+			top: 0;
+			left: 280px;
+			right: 0;
+			height: $top-bar-height;
+			background: $base-blue;
+			display: block;
 		}
 
 		.bar-item {
@@ -204,6 +215,10 @@ a {
 					color: #FFF;
 					background: transparent;
 					border-color: rgba(255,255,255,.2);
+
+					&:hover {
+						border-color: rgba(255,255,255,.4);
+					}
 				}
 			}
 

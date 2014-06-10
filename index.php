@@ -132,10 +132,6 @@ EOT;
                 <div class="bar-item">
                     <a class="toolbar-button red" ng-click="startRead()">Start read <i class="fa fa-play"></i></a>
                 </div>
-
-                <div class="bar-item" ng-show="settings.toast">
-                    <p>{{ settings.toast }}</p>
-                </div>
                 
                 <div class="bar-item">
                     <a title="Show settings" class="toolbar-button opaque" toggle-dropdown="top-bar-drop-settings">Settings <i class="fa fa-gear"></i></a>
@@ -151,6 +147,11 @@ EOT;
                     <div id="about" class="dropdown">
                         <?php echo $aboutDropdown; ?>
                     </div>
+                </div>
+
+
+                <div class="toast" ng-show="settings.toast">
+                    <p>{{ settings.toast }}</p>
                 </div>
 
             </div> <!-- inner container -->
