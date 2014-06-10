@@ -5,14 +5,14 @@
 @import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 
 
-$base-red: #e55454;
-$base-blue: #1EA5AC;
+$base-red: #e95a6e;
+$base-blue: #40b8a3;
 $base-light-grey: #C8C0BB; 
 $base-grey: #202020;
 
 $light-background-color: #F7F7F7;
 
-$top-bar-height: 80px;
+$top-bar-height: 70px;
 $progress-bar-height: 2px;
 
 $center-container-width: 1024px;
@@ -138,103 +138,126 @@ a {
 
 
 
-
-.top-bar {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: $top-bar-height;
-	line-height: $top-bar-height;
-	background: rgba(0,0,0,.2);
-	z-index: 20;
-	@include box-shadow(0 0 3px rgba(255,255,255,.1));
-	@include transition-duration($global-transition-duration);
-	background: $base-blue;
-	color: #FFF;
-
+.front {
 	.has-started &, .is-loading & {
-		.csstransforms & {
-			@include transform(translateY(-$top-bar-height));
+		display: none;
+	}
+
+	.top-bar {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: $top-bar-height;
+		line-height: $top-bar-height;
+		background: rgba(0,0,0,.2);
+		z-index: 20;
+		@include box-shadow(0 0 3px rgba(255,255,255,.1));
+		@include transition-duration($global-transition-duration);
+		background: $base-blue;
+		color: #FFF;
+
+		.inner-container {
+			max-width: $center-container-width + ($center-container-padding*2);
+			margin: 0 auto;
+			padding: 0 $center-container-padding;
 		}
-		.no-csstransforms & {
-			top: -$top-bar-height;
+
+		h1 {
+			display: none;
+		}
+		.logo {
+			position: relative;
+			top: 7px;
+			width: 200px;
+		}
+
+		.bar-item {
+			height: $top-bar-height; // Might not need
+			margin-right: 20px;
+			display: inline-block;
+			vertical-align: top;
+			position: relative;
+
+
+			.toolbar-button {
+				border: 0;
+				position: relative;
+				bottom: -10px;
+				height: 50px;
+				line-height: normal;
+				background: #FFF;
+				color: #777;
+				font-size: 14px;
+				border: 1px solid transparent;
+				border-bottom: 0;
+				display: inline-block;
+				padding: 15px 20px;
+				text-transform: uppercase;
+				@include border-radius($global-radius $global-radius 0 0);
+
+				.fa {
+					margin-left: 5px;
+				}
+
+				&.opaque {
+					color: #FFF;
+					background: transparent;
+					border-color: rgba(255,255,255,.2);
+				}
+			}
+
+			&.logo {
+				margin-right: 40px;
+			}
+
+			&.right {
+				margin-right: 0;
+				margin-left: 10px;
+			}
+
+			&.small-gap {
+				margin-right: 20px;
+			}
+
+			.icon-button {
+				color: #FFF;
+			}
+		}
+
+		.dropdown {
+			top: 100%; // By default it's 100% + 20px
 		}
 	}
 
-	.inner-container {
+
+	.editor {
+		position: absolute;
+		top: $top-bar-height;
+		left: 0;
+		right: 0;
+		height: calc(100% - #{$top-bar-height});
+		z-index: 10;
+		width: 100%;
 		max-width: $center-container-width + ($center-container-padding*2);
 		margin: 0 auto;
-		padding: 0 $center-container-padding;
-	}
-
-	h1 {
-		display: inline-block;
-		font-size: 1.5rem;
+		padding: $center-container-padding;
+		display: block;
+		background: #FFF;
+		border: 0;
+		outline: none;
+		color: inherit;
+		resize: none;
+		font-size: 20px;
+		line-height: 2rem;
+		font-family: 'Roboto Slab', serif;
 		font-weight: 100;
-		margin: 0;
-		color: #FFF;
-	}
-
-	.bar-item {
-		height: $top-bar-height; // Might not need
-		margin-right: 20px;
-		display: inline-block;
-		vertical-align: top;
-		position: relative;
-
-		&.logo {
-			margin-right: 40px;
-		}
-
-		&.right {
-			margin-right: 0;
-			margin-left: 10px;
-		}
-
-		&.small-gap {
-			margin-right: 20px;
-		}
-
-		.icon-button {
-			color: #FFF;
-		}
-	}
-
-	.dropdown {
-		top: 88%;
+		overflow: scroll;
+		overflow-x: hidden;
 	}
 }
 
 
-.editor {
-	position: absolute;
-	top: $top-bar-height;
-	left: 0;
-	right: 0;
-	height: calc(100% - #{$top-bar-height});
-	z-index: 10;
-	width: 100%;
-	max-width: $center-container-width + ($center-container-padding*2);
-	margin: 0 auto;
-	padding: $center-container-padding;
-	display: block;
-	background: #FFF;
-	border: 0;
-	outline: none;
-	color: inherit;
-	resize: none;
-	font-size: 20px;
-	line-height: 2rem;
-	font-family: 'Roboto Slab', serif;
-	font-weight: 100;
-	overflow: scroll;
-	overflow-x: hidden;
-
-	.has-started & {
-		opacity: 0;
-	}
-}
 
 
 

@@ -583,7 +583,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 
 
-
+$interval.cancel($scope.countDownTimeout);
 	// Pause
 	Mousetrap.bind('ctrl+enter', function() {
 		$scope.startRead();

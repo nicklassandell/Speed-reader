@@ -725,7 +725,7 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
         return text.betterTrim().replace(/(\r\n|\n|\r)+/gm, "\r\n\r\n");
     }, $scope.isValidURL = function(text) {
         return text.betterTrim().match(/^https?:\/\/[^\s]*$/);
-    }, // Pause
+    }, $interval.cancel($scope.countDownTimeout), // Pause
     Mousetrap.bind("ctrl+enter", function() {
         $scope.startRead(), $scope.$apply();
     }), // Pause

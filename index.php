@@ -94,12 +94,16 @@ $keyboardDropdown = <<<EOT
     <p><span class="key">ctrl+left</span> for previous sentence</p>
 EOT;
 
+$aboutDropdown = <<<EOT
+    <p>What is this shit?</p>
+EOT;
+
 ?><!doctype html>
 <html class="no-js" lang="en" ng-app="speedReadingApp">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Speed read</title>
+    <title>Champ | Speed read like a boss</title>
     <link rel="stylesheet" href="css/app.css" />
     
     <script src="js/modernizr.js"></script>
@@ -116,33 +120,44 @@ EOT;
                                       {{ settings.init ? 'init' : '' }}
                                       {{ settings.centerFocusPoint ? 'center-focus-point' : '' }}">
 
-    <div class="top-bar">
-        <div class="inner-container">
-            
-            <div class="bar-item logo">
-                <h1>Speed reader</h1>
-            </div>
-            
-            <div class="bar-item">
-                <a class="button red" ng-click="startRead()">Start read <i class="fa fa-play"></i></a>
-            </div>
-
-            <div class="bar-item" ng-show="settings.toast">
-                <p>{{ settings.toast }}</p>
-            </div>
-            
-            <div class="bar-item">
-                <a title="Show settings" class="icon-button" toggle-dropdown="top-bar-drop-settings"><i class="fa fa-gear"></i></a>
-        
-                <div id="top-bar-drop-settings" class="dropdown">
-                    <?php echo $settingsDropdown; ?>
+    <div class="front">
+        <div class="top-bar">
+            <div class="inner-container">
+                
+                <div class="bar-item logo">
+                    <h1>Champ - Speed read like a boss</h1>
+                    <img class="logo" src="img/logox2.png" alt="Champ logo">
                 </div>
-            </div>
+                
+                <div class="bar-item">
+                    <a class="toolbar-button red" ng-click="startRead()">Start read <i class="fa fa-play"></i></a>
+                </div>
 
-        </div> <!-- inner container -->
-    </div> <!-- top bar -->
+                <div class="bar-item" ng-show="settings.toast">
+                    <p>{{ settings.toast }}</p>
+                </div>
+                
+                <div class="bar-item">
+                    <a title="Show settings" class="toolbar-button opaque" toggle-dropdown="top-bar-drop-settings">Settings <i class="fa fa-gear"></i></a>
+            
+                    <div id="top-bar-drop-settings" class="dropdown">
+                        <?php echo $settingsDropdown; ?>
+                    </div>
+                </div>
+                
+                <div class="bar-item">
+                    <a title="Show settings" class="toolbar-button opaque" toggle-dropdown="about">About <i class="fa fa-question"></i></a>
+            
+                    <div id="about" class="dropdown">
+                        <?php echo $aboutDropdown; ?>
+                    </div>
+                </div>
 
-    <textarea ng-model="settings.text" class="editor mousetrap" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)"></textarea>
+            </div> <!-- inner container -->
+        </div> <!-- top bar -->
+
+        <textarea ng-model="settings.text" class="editor mousetrap" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)"></textarea>
+    </div>
     
     <div class="read-canvas">
         <div class="inner-content">
