@@ -781,8 +781,8 @@ label {
 	color: #666;
 	display: none;
 	line-height: $global-line-height;
-	border: 1px solid #E4E4E4;
-	@include box-shadow(0 0 3px rgba(0, 0, 0, .15), 0 0 30px rgba(0, 0, 0, .1));
+	border: 1px solid #E1E1E1;
+	@include box-shadow(0 0 3px rgba(0, 0, 0, .1), 0 0 30px rgba(0, 0, 0, .1));
 	@include border-radius($global-radius);
 
 	&.open {
