@@ -351,6 +351,15 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		}
 	}
 
+	$scope.setWPM = function(wpm) {
+		wpm = Math.round(wpm / 50) * 50; // Round to nearest 50
+
+		// Min/max checks
+		if(wpm < 50 || wpm > 800) return false;
+
+		$scope.settings.wpm = wpm;
+	}
+
 
 	$scope.extractFromUrl = function(url, callback) {
 		url = url.betterTrim();

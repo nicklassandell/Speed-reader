@@ -3,8 +3,9 @@ $settingsDropdown = <<<EOT
     <div class="form-row">
         <label for="set-wpm-sel">Words per minute:</label>
         <select ng-model="settings.wpm" id="set-wpm-sel">
-            <option value="200">100 WPM</option>
-            <option value="200">150 WPM</option>
+            <option value="50">50 WPM</option>
+            <option value="100">100 WPM</option>
+            <option value="150">150 WPM</option>
             <option value="200">200 WPM</option>
             <option value="250">250 WPM</option>
             <option value="300">300 WPM</option>
@@ -59,7 +60,7 @@ $settingsDropdown = <<<EOT
                 <input ng-model="settings.nightMode" id="set-nm-chk" type="checkbox">
                 <span></span>
             </div>
-            <label for="set-nm-chk">Night mode</label>
+            <label for="set-nm-chk">Dark mode</label>
         </div>
     </div>
 
@@ -86,9 +87,9 @@ EOT;
 
 $keyboardDropdown = <<<EOT
     <p>Here are some shortcuts for you!</p>
-    <p><span class="key">space</span> to pause/continue</p>
-    <p><span class="key">left</span> or <span class="key">a</span> for previous word</p>
-    <p><span class="key">right</span> or <span class="key">d</span> for next word</p>
+    <p>Press <span class="key">space</span> to pause/continue,</p>
+    <p><span class="key">left</span> or <span class="key">a</span> for previous word,</p>
+    <p><span class="key">right</span> or <span class="key">d</span> for next word,</p>
     <p><span class="key">ctrl+left</span> for previous sentence</p>
 EOT;
 
@@ -157,12 +158,19 @@ EOT;
                     <a style="width: 132px;" class="icon-button outlined has-text right-spacing show-if-paused" ng-click="continueRead();" title="Continue"><i class="fa fa-play"></i>Continue</a>
                     <a style="width: 132px;" class="icon-button outlined has-text right-spacing show-if-not-paused" ng-click="pauseRead();" title="Pause"><i class="fa fa-pause"></i>Pause</a>
 
-                    <a class="icon-button right-spacing" ng-click="goToPosition('last_sentence');" title="Previous sentence"><i class="fa fa-step-backward"></i></a>
-                    <a class="icon-button right-spacing" ng-click="restartRead();" title="Restart"><i class="fa fa-undo"></i></a>
-                    <a class="icon-button" ng-click="stopRead();" title="Stop"><i class="fa fa-stop"></i></a>
+                    <a class="icon-button" ng-click="goToPosition('last_sentence');" title="Start from previous sentence"><i class="fa fa-step-backward"></i></a>
+                    <a class="icon-button" ng-click="restartRead();" title="Restart"><i class="fa fa-undo"></i></a>
+                    <a class="icon-button has-text" ng-click="stopRead();" title="Stop"><i class="fa fa-stop"></i>Edit</a>
                 </div>
 
                 <div class="right">
+                    <div class="relative" title="Words Per Minute">
+                        <a ng-click="setWPM(settings.wpm - 50)"><i class="fa fa-minus"></i></a>
+                        <span>&nbsp;{{ settings.wpm }} wpm&nbsp;</span>
+                        <a ng-click="setWPM(settings.wpm + 50)"><i class="fa fa-plus"></i></a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+
                     <div class="relative">
                         <a class="icon-button outlined" title="Show keyboard shortcuts" data-toggle-dropdown="in-read-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></a>
                 
@@ -181,7 +189,7 @@ EOT;
                 </div>
 
                 <div class="center">
-                    {{ game.percentComplete(true) }}% complete &nbsp;&nbsp;&nbsp;&nbsp; {{ game.timeToComplete() }} min
+                    <span title="{{ game.timeToComplete() }} minutes left">{{ game.percentComplete(true) }}% complete</span>
                 </div>
             </div>
 

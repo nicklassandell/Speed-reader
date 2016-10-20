@@ -375,9 +375,6 @@ a {
 			margin-right: 0;
 			margin-left: 5px;
 		}
-		.icon-button {
-			margin-right: 5px;
-		}
 	}
 
 	
@@ -634,6 +631,7 @@ label {
 	letter-spacing: 1px;
 }
 
+/*
 .button {
 	background: $base-blue;
 	padding: 15px 20px;
@@ -700,6 +698,7 @@ label {
 		margin-right: 20px;
 	}
 }
+*/
 
 .icon-button {
 	display: inline-block;
@@ -750,6 +749,10 @@ label {
 
 	&.has-text .fa {
 		margin-right: 10px;
+	}
+
+	&.right-spacing {
+		margin-right: 5px;
 	}
 }
 
@@ -859,7 +862,7 @@ input, textarea, select {
 	font-family: $global-font-family;
 }
 
-input[type=text], input[type=number], input[type=password], input[type=email], select {
+/*input[type=text], input[type=number], input[type=password], input[type=email], */select {
 	padding: .4rem .6rem;
 	overflow: hidden;
 	font-size: 13px;

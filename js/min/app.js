@@ -61,13 +61,13 @@
             }
         }, restrict = function(value) {
             // normalize so it can't move out of bounds
-            return 0 > value ? 0 : value > 100 ? 100 : value;
+            return value < 0 ? 0 : value > 100 ? 100 : value;
         }, isNumber = function(n) {
             // console.log(n);
             return !isNaN(parseFloat(n)) && isFinite(n);
         };
         // some sort of touch has been detected
-        return angular.element("html").addClass(4 > EVENT ? "ngrs-touch" : "ngrs-no-touch"), 
+        return EVENT < 4 ? angular.element("html").addClass("ngrs-touch") : angular.element("html").addClass("ngrs-no-touch"), 
         {
             restrict: "A",
             replace: !0,
@@ -93,7 +93,7 @@
                 preventEqualMinMax: "@",
                 attachHandleValues: "@"
             },
-            link: function(scope, element, attrs) {
+            link: function(scope, element, attrs, controller) {
                 /**
                  * HANDLE CHANGES
                  */
@@ -170,8 +170,8 @@
                             proposal = restrict(proposal), scope.preventEqualMinMax && (0 === per && (per = 1 / range * 100), 
                             0 === index ? otherModelPosition -= per : 1 === index && (otherModelPosition += per)), 
                             // check which handle is being moved and add / remove margin
-                            0 === index ? proposal = proposal > otherModelPosition ? otherModelPosition : proposal : 1 === index && (proposal = otherModelPosition > proposal ? otherModelPosition : proposal), 
-                            scope.step > 0 && 100 > proposal && proposal > 0 && (proposal = Math.round(proposal / per) * per), 
+                            0 === index ? proposal = proposal > otherModelPosition ? otherModelPosition : proposal : 1 === index && (proposal = proposal < otherModelPosition ? otherModelPosition : proposal), 
+                            scope.step > 0 && proposal < 100 && proposal > 0 && (proposal = Math.round(proposal / per) * per), 
                             proposal > 95 && 0 === index ? $handle.css("z-index", 3) : $handle.css("z-index", ""), 
                             movement[orientation] && proposal != previousProposal && (0 === index ? // update model as we slide
                             scope.modelMin = parseFloat(proposal * range / 100 + scope.min).toFixed(scope.decimalPlaces) : 1 === index && (scope.modelMax = parseFloat(proposal * range / 100 + scope.min).toFixed(scope.decimalPlaces)), 
@@ -204,24 +204,24 @@
                     angular.isDefined(val) || (scope.disabled = defaults.disabled), scope.$watch("disabled", setDisabledStatus);
                 }), attrs.$observe("orientation", function(val) {
                     angular.isDefined(val) || (scope.orientation = defaults.orientation);
-                    for (var useClass, classNames = scope.orientation.split(" "), i = 0, l = classNames.length; l > i; i++) classNames[i] = "ngrs-" + classNames[i];
+                    for (var useClass, classNames = scope.orientation.split(" "), i = 0, l = classNames.length; i < l; i++) classNames[i] = "ngrs-" + classNames[i];
                     useClass = classNames.join(" "), // add class to element
                     $slider.addClass(useClass), // update pos
-                    ("vertical" === scope.orientation || "vertical left" === scope.orientation || "vertical right" === scope.orientation) && (pos = "top", 
+                    "vertical" !== scope.orientation && "vertical left" !== scope.orientation && "vertical right" !== scope.orientation || (pos = "top", 
                     posOpp = "bottom", orientation = 1);
                 }), attrs.$observe("step", function(val) {
                     angular.isDefined(val) || (scope.step = defaults.step);
                 }), attrs.$observe("decimalPlaces", function(val) {
                     angular.isDefined(val) || (scope.decimalPlaces = defaults.decimalPlaces);
                 }), attrs.$observe("showValues", function(val) {
-                    scope.showValues = angular.isDefined(val) ? "false" === val ? !1 : !0 : defaults.showValues;
+                    angular.isDefined(val) ? "false" === val ? scope.showValues = !1 : scope.showValues = !0 : scope.showValues = defaults.showValues;
                 }), attrs.$observe("pinHandle", function(val) {
-                    scope.pinHandle = angular.isDefined(val) && ("min" === val || "max" === val) ? val : null, 
+                    angular.isDefined(val) && ("min" === val || "max" === val) ? scope.pinHandle = val : scope.pinHandle = null, 
                     scope.$watch("pinHandle", setPinHandle);
                 }), attrs.$observe("preventEqualMinMax", function(val) {
-                    scope.preventEqualMinMax = angular.isDefined(val) ? "false" === val ? !1 : !0 : defaults.preventEqualMinMax;
+                    angular.isDefined(val) ? "false" === val ? scope.preventEqualMinMax = !1 : scope.preventEqualMinMax = !0 : scope.preventEqualMinMax = defaults.preventEqualMinMax;
                 }), attrs.$observe("attachHandleValues", function(val) {
-                    scope.attachHandleValues = angular.isDefined(val) ? "false" === val ? !1 : !0 : defaults.attachHandleValues;
+                    angular.isDefined(val) ? "false" === val ? scope.attachHandleValues = !1 : scope.attachHandleValues = !0 : scope.attachHandleValues = defaults.attachHandleValues;
                 }), // listen for changes to values
                 scope.$watch("min", setMinMax), scope.$watch("max", setMinMax), scope.$watch("modelMin", setModelMinMax), 
                 scope.$watch("modelMax", setModelMinMax), /**
@@ -233,12 +233,12 @@
                     angular.element("body").off(eventNamespace), // unbind from document
                     $document.off(eventNamespace);
                     // unbind from handles
-                    for (var i = 0, l = handles.length; l > i; i++) handles[i].off(eventNamespace), 
+                    for (var i = 0, l = handles.length; i < l; i++) handles[i].off(eventNamespace), 
                     handles[i].off(eventNamespace + "X");
                 }), /**
                  * INIT
                  */
-                $slider.bind("selectstart" + eventNamespace, function() {
+                $slider.bind("selectstart" + eventNamespace, function(event) {
                     return !1;
                 }).bind("click", function(event) {
                     event.stopPropagation();
@@ -321,7 +321,7 @@ function(J, r, f) {
         if (d = c, e = b, !e) {
             if (!p) {
                 p = {};
-                for (var g in h) g > 95 && 112 > g || h.hasOwnProperty(g) && (p[h[g]] = g);
+                for (var g in h) 95 < g && 112 > g || h.hasOwnProperty(g) && (p[h[g]] = g);
             }
             e = p[d] ? "keydown" : "keypress";
         }
@@ -408,7 +408,7 @@ function(J, r, f) {
     }, G = {
         option: "alt",
         command: "meta",
-        "return": "enter",
+        return: "enter",
         escape: "esc",
         mod: /Mac|iPod|iPhone|iPad/.test(navigator.platform) ? "meta" : "ctrl"
     }, l = {}, q = {}, n = {}, z = !1, I = !1, u = !1;
@@ -431,7 +431,7 @@ function(J, r, f) {
             return l = {}, q = {}, this;
         },
         stopCallback: function(a, b) {
-            return -1 < (" " + b.className + " ").indexOf(" mousetrap ") ? !1 : "INPUT" == b.tagName || "SELECT" == b.tagName || "TEXTAREA" == b.tagName || b.isContentEditable;
+            return !(-1 < (" " + b.className + " ").indexOf(" mousetrap ")) && ("INPUT" == b.tagName || "SELECT" == b.tagName || "TEXTAREA" == b.tagName || b.isContentEditable);
         },
         handleKey: function(a, b, d) {
             var e, c = C(a, b, d);
@@ -480,7 +480,7 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
         },
         timeToComplete: function() {
             var wordsLeft = $scope.game.words.length - $scope.game.currentWord, min = wordsLeft / $scope.settings.wpm, round = Math.round(min);
-            return 1 > min ? "< 1" : round;
+            return min < 1 ? "< 1" : round;
         }
     }, $scope.modelsToAutoSave = [ "settings.wpm", "settings.pauseBetweenSentences", "enableMultiplier", "settings.nightMode", "settings.text", "settings.highlightFocusPoint", "settings.centerFocusPoint", "settings.useSerifFont", "game.words", "game.currentWord", "game.hasStarted" ], 
     // Is called at bottom of controller
@@ -511,10 +511,10 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
         get: function(c_name) {
             if (document.cookie.length > 0) {
                 var c_start = document.cookie.indexOf(c_name + "=");
-                if (-1 != c_start) {
+                if (c_start != -1) {
                     c_start = c_start + c_name.length + 1;
                     var c_end = document.cookie.indexOf(";", c_start);
-                    return -1 == c_end && (c_end = document.cookie.length), unescape(document.cookie.substring(c_start, c_end));
+                    return c_end == -1 && (c_end = document.cookie.length), unescape(document.cookie.substring(c_start, c_end));
                 }
             }
             return "";
@@ -602,7 +602,7 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
     }, $scope.pauseRead = function() {
         // Bail if not started or already paused
         // Bail if not started or already paused
-        return !$scope.game.hasStarted || $scope.game.paused ? !1 : (angular.element("#countdown-bar").removeClass("visible"), 
+        return !(!$scope.game.hasStarted || $scope.game.paused) && (angular.element("#countdown-bar").removeClass("visible"), 
         void ($scope.game.paused = !0));
     }, /**
 	 * Runs when reading is continued from a paused state
@@ -610,17 +610,23 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
     $scope.continueRead = function(offset) {
         // Bail if we're not paused or not running
         // Bail if we're not paused or not running
-        return $scope.game.hasStarted && $scope.game.paused ? (offset && $scope.goToPosition(offset), 
-        $scope.game.paused = !1, $scope.game.hasStarted = !0, void $scope.startCountdown($scope.settings.pauseCountdown)) : !1;
+        return !(!$scope.game.hasStarted || !$scope.game.paused) && (offset && $scope.goToPosition(offset), 
+        $scope.game.paused = !1, $scope.game.hasStarted = !0, void $scope.startCountdown($scope.settings.pauseCountdown));
     }, $scope.goToPosition = function(pos) {
         if ("last_sentence" === pos) var goTo = $scope.findLastSentence(); else if ("previous" === pos) {
             if ($scope.game.currentWord > 0) var goTo = $scope.game.currentWord - 1;
         } else if ("next" === pos && $scope.game.currentWord < $scope.game.words.length) var goTo = $scope.game.currentWord + 1;
         isNaN(goTo) || ($scope.game.currentWord = goTo);
     }, $scope.togglePause = function() {
-        return $scope.game.hasStarted ? void ($scope.game.paused ? $scope.continueRead() : $scope.pauseRead()) : !1;
+        return !!$scope.game.hasStarted && void ($scope.game.paused ? $scope.continueRead() : $scope.pauseRead());
+    }, $scope.setWPM = function(wpm) {
+        // Round to nearest 50
+        // Min/max checks
+        // Round to nearest 50
+        // Min/max checks
+        return wpm = 50 * Math.round(wpm / 50), !(wpm < 50 || wpm > 800) && void ($scope.settings.wpm = wpm);
     }, $scope.extractFromUrl = function(url, callback) {
-        url = url.betterTrim(), $http.get(window.base_url + "readability.php?url=" + encodeURIComponent(url)).success(function(data) {
+        url = url.betterTrim(), $http.get(window.base_url + "readability.php?url=" + encodeURIComponent(url)).success(function(data, status) {
             callback(data);
         }).error(function() {
             callback(!1);
@@ -639,13 +645,11 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
         // Cancel if empty (it's a pause)
         // Strip whitespace
         // Cancel if empty (it's a pause)
-        // Check if first char is uppercase
-        return word = word.betterTrim().replace(/\s/, ""), "" === word ? !1 : word.charAt(0) === word.charAt(0).toUpperCase() ? !0 : !1;
+        return word = word.betterTrim().replace(/\s/, ""), "" !== word && word.charAt(0) === word.charAt(0).toUpperCase();
     }, $scope.isEndOfSentence = function(word) {
         var lastChar = word.slice(-1);
         // Check last char
-        // Check last char
-        return "!" === lastChar || "?" === lastChar || "." === lastChar ? !0 : !1;
+        return "!" === lastChar || "?" === lastChar || "." === lastChar;
     }, /**
 	 * Splits chunk of text into array of words, with spaces between
 	 * paragraphs if specified.
@@ -671,7 +675,7 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
                     raw: highlighted
                 }), // Append space after word if it's the last word in a
                 // sentence, and the setting is on
-                spaceAfterSentence = !1, ("." === lastChar || "?" === lastChar || "!" === lastChar) && (words.push({
+                spaceAfterSentence = !1, "." !== lastChar && "?" !== lastChar && "!" !== lastChar || (words.push({
                     type: "pause",
                     multiplier: 1.5,
                     value: "",
@@ -780,7 +784,7 @@ String.prototype.betterTrim = function() {
     return this.replace(/\s+(?=\s)/g, "").trim();
 }, String.prototype.replaceAll = function(stringToFind, stringToReplace) {
     if (stringToFind === stringToReplace) return this;
-    for (var temp = this, index = temp.indexOf(stringToFind); -1 != index; ) temp = temp.replace(stringToFind, stringToReplace), 
+    for (var temp = this, index = temp.indexOf(stringToFind); index != -1; ) temp = temp.replace(stringToFind, stringToReplace), 
     index = temp.indexOf(stringToFind);
     return temp;
 };

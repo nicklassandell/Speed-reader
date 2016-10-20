@@ -789,11 +789,7 @@ a {
   margin-right: 0;
   margin-left: 5px;
 }
-/* line 378, ../scss/app.scss */
-.read-canvas .top-controls .icon-button {
-  margin-right: 5px;
-}
-/* line 385, ../scss/app.scss */
+/* line 382, ../scss/app.scss */
 .read-canvas .word-container {
   position: relative;
   height: 130px;
@@ -812,19 +808,19 @@ a {
   transition-duration: 0.3s;
   font-family: "Lato", sans-serif;
 }
-/* line 399, ../scss/app.scss */
+/* line 396, ../scss/app.scss */
 .bright-mode .read-canvas .word-container {
   border-color: rgba(0, 0, 0, 0.15);
 }
-/* line 404, ../scss/app.scss */
+/* line 401, ../scss/app.scss */
 .serif-font .read-canvas .word-container {
   font-family: 'Roboto Slab', serif;
 }
-/* line 408, ../scss/app.scss */
+/* line 405, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container {
   text-align: left;
 }
-/* line 412, ../scss/app.scss */
+/* line 409, ../scss/app.scss */
 .read-canvas .word-container .focus-point {
   position: static;
   display: inline-block;
@@ -832,12 +828,12 @@ a {
   z-index: 2;
   height: 100%;
 }
-/* line 419, ../scss/app.scss */
+/* line 416, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container .focus-point {
   position: relative;
   left: 50%;
 }
-/* line 425, ../scss/app.scss */
+/* line 422, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container .focus-point:before, .center-focus-point .read-canvas .word-container .focus-point:after {
   position: absolute;
   left: 0;
@@ -846,45 +842,45 @@ a {
   background: rgba(255, 255, 255, 0.1);
   content: '';
 }
-/* line 433, ../scss/app.scss */
+/* line 430, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container .focus-point:before {
   top: 0;
 }
-/* line 436, ../scss/app.scss */
+/* line 433, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container .focus-point:after {
   bottom: 0;
 }
-/* line 441, ../scss/app.scss */
+/* line 438, ../scss/app.scss */
 .center-focus-point.bright-mode .read-canvas .word-container .focus-point:before, .center-focus-point.bright-mode .read-canvas .word-container .focus-point:after {
   background: rgba(0, 0, 0, 0.15);
 }
-/* line 447, ../scss/app.scss */
+/* line 444, ../scss/app.scss */
 .highlight-focus-point.center-focus-point .read-canvas .word-container .focus-point .highlight {
   color: #e95a6e;
 }
-/* line 452, ../scss/app.scss */
+/* line 449, ../scss/app.scss */
 .read-canvas .word-container .focus-point .special {
   opacity: 0;
 }
-/* line 455, ../scss/app.scss */
+/* line 452, ../scss/app.scss */
 .is-paused .read-canvas .word-container .focus-point .special {
   opacity: .1;
 }
-/* line 462, ../scss/app.scss */
+/* line 459, ../scss/app.scss */
 .center-focus-point .read-canvas .word-container .focus-point .before, .center-focus-point .read-canvas .word-container .focus-point .after {
   position: absolute;
   top: 0;
   bottom: 0;
 }
-/* line 468, ../scss/app.scss */
+/* line 465, ../scss/app.scss */
 .read-canvas .word-container .focus-point .before {
   right: 100%;
 }
-/* line 471, ../scss/app.scss */
+/* line 468, ../scss/app.scss */
 .read-canvas .word-container .focus-point .after {
   left: 100%;
 }
-/* line 477, ../scss/app.scss */
+/* line 474, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar {
   position: absolute;
   top: 0;
@@ -895,11 +891,11 @@ a {
   display: none;
   overflow: hidden;
 }
-/* line 487, ../scss/app.scss */
+/* line 484, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar.visible {
   display: block;
 }
-/* line 491, ../scss/app.scss */
+/* line 488, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar .progress {
   position: absolute;
   top: 0;
@@ -913,7 +909,7 @@ a {
   -o-transition-duration: 0.75s;
   transition-duration: 0.75s;
 }
-/* line 501, ../scss/app.scss */
+/* line 498, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar .progress:before, .read-canvas .word-container .countdown-bar .progress:after {
   position: absolute;
   left: 0;
@@ -923,15 +919,15 @@ a {
   display: block;
   content: '';
 }
-/* line 510, ../scss/app.scss */
+/* line 507, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar .progress:before {
   top: 0;
 }
-/* line 514, ../scss/app.scss */
+/* line 511, ../scss/app.scss */
 .read-canvas .word-container .countdown-bar .progress:after {
   bottom: 0;
 }
-/* line 522, ../scss/app.scss */
+/* line 519, ../scss/app.scss */
 .read-canvas .timeline {
   position: relative;
   z-index: 20;
@@ -942,12 +938,12 @@ a {
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
-/* line 529, ../scss/app.scss */
+/* line 526, ../scss/app.scss */
 .has-started .read-canvas .timeline {
   opacity: 1;
 }
 
-/* line 537, ../scss/app.scss */
+/* line 534, ../scss/app.scss */
 .loading-screen {
   position: absolute;
   top: -10000px;
@@ -967,13 +963,13 @@ a {
   -o-transition-property: opacity;
   transition-property: opacity;
 }
-/* line 550, ../scss/app.scss */
+/* line 547, ../scss/app.scss */
 .is-loading .loading-screen {
   top: 0;
   height: 100%;
   opacity: 1;
 }
-/* line 556, ../scss/app.scss */
+/* line 553, ../scss/app.scss */
 .loading-screen .icon {
   position: absolute;
   top: 50%;
@@ -990,17 +986,17 @@ a {
   transform: translateY(-50%);
 }
 
-/* line 576, ../scss/app.scss */
+/* line 573, ../scss/app.scss */
 .block-links, .block-links li {
   padding: 0;
   margin: 0;
   display: block;
 }
-/* line 582, ../scss/app.scss */
+/* line 579, ../scss/app.scss */
 .dropdown .block-links {
   margin: -10px -20px;
 }
-/* line 586, ../scss/app.scss */
+/* line 583, ../scss/app.scss */
 .block-links li a {
   display: block;
   padding: 10px 20px;
@@ -1011,7 +1007,7 @@ a {
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
-/* line 593, ../scss/app.scss */
+/* line 590, ../scss/app.scss */
 .block-links li a:hover {
   background: #dfdad7;
   color: #40b8a3;
@@ -1041,7 +1037,7 @@ a {
 	}
 }
 */
-/* line 628, ../scss/app.scss */
+/* line 625, ../scss/app.scss */
 label {
   display: block;
   line-height: 1.3rem;
@@ -1051,88 +1047,75 @@ label {
   letter-spacing: 1px;
 }
 
-/* line 637, ../scss/app.scss */
+/*
 .button {
-  background: #40b8a3;
-  padding: 15px 20px;
-  margin: 0;
-  font-size: 1.2rem;
-  outline: none;
-  cursor: pointer;
-  border: 0;
-  color: #FFF;
-  display: inline-block;
-  font-size: .75rem;
-  font-family: "Lato", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  line-height: 1em;
-  border: 4px solid #FFF;
-  -webkit-transition-duration: 0.3s;
-  -moz-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
-  border-radius: 2px;
-}
-/* line 656, ../scss/app.scss */
-.button:hover {
-  background: #39a592;
-  -webkit-transition-duration: 0.1s;
-  -moz-transition-duration: 0.1s;
-  -o-transition-duration: 0.1s;
-  transition-duration: 0.1s;
-}
-/* line 660, ../scss/app.scss */
-.button:active {
-  background: #2c7f71;
-}
-/* line 665, ../scss/app.scss */
-.button.dark {
-  color: #444;
-  background: rgba(0, 0, 0, 0.1);
-}
-/* line 669, ../scss/app.scss */
-.button.dark:hover {
-  background: rgba(0, 0, 0, 0.2);
-}
-/* line 672, ../scss/app.scss */
-.button.dark:active {
-  background: rgba(0, 0, 0, 0.3);
-}
-/* line 676, ../scss/app.scss */
-.dark-mode .button.dark {
-  background: rgba(255, 255, 255, 0.05);
-}
-/* line 679, ../scss/app.scss */
-.dark-mode .button.dark:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-/* line 682, ../scss/app.scss */
-.dark-mode .button.dark:active {
-  background: rgba(255, 255, 255, 0.1);
-}
-/* line 688, ../scss/app.scss */
-.button.red {
-  background: #e95a6e;
-}
-/* line 691, ../scss/app.scss */
-.button.red:hover {
-  background: #e6435a;
-}
-/* line 694, ../scss/app.scss */
-.button.red:active {
-  background: #d91d37;
-}
-/* line 699, ../scss/app.scss */
-.button.right-spacing {
-  margin-right: 20px;
-}
+	background: $base-blue;
+	padding: 15px 20px;
+	margin: 0;
+	font-size: 1.2rem;
+	outline: none;
+	cursor: pointer;
+	border: 0;
+	color: #FFF;
+	display: inline-block;
+	font-size: .75rem;
+	font-family: $global-font-family;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	line-height: 1em;
+	border: 4px solid #FFF;
+	@include transition-duration(.3s);
+	@include border-radius(2px);
 
-/* line 704, ../scss/app.scss */
+	&:hover {
+		background: darken($base-blue, 5%);
+		@include transition-duration(.1s);
+	}
+	&:active {
+		background: darken($base-blue, 15%);
+	}
+
+
+	&.dark {
+		color: #444;
+		background: rgba(0,0,0,.1);
+
+		&:hover {
+			background: rgba(0,0,0,.2);
+		}
+		&:active {
+			background: rgba(0,0,0,.3);
+		}
+
+		.dark-mode & {
+			background: rgba(255,255,255,.05);
+
+			&:hover {
+				background: rgba(255,255,255,.08);
+			}
+			&:active {
+				background: rgba(255,255,255,.1);
+			}
+		}
+	}
+
+	&.red {
+		background: $base-red;
+
+		&:hover {
+			background: darken($base-red, 5%);
+		}
+		&:active {
+			background: darken($base-red, 15%);
+		}
+	}
+
+	&.right-spacing {
+		margin-right: 20px;
+	}
+}
+*/
+/* line 703, ../scss/app.scss */
 .icon-button {
   display: inline-block;
   height: 40px;
@@ -1153,52 +1136,56 @@ label {
   background: transparent;
   color: rgba(255, 255, 255, 0.5);
 }
-/* line 721, ../scss/app.scss */
+/* line 720, ../scss/app.scss */
 .icon-button:hover {
   color: rgba(255, 255, 255, 0.7);
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.1);
 }
-/* line 727, ../scss/app.scss */
+/* line 726, ../scss/app.scss */
 .icon-button.outlined {
   border-color: rgba(255, 255, 255, 0.1);
 }
-/* line 731, ../scss/app.scss */
+/* line 730, ../scss/app.scss */
 .bright-mode .icon-button {
   color: rgba(0, 0, 0, 0.5);
 }
-/* line 734, ../scss/app.scss */
+/* line 733, ../scss/app.scss */
 .bright-mode .icon-button:hover {
   color: rgba(0, 0, 0, 0.7);
   background: rgba(0, 0, 0, 0.06);
   border-color: rgba(0, 0, 0, 0.15);
 }
-/* line 740, ../scss/app.scss */
+/* line 739, ../scss/app.scss */
 .bright-mode .icon-button.outlined {
   border-color: rgba(0, 0, 0, 0.15);
 }
-/* line 747, ../scss/app.scss */
+/* line 746, ../scss/app.scss */
 .icon-button .fa {
   font-size: 1em;
 }
-/* line 751, ../scss/app.scss */
+/* line 750, ../scss/app.scss */
 .icon-button.has-text .fa {
   margin-right: 10px;
 }
+/* line 754, ../scss/app.scss */
+.icon-button.right-spacing {
+  margin-right: 5px;
+}
 
-/* line 756, ../scss/app.scss */
+/* line 759, ../scss/app.scss */
 .checkbox {
   display: inline-block;
 }
-/* line 759, ../scss/app.scss */
+/* line 762, ../scss/app.scss */
 .checkbox:hover .check span {
   border-color: #9a8c83;
 }
-/* line 763, ../scss/app.scss */
+/* line 766, ../scss/app.scss */
 .checkbox:hover .check input:checked ~ span {
   background-color: #50c2ae;
 }
-/* line 767, ../scss/app.scss */
+/* line 770, ../scss/app.scss */
 .checkbox label {
   cursor: pointer;
   position: relative;
@@ -1210,7 +1197,7 @@ label {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-/* line 779, ../scss/app.scss */
+/* line 782, ../scss/app.scss */
 .checkbox .check {
   height: 1.3rem;
   width: 1.3rem;
@@ -1219,7 +1206,7 @@ label {
   float: left;
   cursor: pointer;
 }
-/* line 787, ../scss/app.scss */
+/* line 790, ../scss/app.scss */
 .checkbox .check span, .checkbox .check input {
   position: absolute;
   top: 0;
@@ -1230,7 +1217,7 @@ label {
   margin: 0;
   padding: 0;
 }
-/* line 798, ../scss/app.scss */
+/* line 801, ../scss/app.scss */
 .checkbox .check span {
   border: 1px solid #c8c0bb;
   background-color: #FFF;
@@ -1253,18 +1240,18 @@ label {
   -o-transition-timing-function: cubic-bezier(0.2, 1.4, 0.2, 1.2);
   transition-timing-function: cubic-bezier(0.2, 1.4, 0.2, 1.2);
 }
-/* line 811, ../scss/app.scss */
+/* line 814, ../scss/app.scss */
 .checkbox .check input {
   opacity: 0;
 }
-/* line 814, ../scss/app.scss */
+/* line 817, ../scss/app.scss */
 .checkbox .check input:checked ~ span {
   background-color: #40b8a3;
   background-position: center;
   border-color: #40b8a3;
 }
 
-/* line 825, ../scss/app.scss */
+/* line 828, ../scss/app.scss */
 .dropdown {
   position: absolute;
   top: 100%;
@@ -1287,11 +1274,11 @@ label {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 841, ../scss/app.scss */
+/* line 844, ../scss/app.scss */
 .dropdown.open {
   display: block;
 }
-/* line 845, ../scss/app.scss */
+/* line 848, ../scss/app.scss */
 .dropdown::after {
   position: absolute;
   bottom: 100%;
@@ -1302,13 +1289,14 @@ label {
   border-bottom-color: #FFF;
 }
 
-/* line 858, ../scss/app.scss */
+/* line 861, ../scss/app.scss */
 input, textarea, select {
   font-family: "Lato", sans-serif;
 }
 
-/* line 862, ../scss/app.scss */
-input[type=text], input[type=number], input[type=password], input[type=email], select {
+/*input[type=text], input[type=number], input[type=password], input[type=email], */
+/* line 865, ../scss/app.scss */
+select {
   padding: .4rem .6rem;
   overflow: hidden;
   font-size: 13px;
@@ -1322,13 +1310,13 @@ input[type=text], input[type=number], input[type=password], input[type=email], s
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 872, ../scss/app.scss */
-input[type=text].expand, input[type=number].expand, input[type=password].expand, input[type=email].expand, select.expand {
+/* line 875, ../scss/app.scss */
+select.expand {
   display: block;
   width: 100%;
 }
 
-/* line 879, ../scss/app.scss */
+/* line 882, ../scss/app.scss */
 .form-row, .form-group {
   display: block;
   margin: 0 0 1.5rem 0;
@@ -1336,11 +1324,11 @@ input[type=text].expand, input[type=number].expand, input[type=password].expand,
   overflow: hidden;
   *zoom: 1;
 }
-/* line 885, ../scss/app.scss */
+/* line 888, ../scss/app.scss */
 .form-row:last-child, .form-group:last-child {
   margin-bottom: 0;
 }
-/* line 889, ../scss/app.scss */
+/* line 892, ../scss/app.scss */
 .form-row.disabled, .form-group.disabled {
   opacity: .5;
 }
@@ -1353,7 +1341,7 @@ input[type=text].expand, input[type=number].expand, input[type=password].expand,
 	padding: 1rem 0;
 }
 */
-/* line 904, ../scss/app.scss */
+/* line 907, ../scss/app.scss */
 .key {
   background: rgba(0, 0, 0, 0.07);
   padding: 4px 7px;
