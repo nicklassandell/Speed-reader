@@ -451,25 +451,25 @@ var app = angular.module("speedReadingApp", [ "ui-rangeSlider" ]);
 app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$http", function($scope, $timeout, $interval, $window, $http) {
     "use strict";
     $scope.settings = {
-        wpm: 400,
+        wpm: 300,
         wpmMS: function() {
             return 6e4 / $scope.settings.wpm;
         },
         pauseBetweenParagraphs: !0,
         pauseBetweenSentences: !0,
         enableMultiplier: !0,
-        nightMode: !1,
+        // Vary speed by word length
+        nightMode: !0,
         text: "",
         highlightFocusPoint: !0,
         centerFocusPoint: !0,
-        toastDefault: "",
         toast: "",
         useSerifFont: !0,
         pauseCountdown: 1,
         countDownInProgress: !1,
         showLoadingOverlay: !1,
         init: !1
-    }, $scope.settings.toast = $scope.settings.toastDefault, $scope.game = {
+    }, $scope.game = {
         words: [],
         currentWord: 0,
         paused: !1,
@@ -482,43 +482,16 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
             var wordsLeft = $scope.game.words.length - $scope.game.currentWord, min = wordsLeft / $scope.settings.wpm, round = Math.round(min);
             return min < 1 ? "< 1" : round;
         }
-    }, $scope.modelsToAutoSave = [ "settings.wpm", "settings.pauseBetweenSentences", "enableMultiplier", "settings.nightMode", "settings.text", "settings.highlightFocusPoint", "settings.centerFocusPoint", "settings.useSerifFont", "game.words", "game.currentWord", "game.hasStarted" ], 
+    }, $scope.modelsToAutoSave = [ "settings.wpm", "settings.pauseBetweenSentences", "settings.enableMultiplier", "settings.nightMode", "settings.text", "settings.highlightFocusPoint", "settings.centerFocusPoint", "settings.useSerifFont" ], 
     // Is called at bottom of controller
     $scope.init = function() {
-        $scope.autoSave.loadAll(), $scope.autoSave.setup();
-        var cookieText = $scope.cookie.get("READ_TEXT");
-        if (cookieText.length > 0) {
-            // Remove cookie
-            $scope.cookie.set("READ_TEXT", "", -1);
-            var text = $scope.makeTextReadable($scope.decodeURI(cookieText));
-            // Start reading cookie text
-            $scope.stopRead(), $scope.settings.text = text, $scope.startRead();
-        }
+        // $scope.autoSave.loadAll();
+        // $scope.autoSave.setup();
         // Lastly, init app
         $scope.settings.init = !0;
     }, $scope.decodeURI = function(text) {
         var text = decodeURI(text), text = text.replaceAll("%0A", "\r\n");
         return text;
-    }, $scope.cookie = {
-        set: function(name, value, days) {
-            var expires;
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + 24 * days * 60 * 60 * 1e3), expires = "; expires=" + date.toGMTString();
-            } else expires = "";
-            document.cookie = name + "=" + value + expires + "; path=/";
-        },
-        get: function(c_name) {
-            if (document.cookie.length > 0) {
-                var c_start = document.cookie.indexOf(c_name + "=");
-                if (c_start != -1) {
-                    c_start = c_start + c_name.length + 1;
-                    var c_end = document.cookie.indexOf(";", c_start);
-                    return c_end == -1 && (c_end = document.cookie.length), unescape(document.cookie.substring(c_start, c_end));
-                }
-            }
-            return "";
-        }
     }, // Handles auto saving of models
     $scope.autoSave = {
         // Runs on page load. Will restore saved values.
@@ -634,7 +607,7 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
     }, $scope.flashToast = function(text) {
         $scope.settings.toast = text, $timeout($scope.resetToast, 3e3);
     }, $scope.resetToast = function() {
-        $scope.settings.toast = $scope.settings.toastDefault;
+        $scope.settings.toast = "";
     }, $scope.findLastSentence = function() {
         for (var currWord = $scope.game.currentWord, currWord = currWord > 0 ? currWord - 1 : currWord, countDown = currWord; countDown >= 2; --countDown) {
             var word = $scope.game.words[countDown].value, prevWord = $scope.game.words[countDown - 1].value, secondPrevWord = $scope.game.words[countDown - 2].value;

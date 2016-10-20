@@ -4,18 +4,17 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	"use strict";
 
 	$scope.settings = {
-		'wpm' : 400,
+		'wpm' : 300,
 		'wpmMS' : function() {
 			return 60000 / $scope.settings.wpm;
 		},
 		'pauseBetweenParagraphs' : true,
 		'pauseBetweenSentences' : true,
-		'enableMultiplier' : true,
-		'nightMode' : false,
+		'enableMultiplier' : true, // Vary speed by word length
+		'nightMode' : true,
 		'text' : '',
 		'highlightFocusPoint' : true,
 		'centerFocusPoint' : true,
-		'toastDefault' : '',
 		'toast' : '',
 		'useSerifFont' : true,
 		'pauseCountdown' : 1,
@@ -23,7 +22,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		'showLoadingOverlay' : false,
 		'init' : false
 	};
-	$scope.settings.toast = $scope.settings.toastDefault;
 
 	$scope.game = {
 		'words' : [],
@@ -48,38 +46,20 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	$scope.modelsToAutoSave = [
 		'settings.wpm',
 		'settings.pauseBetweenSentences',
-		'enableMultiplier',
+		'settings.enableMultiplier',
 		'settings.nightMode',
 		'settings.text',
 		'settings.highlightFocusPoint',
 		'settings.centerFocusPoint',
-		'settings.useSerifFont',
-
-		'game.words',
-		'game.currentWord',
-		'game.hasStarted'
+		'settings.useSerifFont'
 	];
 
 
 
 	// Is called at bottom of controller
 	$scope.init = function() {
-		$scope.autoSave.loadAll();
-		$scope.autoSave.setup();
-
-		var cookieText = $scope.cookie.get('READ_TEXT');
-		if(cookieText.length > 0) {
-			
-			// Remove cookie
-			$scope.cookie.set('READ_TEXT', '', -1);
-
-			var text = $scope.makeTextReadable($scope.decodeURI(cookieText));
-
-			// Start reading cookie text
-			$scope.stopRead();
-			$scope.settings.text = text;
-			$scope.startRead();
-		}
+		// $scope.autoSave.loadAll();
+		// $scope.autoSave.setup();
 
 		// Lastly, init app
 		$scope.settings.init = true;
@@ -90,36 +70,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			text = text.replaceAll('%0A', "\r\n");
 
 		return text;
-	};
-
-	$scope.cookie = {
-		set : function(name, value, days) {
-		    var expires;
-		    if (days) {
-		        var date = new Date();
-		        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-		        expires = "; expires=" + date.toGMTString();
-		    }
-		    else {
-		        expires = "";
-		    }
-		    document.cookie = name + "=" + value + expires + "; path=/";
-		},
-
-		get : function(c_name) {
-		    if (document.cookie.length > 0) {
-		        var c_start = document.cookie.indexOf(c_name + "=");
-		        if (c_start != -1) {
-		            c_start = c_start + c_name.length + 1;
-		            var c_end = document.cookie.indexOf(";", c_start);
-		            if (c_end == -1) {
-		                c_end = document.cookie.length;
-		            }
-		            return unescape(document.cookie.substring(c_start, c_end));
-		        }
-		    }
-		    return "";
-		}
 	};
 
 
@@ -377,7 +327,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		$timeout($scope.resetToast, 3*1000);
 	}
 	$scope.resetToast = function() {
-		$scope.settings.toast = $scope.settings.toastDefault;
+		$scope.settings.toast = '';
 	}
 
 

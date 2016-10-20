@@ -1,4 +1,103 @@
-<!doctype html>
+<?php
+$settingsDropdown = <<<EOT
+    <div class="form-row">
+        <label for="set-wpm-sel">Words per minute:</label>
+        <select ng-model="settings.wpm" id="set-wpm-sel">
+            <option value="50">50 WPM</option>
+            <option value="100">100 WPM</option>
+            <option value="150">150 WPM</option>
+            <option value="200">200 WPM</option>
+            <option value="250">250 WPM</option>
+            <option value="300">300 WPM</option>
+            <option value="350">350 WPM</option>
+            <option value="400">400 WPM - Default speed</option>
+            <option value="450">450 WPM</option>
+            <option value="500">500 WPM</option>
+            <option value="550">550 WPM</option>
+            <option value="600">600 WPM</option>
+            <option value="650">650 WPM</option>
+            <option value="700">700 WPM</option>
+            <option value="750">750 WPM</option>
+            <option value="800">800 WPM</option>
+        </select>
+    </div>
+    
+    <div class="form-row">
+        <div class="checkbox">
+            <div class="check">
+                <input ng-model="settings.pauseBetweenSentences" id="set-pause-sent-chk" type="checkbox">
+                <span></span>
+            </div>
+            <label for="set-pause-sent-chk">Pause between sentences</label>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="form-row">
+            <div class="checkbox">
+                <div class="check">
+                    <input ng-model="settings.centerFocusPoint" id="set-center-focus-point-chk" type="checkbox">
+                    <span></span>
+                </div>
+                <label for="set-center-focus-point-chk">Center focus point</label>
+            </div>
+        </div>
+        
+        <div class="form-row {{ !settings.centerFocusPoint ? 'disabled' : '' }}">
+            <div class="checkbox">
+                <div class="check">
+                    <input ng-model="settings.highlightFocusPoint" id="set-highlight-focus-point-chk" type="checkbox">
+                    <span></span>
+                </div>
+                <label for="set-highlight-focus-point-chk">Highlight focus point</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="checkbox">
+            <div class="check">
+                <input ng-model="settings.nightMode" id="set-nm-chk" type="checkbox">
+                <span></span>
+            </div>
+            <label for="set-nm-chk">Dark mode</label>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="checkbox">
+            <div class="check">
+                <input ng-model="settings.enableMultiplier" id="set-enable-multiplier-chk" type="checkbox">
+                <span></span>
+            </div>
+            <label for="set-enable-multiplier-chk" title="Slow down or speed up words based on their length.">Smart speed (?)</label>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="checkbox">
+            <div class="check">
+                <input ng-model="settings.useSerifFont" id="set-serifFont-chk" type="checkbox">
+                <span></span>
+            </div>
+            <label for="set-serifFont-chk">Use Serif font style</label>
+        </div>
+    </div>
+EOT;
+
+$keyboardDropdown = <<<EOT
+    <p>Here are some shortcuts for you!</p>
+    <p>Press <span class="key">space</span> to pause/continue,</p>
+    <p><span class="key">left</span> or <span class="key">a</span> for previous word,</p>
+    <p><span class="key">right</span> or <span class="key">d</span> for next word,</p>
+    <p><span class="key">ctrl+left</span> for previous sentence</p>
+EOT;
+
+$aboutDropdown = <<<EOT
+    <p>What is this shit?</p>
+EOT;
+
+?><!doctype html>
 <html class="no-js" lang="en" ng-app="speedReadingApp">
 <head>
     <meta charset="utf-8" />
@@ -31,6 +130,14 @@
                 
                 <div class="bar-item">
                     <a class="icon-button outlined has-text" ng-click="startRead()"><i class="fa fa-play"></i>Start read</a>
+                </div>
+                
+                <div class="bar-item">
+                    <a title="Show settings" class="icon-button has-text" toggle-dropdown="top-bar-drop-settings"><i class="fa fa-gear"></i>Settings</a>
+            
+                    <div id="top-bar-drop-settings" class="dropdown">
+                        <?php echo $settingsDropdown; ?>
+                    </div>
                 </div>
 
                 <div class="toast" ng-show="settings.toast">
@@ -68,11 +175,7 @@
                         <a class="icon-button outlined" title="Show keyboard shortcuts" data-toggle-dropdown="in-read-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></a>
                 
                         <div id="in-read-keyboard-dropdown" class="dropdown">
-                            <p>Here are some shortcuts for you!</p>
-                            <p>Press <span class="key">space</span> to pause/continue,</p>
-                            <p><span class="key">left</span> or <span class="key">a</span> for previous word,</p>
-                            <p><span class="key">right</span> or <span class="key">d</span> for next word,</p>
-                            <p><span class="key">ctrl+left</span> for previous sentence</p>
+                            <?php echo $keyboardDropdown; ?>
                         </div>
                     </div>
 
@@ -80,89 +183,7 @@
                         <a class="icon-button outlined" title="Show settings" data-toggle-dropdown="in-read-drop-settings"><i class="fa fa-gear"></i></a>
                 
                         <div id="in-read-drop-settings" class="dropdown">
-                            <div class="form-row">
-                                <label for="set-wpm-sel">Words per minute:</label>
-                                <select ng-model="settings.wpm" id="set-wpm-sel">
-                                    <option value="50">50 WPM</option>
-                                    <option value="100">100 WPM</option>
-                                    <option value="150">150 WPM</option>
-                                    <option value="200">200 WPM</option>
-                                    <option value="250">250 WPM</option>
-                                    <option value="300">300 WPM - Default speed</option>
-                                    <option value="350">350 WPM</option>
-                                    <option value="400">400 WPM</option>
-                                    <option value="450">450 WPM</option>
-                                    <option value="500">500 WPM</option>
-                                    <option value="550">550 WPM</option>
-                                    <option value="600">600 WPM</option>
-                                    <option value="650">650 WPM</option>
-                                    <option value="700">700 WPM</option>
-                                    <option value="750">750 WPM</option>
-                                    <option value="800">800 WPM</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="checkbox">
-                                    <div class="check">
-                                        <input ng-model="settings.pauseBetweenSentences" id="set-pause-sent-chk" type="checkbox">
-                                        <span></span>
-                                    </div>
-                                    <label for="set-pause-sent-chk">Pause between sentences</label>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <div class="form-row">
-                                    <div class="checkbox">
-                                        <div class="check">
-                                            <input ng-model="settings.centerFocusPoint" id="set-center-focus-point-chk" type="checkbox">
-                                            <span></span>
-                                        </div>
-                                        <label for="set-center-focus-point-chk">Center focus point</label>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-row {{ !settings.centerFocusPoint ? 'disabled' : '' }}">
-                                    <div class="checkbox">
-                                        <div class="check">
-                                            <input ng-model="settings.highlightFocusPoint" id="set-highlight-focus-point-chk" type="checkbox">
-                                            <span></span>
-                                        </div>
-                                        <label for="set-highlight-focus-point-chk">Highlight focus point</label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="checkbox">
-                                    <div class="check">
-                                        <input ng-model="settings.nightMode" id="set-nm-chk" type="checkbox">
-                                        <span></span>
-                                    </div>
-                                    <label for="set-nm-chk">Dark mode</label>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="checkbox">
-                                    <div class="check">
-                                        <input ng-model="settings.enableMultiplier" id="set-enable-multiplier-chk" type="checkbox">
-                                        <span></span>
-                                    </div>
-                                    <label for="set-enable-multiplier-chk" title="Slow down or speed up words based on their length.">Smart speed (?)</label>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="checkbox">
-                                    <div class="check">
-                                        <input ng-model="settings.useSerifFont" id="set-serifFont-chk" type="checkbox">
-                                        <span></span>
-                                    </div>
-                                    <label for="set-serifFont-chk">Use Serif font style</label>
-                                </div>
-                            </div>
+                            <?php echo $settingsDropdown; ?>
                         </div>
                     </div>
                 </div>
