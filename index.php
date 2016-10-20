@@ -53,7 +53,6 @@ $settingsDropdown = <<<EOT
         </div>
     </div>
     
-    <!--
     <div class="form-row">
         <div class="checkbox">
             <div class="check">
@@ -63,7 +62,6 @@ $settingsDropdown = <<<EOT
             <label for="set-nm-chk">Night mode</label>
         </div>
     </div>
-    -->
 
     <div class="form-row">
         <div class="checkbox">
@@ -130,25 +128,16 @@ EOT;
                 </div>
                 
                 <div class="bar-item">
-                    <a class="toolbar-button red" ng-click="startRead()">Start read <i class="fa fa-play"></i></a>
+                    <a class="icon-button outlined has-text" ng-click="startRead()"><i class="fa fa-play"></i>Start read</a>
                 </div>
                 
                 <div class="bar-item">
-                    <a title="Show settings" class="toolbar-button opaque" toggle-dropdown="top-bar-drop-settings">Settings <i class="fa fa-gear"></i></a>
+                    <a title="Show settings" class="icon-button has-text" toggle-dropdown="top-bar-drop-settings"><i class="fa fa-gear"></i>Settings</a>
             
                     <div id="top-bar-drop-settings" class="dropdown">
                         <?php echo $settingsDropdown; ?>
                     </div>
                 </div>
-                
-                <div class="bar-item">
-                    <a title="Show settings" class="toolbar-button opaque" toggle-dropdown="about">About <i class="fa fa-question"></i></a>
-            
-                    <div id="about" class="dropdown">
-                        <?php echo $aboutDropdown; ?>
-                    </div>
-                </div>
-
 
                 <div class="toast" ng-show="settings.toast">
                     <p>{{ settings.toast }}</p>

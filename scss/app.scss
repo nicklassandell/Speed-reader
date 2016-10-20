@@ -12,7 +12,7 @@ $base-grey: #202020;
 
 $light-background-color: #F7F7F7;
 
-$top-bar-height: 70px;
+$top-bar-height: 100px;
 $progress-bar-height: 2px;
 
 $center-container-width: 1024px;
@@ -38,12 +38,19 @@ body {
 	padding: 0;
 	margin: 0;
 	line-height: $global-line-height;
-	background: $light-background-color;
-	color: #4A4A4A;
 	display: none;
 
 	&.init {
 		display: block;
+	}
+
+	&.bright-mode {
+		background: $light-background-color;
+		color: $base-grey;
+	}
+	&.dark-mode {
+		background: $base-grey;
+		color: $base-light-grey;
 	}
 
 	@include transition-property(color background-color);
@@ -150,11 +157,8 @@ a {
 		right: 0;
 		height: $top-bar-height;
 		line-height: $top-bar-height;
-		background: rgba(0,0,0,.2);
 		z-index: 20;
-		@include box-shadow(0 0 3px rgba(255,255,255,.1));
 		@include transition-duration($global-transition-duration);
-		background: $base-blue;
 		color: #FFF;
 
 		.inner-container {
@@ -190,7 +194,7 @@ a {
 			vertical-align: top;
 			position: relative;
 
-
+			/*
 			.toolbar-button {
 				border: 0;
 				position: relative;
@@ -221,6 +225,7 @@ a {
 					}
 				}
 			}
+			*/
 
 			&.logo {
 				margin-right: 40px;
@@ -233,10 +238,6 @@ a {
 
 			&.small-gap {
 				margin-right: 20px;
-			}
-
-			.icon-button {
-				color: #FFF;
 			}
 		}
 
@@ -258,7 +259,7 @@ a {
 		margin: 0 auto;
 		padding: $center-container-padding;
 		display: block;
-		background: #FFF;
+		background: rgba(white, .04);
 		border: 0;
 		outline: none;
 		color: inherit;
@@ -269,6 +270,22 @@ a {
 		font-weight: 100;
 		overflow: scroll;
 		overflow-x: hidden;
+
+		.bright-mode & {
+			background: rgba(black, .04);
+			&::-webkit-scrollbar-thumb {
+				background: rgba(black, .3);
+			}
+		}
+
+		&::-webkit-scrollbar {
+			background: none;
+			width: 10px;
+		}
+		&::-webkit-scrollbar-thumb {
+			border-radius: 100px;
+			background: rgba(white, .5);
+		}
 	}
 }
 
@@ -378,6 +395,10 @@ a {
 		text-align: center;
 		margin: 90px 0 100px 0;
 		@include transition-duration($global-transition-duration);
+
+		.bright-mode & {
+			border-color: rgba(0, 0, 0, 0.15);
+		}
 		
 		font-family: $global-font-family;
 		.serif-font & {
@@ -414,6 +435,11 @@ a {
 				}
 				&:after {
 					bottom: 0;
+				}
+			}
+			.center-focus-point.bright-mode & {
+				&:before, &:after {
+					background: rgba(0, 0, 0, .15);
 				}
 			}
 			
@@ -681,7 +707,6 @@ label {
 	min-width: 40px;
 	line-height: 35px;
 	text-align: center;
-	background: transparent;
 	text-transform: uppercase;
 	margin: 0;
 	padding: 0 15px;
@@ -689,8 +714,9 @@ label {
 	cursor: pointer;
 	font-size: .9em;
 	border: 1px solid transparent;
-	color: rgba(255,255,255,.5);
 	@include transition-duration($global-transition-duration);
+	background: transparent;
+	color: rgba(255,255,255,.5);
 
 	&:hover {
 		color: rgba(255,255,255,.7);
@@ -698,13 +724,25 @@ label {
 		border-color: rgba(255,255,255,.1);
 	}
 
-	&:active {
-		color: $base-blue;
-	}
-
 	&.outlined {
 		border-color: rgba(255,255,255,.1);
 	}
+
+	.bright-mode & {
+		color: rgba(0,0,0,.5);
+
+		&:hover {
+			color: rgba(0,0,0,.7);
+			background: rgba(0,0,0,.06);
+			border-color: rgba(0,0,0,.15);
+		}
+
+		&.outlined {
+			border-color: rgba(0,0,0,.15);
+		}
+	}
+
+
 
 	.fa {
 		font-size: 1em;
