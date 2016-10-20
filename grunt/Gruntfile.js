@@ -11,7 +11,7 @@ module.exports = function(grunt) {
                     beautify: true
                 },
                 files: {
-                    '../js/min/app.js' : ['../js/angular.rangeSlider.js', '../js/mousetrap.js', '../js/app.js']
+                    '../js/min/app.js' : ['../js/libs/jquery.js', '../js/libs/angular.js', '../js/libs/angular.rangeSlider.js', '../js/mousetrap.js', '../js/app.js']
                 }
             },
             dist: {
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
                     beautify: false
                 },
                 files: {
-                    '../js/min/app.js' : ['../js/angular.rangeSlider.js', '../js/mousetrap.js', '../js/app.js']
+                    '../js/min/app.js' : ['../js/libs/jquery.js', '../js/libs/angular.js', '../js/libs/angular.rangeSlider.js', '../js/mousetrap.js', '../js/app.js']
                 }
             }
         },

@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="css/app.css" />
     
     <script src="js/modernizr.js"></script>
-    <script>
-        var base_url = '<?php $parsed = parse_url($_SERVER["REQUEST_URI"]); echo $parsed['path']; ?>';
-    </script>
 </head>
 <body ng-controller="MainCtrl" class="{{ game.paused ? 'is-paused' : 'is-not-paused' }}
                                       {{ game.hasStarted ? 'has-started' : 'has-not-started' }}
@@ -197,8 +194,6 @@
     </div>
     
     <!-- jQuery only used for range slider support -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
     <script src="js/min/app.js"></script>
 </body>
 </html>

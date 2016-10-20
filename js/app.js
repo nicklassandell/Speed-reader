@@ -61,9 +61,21 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		// $scope.autoSave.loadAll();
 		// $scope.autoSave.setup();
 
-		// Lastly, init app
-		$scope.settings.init = true;
+		chrome.runtime.sendMessage({action: 'getText'}, function(response) {
+			$scope.$apply(function() {
+
+				$scope.settings.text = $scope.makeTextReadable(response);
+
+				// Lastly, init app
+				$scope.settings.init = true;
+			});
+		});
 	}
+
+
+	$scope.getTextFromHTML = function(html) {
+		html = html.replace(/(\r\n|\n|\r)+/gm, '');
+	};
 
 	$scope.decodeURI = function(text) {
 		var text = decodeURI(text),
