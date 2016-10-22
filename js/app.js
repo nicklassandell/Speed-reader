@@ -77,7 +77,9 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	}
 
 	$scope.HtmlToPlainText = function(text) {
-		var newlineTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'hr', 'table', 'ul', 'ol', 'li', 'section'],
+
+		// These tags will count as paragraphs, they get a line break after them
+		var newlineTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'hr', 'table', 'ul', 'ol', 'li', 'dl', 'dt', 'section', 'blockquote'],
 			newlineRegexp = new RegExp('(<\/(?:'+ newlineTags.join('|') +')>)', 'gim');
 
 		// Remove all line breaks
@@ -89,11 +91,14 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		// Remove all remaining HTML
 		text = text.replace(/(<\/?.+?\/?>)/gim, '');
 
-		// Trim whitespacetext
+		// Trim whitespace
 		text = text.betterTrim();
 
-		// Trim newlines
+		// Fix line breaks (all line breaks should be double)
 		text = text.replace(/(\r\n|\n|\r)+/gm, '\r\n\r\n');
+
+		// Previous step might add empty linebreaks at the end, remove them
+		text = text.replace(/\s+$/g, '');
 
 		// Decode HTML special characters
 		text = text.decodeHtml();
@@ -630,9 +635,19 @@ app.directive('toggleDropdown', ['$timeout', function($timeout) {
 }]);
 
 
+
 // Removes all double whitespace. Also trims beginning and end.
 String.prototype.betterTrim = function() {
-	return this.replace(/\s+(?=\s)/g, '').trim();
+
+	var str = this;
+
+	// Remove double spaces
+	str = str.replace(/ {2,}/gm, ' ');
+
+	// Remove leading and trailing space on each line, keep empty lines
+	str = str.replace(/^[ \t\f\v]+|[ \t\f\v]+$/gm, '');
+
+	return str;
 };
 
 // Decodes HTML entities but keeps tags intact
