@@ -49,8 +49,9 @@
 		} else if(request.action === 'getParseData') {
 			var parsed = parsePage();
 
-			if(!parsed.content) {
+			if(!parsed) {
 				alert("Can't find any content to read.")
+				return false;
 			}
 
 			sendResponse(parsed.content);
