@@ -49,11 +49,11 @@
 		} else if(request.action === 'getParseData') {
 			var parsed = parsePage();
 
-			if(!parsed.textContent) {
+			if(!parsed.content) {
 				alert("Can't find any content to read.")
 			}
 
-			sendResponse(parsed.textContent);
+			sendResponse(parsed.content);
 		}
 	});
 
@@ -81,7 +81,6 @@
 			article;
 
 		article = new Readability(uri, doc).parse();
-		console.dir(article);
 		return article;
 	}
 })();

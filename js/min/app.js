@@ -9134,12 +9134,17 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
             action: "getText"
         }, function(response) {
             $scope.$apply(function() {
-                $scope.settings.text = $scope.makeTextReadable(response), // Lastly, init app
+                var newlineTags = [ "p", "h1", "h2", "h3", "h4", "h5", "h6", "div", "hr" ], newlineRegexp = new RegExp("(</(?:" + newlineTags.join("|") + ")>)", "gim");
+                // Remove all whitespace
+                response = response.replace(/(\r\n|\n|\r)+/gm, ""), // Add newlines where appropriate
+                response = response.replace(newlineRegexp, "\r\n"), // Remove all remaining HTML
+                response = response.replace(/(<\/?.+?\/?>)/gim, ""), // Trim text
+                response = response.betterTrim(), // Trim newlines
+                response = response.replace(/(\r\n|\n|\r)+/gm, "\r\n\r\n"), // Decode HTML special characters
+                response = response.decodeHtml(), $scope.settings.text = response, // Lastly, init app
                 $scope.settings.init = !0;
             });
         });
-    }, $scope.getTextFromHTML = function(html) {
-        html = html.replace(/(\r\n|\n|\r)+/gm, "");
     }, $scope.decodeURI = function(text) {
         var text = decodeURI(text), text = text.replaceAll("%0A", "\r\n");
         return text;
@@ -9349,8 +9354,6 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
         } else $timeout(function() {
             $scope.stopRead();
         }, 500);
-    }, $scope.makeTextReadable = function(text) {
-        return text.betterTrim().replace(/(\r\n|\n|\r)+/gm, "\r\n\r\n");
     }, $scope.isValidURL = function(text) {
         return text.betterTrim().match(/^https?:\/\/[^\s]*$/);
     }, $interval.cancel($scope.countDownTimeout), // Pause
@@ -9406,6 +9409,10 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
 } ]), // Removes all double whitespace. Also trims beginning and end.
 String.prototype.betterTrim = function() {
     return this.replace(/\s+(?=\s)/g, "").trim();
+}, // Decodes HTML entities but keeps tags intact
+String.prototype.decodeHtml = function() {
+    var txt = document.createElement("textarea");
+    return txt.innerHTML = this, txt.value;
 }, String.prototype.replaceAll = function(stringToFind, stringToReplace) {
     if (stringToFind === stringToReplace) return this;
     for (var temp = this, index = temp.indexOf(stringToFind); index != -1; ) temp = temp.replace(stringToFind, stringToReplace), 
