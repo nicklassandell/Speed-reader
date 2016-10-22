@@ -77,13 +77,13 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	}
 
 	$scope.HtmlToPlainText = function(text) {
-		var newlineTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'hr'],
+		var newlineTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'hr', 'table', 'ul', 'ol', 'li', 'section'],
 			newlineRegexp = new RegExp('(<\/(?:'+ newlineTags.join('|') +')>)', 'gim');
 
-		// Remove all whitespace
+		// Remove all line breaks
 		text = text.replace(/(\r\n|\n|\r)+/gm, '');
 
-		// Add newlines where appropriate
+		// Add line breaks where appropriate
 		text = text.replace(newlineRegexp, '\r\n');
 
 		// Remove all remaining HTML
