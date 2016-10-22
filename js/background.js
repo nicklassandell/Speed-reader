@@ -139,9 +139,20 @@ function updateContextMenu() {
 
 
 function openApp() {
+	var width = 1200,
+		height = 650/*,
+		left = (screen.width/2) - (width/2),
+		top = (screen.height/2) - (height/2)*/;
+
 	chrome.windows.create({
 		url: 'app.html',
-		type: 'popup'
+		type: 'popup',
+		width: width,
+		height: height
+
+		/*, Will center window but can't control which monitor it's displayed on, so skipping for now
+		left: left,
+		top: top*/
 	});
 }
 
