@@ -70,6 +70,8 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 				// Lastly, init app
 				$scope.settings.init = true;
+
+				$scope.startRead();
 			});
 		});
 	}
@@ -179,37 +181,19 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			return false;
 		}
 
-		if($scope.isValidURL($scope.settings.text)) {
-			$scope.settings.showLoadingOverlay = true;
-			$scope.extractFromUrl($scope.settings.text, function(res) {
-				if(res.status === 'success') {
-					var text = res.result.betterTrim();
-					$scope.settings.text = $scope.makeTextReadable(text);
-					$scope.game.words = $scope.splitToWords(text);
-					$scope.game.hasStarted = true;
-					$scope.game.paused = false;
-					$scope.resetToast();
-					$timeout(function() {
-						$scope.settings.showLoadingOverlay = false;
-						$scope.startCountdown($scope.settings.pauseCountdown*3);
-					}, 300);
-				} else {
-					$scope.settings.showLoadingOverlay = false;
-					$scope.flashToast("Sorry, i couldn't parse that URL.");
-				}
-			});
-		} else {
-			$scope.game.words = $scope.splitToWords($scope.settings.text);
-			if($scope.game.words.length < 2) {
-				$scope.flashToast('Please enter something to read.');
-				return false;
-			}
-			$scope.game.hasStarted = true;
-			$scope.game.paused = false;
-			$timeout(function() {
-				$scope.startCountdown($scope.settings.pauseCountdown*3);
-			}, 300);
+		$scope.game.words = $scope.splitToWords($scope.settings.text);
+
+		if($scope.game.words.length < 5) {
+			$scope.flashToast('Please enter something to read.');
+			return false;
 		}
+
+		$scope.game.hasStarted = true;
+		$scope.game.paused = false;
+
+		$timeout(function() {
+			$scope.startCountdown($scope.settings.pauseCountdown*3);
+		}, 300);
 	}
 
 	// Todo: Clean this mess up
@@ -254,14 +238,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	}
 
 	$scope.stopRead = function() {
-
-		// Bail if not started
-		/*
-		if(!$scope.game.hasStarted) {
-			return false;
-		}
-		*/
-
 		$scope.game.hasStarted = false;
 		$scope.game.paused = false;
 		$scope.game.currentWord = 0;
@@ -341,16 +317,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		if(wpm < 50 || wpm > 800) return false;
 
 		$scope.settings.wpm = wpm;
-	}
-
-
-	$scope.extractFromUrl = function(url, callback) {
-		url = url.betterTrim();
-		$http.get(window.base_url + 'readability.php?url=' + encodeURIComponent(url)) .success(function(data, status) {
-			callback(data);
-		}).error(function() {
-			callback(false);
-		});
 	}
 
 
@@ -560,12 +526,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			}, 500);
 		}
 	}
-
-
-	$scope.isValidURL = function(text) {
-		return text.betterTrim().match(/^https?:\/\/[^\s]*$/);
-	}
-
 
 
 

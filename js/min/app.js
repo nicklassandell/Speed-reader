@@ -9136,7 +9136,7 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
             $scope.$apply(function() {
                 var text = $scope.HtmlToPlainText(response);
                 $scope.settings.text = text, // Lastly, init app
-                $scope.settings.init = !0;
+                $scope.settings.init = !0, $scope.startRead();
             });
         });
     }, $scope.HtmlToPlainText = function(text) {
@@ -9193,23 +9193,12 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
 	 */
     $scope.startRead = function() {
         // Bail if already started
-        if ($scope.game.hasStarted) return !1;
-        if ($scope.isValidURL($scope.settings.text)) $scope.settings.showLoadingOverlay = !0, 
-        $scope.extractFromUrl($scope.settings.text, function(res) {
-            if ("success" === res.status) {
-                var text = res.result.betterTrim();
-                $scope.settings.text = $scope.makeTextReadable(text), $scope.game.words = $scope.splitToWords(text), 
-                $scope.game.hasStarted = !0, $scope.game.paused = !1, $scope.resetToast(), $timeout(function() {
-                    $scope.settings.showLoadingOverlay = !1, $scope.startCountdown(3 * $scope.settings.pauseCountdown);
-                }, 300);
-            } else $scope.settings.showLoadingOverlay = !1, $scope.flashToast("Sorry, i couldn't parse that URL.");
-        }); else {
-            if ($scope.game.words = $scope.splitToWords($scope.settings.text), $scope.game.words.length < 2) return $scope.flashToast("Please enter something to read."), 
-            !1;
-            $scope.game.hasStarted = !0, $scope.game.paused = !1, $timeout(function() {
-                $scope.startCountdown(3 * $scope.settings.pauseCountdown);
-            }, 300);
-        }
+        // Bail if already started
+        return !$scope.game.hasStarted && ($scope.game.words = $scope.splitToWords($scope.settings.text), 
+        $scope.game.words.length < 5 ? ($scope.flashToast("Please enter something to read."), 
+        !1) : ($scope.game.hasStarted = !0, $scope.game.paused = !1, void $timeout(function() {
+            $scope.startCountdown(3 * $scope.settings.pauseCountdown);
+        }, 300)));
     }, // Todo: Clean this mess up
     $scope.startCountdown = function(steps) {
         if ($scope.settings.countDownInProgress) return !1;
@@ -9224,12 +9213,6 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
             }, 1e3);
         }, 50);
     }, $scope.stopRead = function() {
-        // Bail if not started
-        /*
-		if(!$scope.game.hasStarted) {
-			return false;
-		}
-		*/
         $scope.game.hasStarted = !1, $scope.game.paused = !1, $scope.game.currentWord = 0;
     }, $scope.restartRead = function() {
         $scope.pauseRead(), $scope.game.currentWord = 0, $scope.continueRead();
@@ -9259,12 +9242,6 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
         // Round to nearest 50
         // Min/max checks
         return wpm = 50 * Math.round(wpm / 50), !(wpm < 50 || wpm > 800) && void ($scope.settings.wpm = wpm);
-    }, $scope.extractFromUrl = function(url, callback) {
-        url = url.betterTrim(), $http.get(window.base_url + "readability.php?url=" + encodeURIComponent(url)).success(function(data, status) {
-            callback(data);
-        }).error(function() {
-            callback(!1);
-        });
     }, $scope.flashToast = function(text) {
         $scope.settings.toast = text, $timeout($scope.resetToast, 3e3);
     }, $scope.resetToast = function() {
@@ -9359,8 +9336,6 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
         } else $timeout(function() {
             $scope.stopRead();
         }, 500);
-    }, $scope.isValidURL = function(text) {
-        return text.betterTrim().match(/^https?:\/\/[^\s]*$/);
     }, $interval.cancel($scope.countDownTimeout), // Pause
     Mousetrap.bind("ctrl+enter", function() {
         $scope.startRead(), $scope.$apply();
