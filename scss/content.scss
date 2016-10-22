@@ -1,9 +1,90 @@
 
 @import "compass/css3";
 
+.sr-toast-container {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	height: 70px;
+	width: 60px;
+	z-index: 9999999;
+
+	&:hover {
+		height: 130px;
+		width: 250px;
+
+		.sr-toast-button {
+			pointer-events: auto;
+			opacity: 1;
+
+			.sr-label {
+				opacity: 1;
+			}
+
+			&:nth-child(2n) {
+				transform: none;
+				opacity: 1;
+			}
+		}
+	}
+
+	.sr-toast-button {
+		position: absolute;
+		right: 20px;
+		display: block;
+		height: 50px;
+		width: 250px;
+		opacity: .8;
+		cursor: default;
+		transition-duration: .3s;
+		z-index: 2;
+		pointer-events: none;
+
+		.sr-label {
+			display: block;
+			position: absolute;
+			top: 0;
+			line-height: 40px;
+			right: 55px;
+			text-align: right;
+			opacity: 0;
+			transition-duration: .3s;
+			color: #333;
+		}
+
+		img, .sr-icon {
+			display: block;
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+
+		.sr-icon {
+			height: 40px;
+			width: 40px;
+			background: #333;
+
+			object {
+				fill: #FFF;
+			}
+
+		}
+
+		&:nth-child(1n) {
+			bottom: 20px;
+		}
+		&:nth-child(2n) {
+			bottom: 70px;
+			opacity: 0;
+			transform: translateY(-5px);
+		}
+	}
+}
+
+/*
 $button-size: 40px;
 
-.sr-toolbar {
+.sr-toast-container {
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
@@ -73,3 +154,4 @@ $button-size: 40px;
 	visibility: hidden;
 	@include transform(scale(0) translateX(50px));
 }
+*/
