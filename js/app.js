@@ -64,33 +64,39 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		chrome.runtime.sendMessage({action: 'getText'}, function(response) {
 			$scope.$apply(function() {
 
-				var newlineTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'hr'],
-					newlineRegexp = new RegExp('(<\/(?:'+ newlineTags.join('|') +')>)', 'gim');
+				var text = $scope.HtmlToPlainText(response);
 
-				// Remove all whitespace
-				response = response.replace(/(\r\n|\n|\r)+/gm, '');
-
-				// Add newlines where appropriate
-				response = response.replace(newlineRegexp, '\r\n');
-
-				// Remove all remaining HTML
-				response = response.replace(/(<\/?.+?\/?>)/gim, '');
-
-				// Trim text
-				response = response.betterTrim();
-
-				// Trim newlines
-				response = response.replace(/(\r\n|\n|\r)+/gm, '\r\n\r\n');
-
-				// Decode HTML special characters
-				response = response.decodeHtml();
-
-				$scope.settings.text = response;
+				$scope.settings.text = text;
 
 				// Lastly, init app
 				$scope.settings.init = true;
 			});
 		});
+	}
+
+	$scope.HtmlToPlainText = function(text) {
+		var newlineTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'hr'],
+			newlineRegexp = new RegExp('(<\/(?:'+ newlineTags.join('|') +')>)', 'gim');
+
+		// Remove all whitespace
+		text = text.replace(/(\r\n|\n|\r)+/gm, '');
+
+		// Add newlines where appropriate
+		text = text.replace(newlineRegexp, '\r\n');
+
+		// Remove all remaining HTML
+		text = text.replace(/(<\/?.+?\/?>)/gim, '');
+
+		// Trim whitespacetext
+		text = text.betterTrim();
+
+		// Trim newlines
+		text = text.replace(/(\r\n|\n|\r)+/gm, '\r\n\r\n');
+
+		// Decode HTML special characters
+		text = text.decodeHtml();
+
+		return text;
 	}
 
 	$scope.decodeURI = function(text) {
@@ -100,7 +106,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		return text;
 	};
 
-	
 
 	// Handles auto saving of models
 	$scope.autoSave = {

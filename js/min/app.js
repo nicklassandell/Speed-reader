@@ -9134,17 +9134,22 @@ app.controller("MainCtrl", [ "$scope", "$timeout", "$interval", "$window", "$htt
             action: "getText"
         }, function(response) {
             $scope.$apply(function() {
-                var newlineTags = [ "p", "h1", "h2", "h3", "h4", "h5", "h6", "div", "hr" ], newlineRegexp = new RegExp("(</(?:" + newlineTags.join("|") + ")>)", "gim");
-                // Remove all whitespace
-                response = response.replace(/(\r\n|\n|\r)+/gm, ""), // Add newlines where appropriate
-                response = response.replace(newlineRegexp, "\r\n"), // Remove all remaining HTML
-                response = response.replace(/(<\/?.+?\/?>)/gim, ""), // Trim text
-                response = response.betterTrim(), // Trim newlines
-                response = response.replace(/(\r\n|\n|\r)+/gm, "\r\n\r\n"), // Decode HTML special characters
-                response = response.decodeHtml(), $scope.settings.text = response, // Lastly, init app
+                var text = $scope.HtmlToPlainText(response);
+                $scope.settings.text = text, // Lastly, init app
                 $scope.settings.init = !0;
             });
         });
+    }, $scope.HtmlToPlainText = function(text) {
+        var newlineTags = [ "p", "h1", "h2", "h3", "h4", "h5", "h6", "div", "hr" ], newlineRegexp = new RegExp("(</(?:" + newlineTags.join("|") + ")>)", "gim");
+        // Remove all whitespace
+        // Add newlines where appropriate
+        // Remove all remaining HTML
+        // Trim whitespacetext
+        // Trim newlines
+        // Decode HTML special characters
+        return text = text.replace(/(\r\n|\n|\r)+/gm, ""), text = text.replace(newlineRegexp, "\r\n"), 
+        text = text.replace(/(<\/?.+?\/?>)/gim, ""), text = text.betterTrim(), text = text.replace(/(\r\n|\n|\r)+/gm, "\r\n\r\n"), 
+        text = text.decodeHtml();
     }, $scope.decodeURI = function(text) {
         var text = decodeURI(text), text = text.replaceAll("%0A", "\r\n");
         return text;
