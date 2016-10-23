@@ -84,6 +84,12 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			// We don't care if it's an open, close or self-closing tag.
 			newlineRegexp = new RegExp('(<\/?(?:'+ newlineTags.join('|') +')\/?>)', 'gim');
 
+		/*
+		 * \/? seems pointless in newlineRegexp and to remove HTML below
+		 * but it does seem to have an effect so i'll leave it for now
+		 * and dig more in it later.
+		 */
+
 		// Remove all line breaks
 		text = text.replace(/(\r\n|\n|\r)+/gm, '');
 
@@ -93,17 +99,18 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		// Remove all remaining HTML
 		text = text.replace(/(<\/?.+?\/?>)/gim, '');
 
-		// Trim whitespace
+		// Trim whitespace everywhere and linebreaks in beginning/end
 		text = text.betterTrim();
 
 		// Fix line breaks (all line breaks should be double)
 		text = text.replace(/(\r\n|\n|\r)+/gm, '\r\n\r\n');
 
-		// Previous step might add empty linebreaks at the end, remove them
-		text = text.replace(/\s+$/g, '');
-
 		// Decode HTML special characters
 		text = text.decodeHtml();
+
+		// Trim whitespace everywhere and linebreaks in beginning/end
+		// This is run again because sometimes linebreaks are left in the beinning/end
+		text = text.betterTrim();
 
 		return text;
 	}
@@ -648,6 +655,12 @@ String.prototype.betterTrim = function() {
 
 	// Remove leading and trailing space on each line, keep empty lines
 	str = str.replace(/^[ \t\f\v]+|[ \t\f\v]+$/gm, '');
+
+	// Remove whitespace and line breaks in the beginning of the text
+	str = str.replace(/^\s+/g, '');
+
+	// Remove whitespace and line breaks in the end of the text
+	str = str.replace(/\s+$/g, '');
 
 	return str;
 };
