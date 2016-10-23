@@ -1,6 +1,10 @@
 
 @import "compass/css3";
 
+$toast-size: 45px;
+$toast-spacing: 10px;
+$toast-window-spacing: 20px;
+
 .sr-toast-container {
 	position: fixed;
 	bottom: 0;
@@ -11,15 +15,9 @@
 
 	&:hover {
 		height: 130px;
-		width: 250px;
 
 		.sr-toast-button {
 			pointer-events: auto;
-			opacity: 1;
-
-			.sr-label {
-				opacity: 1;
-			}
 
 			&:nth-child(2n) {
 				transform: none;
@@ -30,51 +28,85 @@
 
 	.sr-toast-button {
 		position: absolute;
-		right: 20px;
+		right: $toast-window-spacing;
 		display: block;
-		height: 50px;
+		height: $toast-size;
 		width: 250px;
-		opacity: .8;
 		cursor: default;
 		transition-duration: .3s;
 		z-index: 2;
 		pointer-events: none;
 
+		&:hover {
+
+			.sr-icon {
+				background-color: #2CA08C;
+			}
+			.sr-label {
+				opacity: 1;
+			}
+		}
+
 		.sr-label {
 			display: block;
 			position: absolute;
-			top: 0;
-			line-height: 40px;
+			top: 27%;
 			right: 55px;
 			text-align: right;
 			opacity: 0;
 			transition-duration: .3s;
-			color: #333;
+			color: #FFF;
+			background: #333;
+			line-height: 18px;
+			font-size: 13px;
+			font-family: sans-serif;
+			border-radius: 2px;
+			padding: 3px 5px;
+			line-height: 18px;
+			font-size: 13px;
+			font-family: sans-serif;
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 8px;
+				left: 100%;
+				border: 4px solid transparent;
+				border-right: none;
+				border-left-color: #333;
+
+			}
 		}
 
-		img, .sr-icon {
+		.sr-icon {
 			display: block;
 			position: absolute;
 			top: 0;
 			right: 0;
-		}
-
-		.sr-icon {
-			height: 40px;
-			width: 40px;
+			transition-duration: .3s;
+			height: $toast-size;
+			width: $toast-size;
 			background: #333;
+			background-size: 34px;
+			background-position: center;
+			background-repeat: no-repeat;
+			border-radius: 1000px;
+			cursor: pointer;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
 
-			object {
-				fill: #FFF;
+			&.sr-icon-book {
+				background-image: url(chrome-extension://__MSG_@@extension_id__/img/book.png);
 			}
-
+			&.sr-icon-close {
+				background-image: url(chrome-extension://__MSG_@@extension_id__/img/close.png);
+			}
 		}
 
 		&:nth-child(1n) {
-			bottom: 20px;
+			bottom: $toast-window-spacing;
 		}
 		&:nth-child(2n) {
-			bottom: 70px;
+			bottom: $toast-window-spacing + $toast-size + $toast-spacing;
 			opacity: 0;
 			transform: translateY(-5px);
 		}
