@@ -103,7 +103,7 @@
 				return false;
 			}
 
-			sendResponse(parseResults.content);
+			sendResponse(parseResults);
 		}
 	});
 
