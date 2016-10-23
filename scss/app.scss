@@ -1,7 +1,7 @@
 @import "compass/css3";
 @import "compass/utilities/general/clearfix";
 
-@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,300|Lato:300,400);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:300|Roboto:300&amp;subset=cyrillic,greek,vietnamese);
 @import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 
 
@@ -23,7 +23,7 @@ $global-transition-duration: .3s;
 
 
 $global-line-height: 1.3rem;
-$global-font-family: 'Lato', sans-serif;;
+$global-font-family: 'Roboto', sans-serif;;
 
 @import "angular.rangeSlider";
 @import "nprogress";
@@ -387,7 +387,7 @@ a {
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-left: 0;
 		border-right: 0;
-		font-weight: 100;
+		font-weight: 200;
 		font-size: 65px;
 		cursor: default;
 		text-align: center;
