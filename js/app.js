@@ -1,4 +1,4 @@
-var app = angular.module('speedReadingApp', ['ui-rangeSlider']);
+var app = angular.module('speedReadingApp', ['rzModule']);
 
 app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http', function($scope, $timeout, $interval, $window, $http) {
 	"use strict";
@@ -42,6 +42,28 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			return min < 1 ? '< 1' : round;
 		}
 	};
+
+	$scope.slider = {
+		options: {
+			floor: 0,
+			ceil: 1,
+			showSelectionBar: true,
+			hideLimitLabels: true,
+			hidePointerLabels: true
+			/*hidePointerLabels: false,
+			hideLimitLabels: false,
+			showSelectionBarEnd: false,
+			showSelectionBarFromValue: false*/
+		}
+	};
+
+	$scope.$watch('game.words', function(words) {
+		$scope.slider.options.ceil = words.length;
+
+	    $timeout(function () {
+	        $scope.$broadcast('rzSliderForceRender');
+	    });
+	});
 
 	// Only for $scope.settings atm
 	$scope.autosaveVariables = [
@@ -137,7 +159,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 					for(var opt in options) {
 
 						if(opt in $scope.settings) {
-							console.log('loading', opt, options[opt])
 							$scope.settings[opt] = options[opt];
 						}
 					}
@@ -149,7 +170,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		save : function(model, val) {
 			var toSave = {};
 			toSave[model] = val;
-			console.log('saving', toSave);
 			chrome.storage.sync.set(toSave);
 		},
 
@@ -162,8 +182,8 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 				// Attach watch event to capture changes
 				$scope.$watch(modelName, function(change) {
-					var t = this.exp;
-					t = t.substring( this.exp.lastIndexOf('.')+1 );
+					var t = modelName;
+					t = t.substring( modelName.lastIndexOf('.')+1 );
 					$scope.autoSave.save(t, change);
 				});
 			}

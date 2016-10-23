@@ -25,9 +25,7 @@ $global-transition-duration: .3s;
 $global-line-height: 1.3rem;
 $global-font-family: 'Roboto', sans-serif;;
 
-@import "angular.rangeSlider";
-@import "nprogress";
-
+@import "import/angular.rzslider.scss";
 
 
 html, body {
@@ -521,11 +519,36 @@ a {
 		position: relative;
 		z-index: 20;
 		background: transparent;
-		opacity: 0;
 		@include transition-duration($global-transition-duration);
 
-		.has-started & {
-			opacity: 1;
+		&:hover .rzslider .rz-bar.rz-selection, .is-not-paused & .rzslider .rz-bar.rz-selection {
+			background: $base-blue;
+		}
+
+		.rzslider {
+
+			.rz-bar {
+				height: 3px;
+				background: #444;
+
+				&.rz-selection {
+					background: #555;
+					transition-duration: .2s;
+				}
+			}
+
+			.rz-pointer {
+				background: #FFF;
+				width: 20px;
+				height: 20px;
+				top: -9px;
+				box-shadow: 0 0 0 5px #202020;
+				outline: none;
+
+				&::after {
+					display: none;
+				}
+			}
 		}
 	}
 }
