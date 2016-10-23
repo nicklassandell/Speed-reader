@@ -75,9 +75,13 @@
 			result;
 
 		result =  new Readability(uri, doc).parse();
-		parseResults = result.content;
-		
-		return result.content;
+
+		if(result) {
+			parseResults = result.content;
+			return result.content;
+		}
+
+		return false;
 	}
 
 
