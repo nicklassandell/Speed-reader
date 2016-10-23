@@ -109,9 +109,12 @@ function updateContextMenu() {
 
 					chrome.tabs.executeScript( {
 						code: "window.getSelection().toString();"
-					}, function(selection) {
-						var selected = selection[0];
-						textToRead = selected;
+					}, function(text) {
+
+						// App only accepts HTML, so let's convert plaintext line breaks into <br>
+						text = text[0].replace(/(\r\n|\n|\r)+/gm, '<br/>');
+
+						textToRead = text;
 						openApp();
 					});
 
