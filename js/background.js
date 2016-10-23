@@ -31,8 +31,8 @@ chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
 			getOption('hideToast', function(hideToast) {
 				if(!hideToast) {
 					chrome.tabs.insertCSS(tabId, {file: 'css/content.css'}, function() {
-						chrome.tabs.executeScript(tabId, {file: 'js/libs/readability.js'});
-						chrome.tabs.executeScript(tabId, {file: 'js/content.js'});
+						chrome.tabs.executeScript(tabId, {file: 'js/libs/readability.js', runAt: 'document_end'});
+						chrome.tabs.executeScript(tabId, {file: 'js/content.js', runAt: 'document_end'});
 					});
 				}
 			});
@@ -62,11 +62,17 @@ chrome.extension.onMessage.addListener(function(data, sender, sendResponse) {
 					toastBlacklist: newVal
 				});
 			});
-			
-		}
-		else if(data.action == 'getText') {
+		
+		// App is requesting text
+		} else if(data.action == 'getText') {
 			sendResponse(textToRead);
+		
+		// Document (content script) requested a read start
+		} else if(data.action == 'requestRead') {
+			textToRead = data.text;
+			openApp();
 		}
+
 	}
 });
 
@@ -117,7 +123,6 @@ function updateContextMenu() {
 							openApp();
 						}
 					});
-
 
 				}
 
