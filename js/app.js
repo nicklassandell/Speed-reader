@@ -43,12 +43,12 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		}
 	};
 
-	$scope.modelsToAutoSave = [
+	// Only for $scope.settings atm
+	$scope.autosaveVariables = [
 		'settings.wpm',
 		'settings.pauseBetweenSentences',
 		'settings.enableMultiplier',
 		'settings.nightMode',
-		'settings.text',
 		'settings.highlightFocusPoint',
 		'settings.centerFocusPoint',
 		'settings.useSerifFont'
@@ -58,8 +58,11 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 	// Is called at bottom of controller
 	$scope.init = function() {
-		// $scope.autoSave.loadAll();
-		// $scope.autoSave.setup();
+
+		// Clear all settings
+		//chrome.storage.sync.clear();
+		$scope.autoSave.loadAll();
+		$scope.autoSave.setup();
 
 		chrome.runtime.sendMessage({action: 'getText'}, function(response) {
 			$scope.$apply(function() {
@@ -128,57 +131,40 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 		// Runs on page load. Will restore saved values.
 		loadAll : function() {
-			if(!localStorage.spread) return false;
+			chrome.storage.sync.get(null, function(options) {
 
-			var stored = JSON.parse(localStorage.spread);
+				if(options) {
+					for(var opt in options) {
 
-			for(var model in stored) {
-				var modelValue = stored[model];
-
-				// For checkboxes
-				if(modelValue === 'on') {
-					modelValue = true;
-				}
-				if(modelValue === 'off') {
-					modelValue = false;
-				}
-
-				// Make numbers actual numbers
-				if(modelValue == parseInt(modelValue)) {
-					modelValue = parseInt(modelValue);
-				}
-
-				// Split model name by dot, loop through each level and update
-				// the corresponding value in $scope
-				model.split('.').reduce(function(result, key, index, array) {
-					if(index === array.length-1) {
-						result[key] = modelValue;
+						if(opt in $scope.settings) {
+							console.log('loading', opt, options[opt])
+							$scope.settings[opt] = options[opt];
+						}
 					}
-					return result[key];
-				}, $scope);
-			}
+				}
+			});
 		},
 
 		// Save key-value pair
 		save : function(model, val) {
-
-			// Read local storage
-	    	var currStored = localStorage.spread ? JSON.parse(localStorage.spread) : {};
-
-	    	// Set new value
-	    	currStored[model] = val;
-
-	    	// Save to local storage
-	    	localStorage.spread = JSON.stringify(currStored);
+			var toSave = {};
+			toSave[model] = val;
+			console.log('saving', toSave);
+			chrome.storage.sync.set(toSave);
 		},
 
 		// Setup watchers for models to autosave
 		setup : function() {
-			for(var mindex in $scope.modelsToAutoSave) {
-				var modelName = $scope.modelsToAutoSave[mindex];
 
-				$scope.$watch(modelName, function(newValue) {
-					$scope.autoSave.save(this.exp, newValue);
+			// Loop through all models to autosave
+			for(var i in $scope.autosaveVariables) {
+				var modelName = $scope.autosaveVariables[i];
+
+				// Attach watch event to capture changes
+				$scope.$watch(modelName, function(change) {
+					var t = this.exp;
+					t = t.substring( this.exp.lastIndexOf('.')+1 );
+					$scope.autoSave.save(t, change);
 				});
 			}
 		}
