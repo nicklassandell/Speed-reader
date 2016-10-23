@@ -79,7 +79,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	$scope.HtmlToPlainText = function(text) {
 
 		// These tags will count as paragraphs, they get a line break after them
-		var newlineTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'hr', 'table', 'ul', 'ol', 'li', 'dl', 'dt', 'section', 'blockquote'],
+		var newlineTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'hr', 'table', 'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'section', 'blockquote'],
 			newlineRegexp = new RegExp('(<\/(?:'+ newlineTags.join('|') +')>)', 'gim');
 
 		// Remove all line breaks
@@ -407,21 +407,21 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 					lastChar = w.slice(-1),
 					multiplier;
 
-				// Short
-				if (w.length <= 4) {
-					multiplier = .7;
-
-				// Normal
-				} else if (w.length <= 8) {
-					multiplier = 1;
-
-				// Long
-				} else if(w.length <= 12) {
-					multiplier = 1.3;
-
-				// Super long
-				} else {
+				// Super long word
+				if(w.length > 18) {
+					multiplier = 2;
+				
+				// Long word
+				} else if(w.length > 12) {
 					multiplier = 1.5;
+				
+				// Medium word
+				} else if(w.length > 8) {
+					multiplier = 1;
+				
+				// Short word
+				} else {
+					multiplier = .7;
 				}
 
 				var highlighted = $scope.highlightFocusPoint(w);
