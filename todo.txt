@@ -1,7 +1,6 @@
-
-
-- Fix serif font
-- Implement standalone readability script
-- Branch to new chrome app
-	- Can probably open index.php (to be .html) as a new window with chrome API. App does not get injected into webpage, only toast does.
-	- Don't need auto-save in the same sense anymore, no need to save previous sessions. Should however save settings to chrome app settings.
+- Fix autosave
+- Settings page
+- Finish content script (with selected text functionality)
+- Install and feature compare with competitors
+- Reader UI finish
+- modernizr?

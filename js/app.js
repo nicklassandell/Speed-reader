@@ -50,11 +50,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			showSelectionBar: true,
 			hideLimitLabels: true,
 			hidePointerLabels: true,
-			interval: 250,
-			/*hidePointerLabels: false,
-			hideLimitLabels: false,
-			showSelectionBarEnd: false,
-			showSelectionBarFromValue: false*/
+			interval: 250
 		}
 	};
 
