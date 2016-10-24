@@ -519,7 +519,19 @@ a {
 		position: relative;
 		z-index: 20;
 		background: transparent;
+		padding-right: 60px;
 		@include transition-duration($global-transition-duration);
+
+		.time-stats {
+			position: absolute;
+			top: 0;
+			right: 0;
+			color: $base-grey;
+
+			.dark-mode & {
+				color: #B6B6B6;
+			}
+		}
 
 		&:hover .rzslider .rz-bar.rz-selection, .is-paused & .rzslider .rz-bar.rz-selection {
 			background: $base-blue;

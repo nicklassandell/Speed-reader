@@ -165,7 +165,7 @@
                 </div>
 
                 <div class="center">
-                    <span title="{{ game.timeToComplete() }} minutes left">{{ game.percentComplete(true) }}% complete</span>
+                    
                 </div>
             </div>
 
@@ -184,6 +184,7 @@
 
             <div id="timeline" class="timeline">
                 <rzslider  rz-slider-model="game.currentWord" rz-slider-options="slider.options"></rzslider>
+                <span class="time-stats" title="{{ game.percentComplete(true) }}% complete">{{ game.timeToComplete() }}</span>
             </div>
 
         </div>

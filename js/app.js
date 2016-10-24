@@ -36,10 +36,19 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		},
 		'timeToComplete' : function() {
 			var wordsLeft = $scope.game.words.length - $scope.game.currentWord,
-				min = wordsLeft/$scope.settings.wpm,
-				round = Math.round(min);
 
-			return min < 1 ? '< 1' : round;
+				// Time left in minutes
+				time = wordsLeft/$scope.settings.wpm,
+				roundTime = Math.floor(time);
+
+			// More than a minute left
+			if(time >= 1) {
+				return '~' + roundTime + ' min';
+			}
+
+			// Convert minutes to seconds
+			time = Math.round(time*60);
+			return '~' + time + ' sec';
 		}
 	};
 
@@ -262,6 +271,9 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		$scope.game.hasStarted = false;
 		$scope.game.paused = false;
 		$scope.game.currentWord = 0;
+
+		// Prevent timeout from firing if it's aleady started
+		$timeout.cancel($scope.wordLoopTimeout);
 	}
 
 	$scope.restartRead = function() {
@@ -277,6 +289,10 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			return false;
 		}
 
+		// Prevent timeout from firing if it's aleady started
+		$timeout.cancel($scope.wordLoopTimeout);
+
+		// Reset countdown element
 		angular.element('#countdown-bar').removeClass('visible');
 
 		$scope.game.paused = true;
@@ -524,7 +540,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 				var timeout = ms * multiplier;
 			}
 
-			$timeout.cancel($scope.wordLoopTimeout);
 			$scope.wordLoopTimeout = $timeout(function() {
 				// Todo: Clean dis' up
 				if($scope.game.hasStarted === true && $scope.game.paused === false) {
