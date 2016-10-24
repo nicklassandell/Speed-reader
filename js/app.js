@@ -71,15 +71,16 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	    });
 	});
 
-	// Only for $scope.settings atm
-	$scope.autosaveVariables = [
-		'settings.wpm',
-		'settings.pauseBetweenSentences',
-		'settings.enableMultiplier',
-		'settings.nightMode',
-		'settings.highlightFocusPoint',
-		'settings.centerFocusPoint',
-		'settings.useSerifFont'
+	// Only for $scope.settings
+	$scope.modelsToAutosave = [
+		'wpm',
+		'pauseBetweenParagraphs',
+		'pauseBetweenSentences',
+		'enableMultiplier',
+		'nightMode',
+		'highlightFocusPoint',
+		'centerFocusPoint',
+		'useSerifFont'
 	];
 
 
@@ -168,7 +169,8 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 				if(options) {
 					for(var opt in options) {
 
-						if(opt in $scope.settings) {
+						// Check if option is a settomg
+						if( opt in $scope.settings ) {
 							$scope.settings[opt] = options[opt];
 						}
 					}
@@ -180,23 +182,30 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		save : function(model, val) {
 			var toSave = {};
 			toSave[model] = val;
+
 			chrome.storage.sync.set(toSave);
 		},
 
 		// Setup watchers for models to autosave
 		setup : function() {
 
-			// Loop through all models to autosave
-			for(var i in $scope.autosaveVariables) {
-				var modelName = $scope.autosaveVariables[i];
+			$scope.$watchCollection('settings', function(newObj, oldObj) {
+				
+				// Loop through new object and compare values to old to see which one changed
+				angular.forEach(newObj, function(val, property) {
+					if(newObj[property] !== oldObj[property]) {
 
-				// Attach watch event to capture changes
-				$scope.$watch(modelName, function(change) {
-					var t = modelName;
-					t = t.substring( modelName.lastIndexOf('.')+1 );
-					$scope.autoSave.save(t, change);
+						// Should we autosave it?
+						if( $scope.modelsToAutosave.indexOf(property) !== -1 ) {
+							$scope.autoSave.save(property, val);
+						}
+
+						// Stop foreach
+						return true;
+					}
 				});
-			}
+
+			}, true);
 		}
 	};
 
@@ -603,7 +612,7 @@ $interval.cancel($scope.countDownTimeout);
 
 
 	// Tried to put this in ng-mousedown, but no luck
-	angular.element(document.body).get(0).addEventListener('mousedown', function(e){
+	angular.element(document.body)[0].addEventListener('mousedown', function(e){
 		if( angular.element(e.target).closest('#timeline').length > 0 ) {
 			$scope.pauseRead();
 		}

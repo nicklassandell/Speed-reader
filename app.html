@@ -8,26 +8,24 @@
     
     <script src="js/modernizr.js"></script>
 </head>
-<body ng-controller="MainCtrl" class="{{ game.paused ? 'is-paused' : 'is-not-paused' }}
-                                      {{ game.hasStarted ? 'has-started' : 'has-not-started' }}
-                                      {{ settings.nightMode ? 'dark-mode' : 'bright-mode' }}
-                                      {{ settings.highlightFocusPoint ? 'highlight-focus-point' : '' }}
-                                      {{ settings.useSerifFont ? 'serif-font' : '' }}
-                                      {{ settings.showLoadingOverlay ? 'is-loading' : '' }}
-                                      {{ settings.init ? 'init' : '' }}
-                                      {{ settings.centerFocusPoint ? 'center-focus-point' : '' }}">
+<body ng-controller="MainCtrl" ng-class="
+    (game.paused ? 'is-paused' : 'is-not-paused') + ' ' +
+    (game.hasStarted ? 'has-started' : 'has-not-started') + ' ' +
+    
+    (settings.nightMode ? 'dark-mode' : 'bright-mode') + ' ' +
+    (settings.highlightFocusPoint ? 'highlight-focus-point' : '') + ' ' +
+    (settings.useSerifFont ? 'serif-font' : '') + ' ' +
+    (settings.showLoadingOverlay ? 'is-loading' : '') + ' ' +
+    (settings.init ? 'init' : '') + ' ' +
+    (settings.centerFocusPoint ? 'center-focus-point' : '')
+">
 
     <div class="front">
         <div class="top-bar">
             <div class="inner-container">
                 
-                <div class="bar-item logo">
-                    <h1>Champ - Speed read like a boss</h1>
-                    <img class="logo" src="img/logox2.png" alt="Champ logo">
-                </div>
-                
                 <div class="bar-item">
-                    <a class="icon-button outlined has-text" ng-click="startRead()"><i class="fa fa-play"></i>Start read</a>
+                    <a class="icon-button outlined has-text" ng-click="startRead()"><i class="fa fa-play"></i>Start reading</a>
                 </div>
 
                 <div class="toast" ng-show="settings.toast">
@@ -37,7 +35,9 @@
             </div> <!-- inner container -->
         </div> <!-- top bar -->
 
-        <textarea ng-model="settings.text" class="editor mousetrap" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)"></textarea>
+        <div class="editor-container">
+            <textarea ng-model="settings.text" class="editor mousetrap" placeholder="Paste text or URL here..." spellcheck=false ng-paste="formatPastedText($event)"></textarea>
+        </div>
     </div>
     
     <div class="read-canvas">

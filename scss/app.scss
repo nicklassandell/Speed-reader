@@ -10,7 +10,7 @@ $base-blue: #40b8a3;
 $base-light-grey: #C8C0BB; 
 $base-grey: #202020;
 
-$light-background-color: #F4F4F4;
+$light-background-color: #F3F3F3;
 
 $top-bar-height: 100px;
 $progress-bar-height: 2px;
@@ -193,39 +193,6 @@ a {
 			vertical-align: top;
 			position: relative;
 
-			/*
-			.toolbar-button {
-				border: 0;
-				position: relative;
-				bottom: -10px;
-				height: 50px;
-				line-height: normal;
-				background: #FFF;
-				color: #777;
-				font-size: 14px;
-				border: 1px solid transparent;
-				border-bottom: 0;
-				display: inline-block;
-				padding: 15px 20px;
-				text-transform: uppercase;
-				@include border-radius($global-radius $global-radius 0 0);
-
-				.fa {
-					margin-left: 5px;
-				}
-
-				&.opaque {
-					color: #FFF;
-					background: transparent;
-					border-color: rgba(255,255,255,.2);
-
-					&:hover {
-						border-color: rgba(255,255,255,.4);
-					}
-				}
-			}
-			*/
-
 			&.logo {
 				margin-right: 40px;
 			}
@@ -246,7 +213,7 @@ a {
 	}
 
 
-	.editor {
+	.editor-container {
 		position: absolute;
 		top: $top-bar-height;
 		left: 0;
@@ -254,36 +221,41 @@ a {
 		height: calc(100% - #{$top-bar-height});
 		z-index: 10;
 		width: 100%;
-		max-width: $center-container-width + ($center-container-padding*2);
-		margin: 0 auto;
-		padding: $center-container-padding;
-		display: block;
-		background: rgba(white, .04);
-		border: 0;
-		outline: none;
-		color: inherit;
-		resize: none;
-		font-size: 20px;
-		line-height: 2rem;
-		font-family: 'Roboto Slab', serif;
-		font-weight: 100;
-		overflow: scroll;
-		overflow-x: hidden;
+		background: rgba(255,255,255,.05);
 
-		.bright-mode & {
-			background: rgba(black, .04);
-			&::-webkit-scrollbar-thumb {
-				background: rgba(black, .3);
+		.editor {
+			max-width: $center-container-width + ($center-container-padding*2);
+			width: 100%;
+			height: 100%;
+			margin: 0 auto;
+			padding: $center-container-padding;
+			display: block;
+			border: 0;
+			outline: none;
+			color: inherit;
+			resize: none;
+			font-size: 20px;
+			line-height: 2rem;
+			font-family: 'Roboto Slab', serif;
+			font-weight: 100;
+			overflow: scroll;
+			overflow-x: hidden;
+			background: transparent;
+
+			.bright-mode & {
+				&::-webkit-scrollbar-thumb {
+					background: rgba(black, .3);
+				}
 			}
-		}
 
-		&::-webkit-scrollbar {
-			background: none;
-			width: 10px;
-		}
-		&::-webkit-scrollbar-thumb {
-			border-radius: 100px;
-			background: rgba(white, .5);
+			&::-webkit-scrollbar {
+				background: none;
+				width: 10px;
+			}
+			&::-webkit-scrollbar-thumb {
+				border-radius: 100px;
+				background: rgba(white, .5);
+			}
 		}
 	}
 }
@@ -546,6 +518,16 @@ a {
 		.rzslider {
 			margin: 10px 0 10px 0;
 
+			.bright-mode & {
+				.rz-bar {
+					background: rgba(0,0,0, .15);
+				}
+				.rz-pointer {
+					background: #333;
+					box-shadow: 0 0 0 6px $light-background-color;
+				}
+			}
+
 			.rz-bar {
 				height: 3px;
 				background: #333;
@@ -579,7 +561,7 @@ a {
 					width: 100%;
 					height: 100%;
 					border-radius: 100px;
-					background: #FFF;
+					background: inherit;
 					transform: scale(.95);
 					transition-duration: .1s;
 				}
