@@ -1,6 +1,13 @@
-- Fix autosave
 - Settings page
-- Finish content script (with selected text functionality)
 - Install and feature compare with competitors
 - Reader UI finish
-- modernizr?
+- Cannot read property 'type' of undefined, at end of wordloop i think
+- Remember window size
+
+Features from other apps:
+- Estimated time to read in toast
+- Select text on page toast
+- More keyboard shortcuts: Previous sentence, hide controls (?), close window, restart, speed
+- Paste text to read
+- Flash page on install with instructions how to use etc
+- Display current location on pause (10 words each way)

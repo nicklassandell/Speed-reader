@@ -353,14 +353,11 @@ a {
 	.word-container {
 		position: relative;
 		height: $word-container-height;
-		line-height: $word-container-height;
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-left: 0;
 		border-right: 0;
-		font-weight: 200;
-		font-size: 65px;
-		cursor: default;
 		text-align: center;
+		cursor: default;
 		margin: 90px 0 90px 0;
 		@include transition-duration($global-transition-duration);
 
@@ -375,21 +372,30 @@ a {
 
 		.center-focus-point & {
 			text-align: left;
-		}
-		
-		.focus-point {
-			position: static;
-			display: inline-block;
-			white-space: nowrap;
-			z-index: 2;
-			height: 100%;
 
-			.center-focus-point & {
+			.focus-point {
 				position: relative;
 				left: 50%;
-			}
+				display: inline-block;
 
-			.center-focus-point & {
+				.scaler {
+					transform-origin: left;
+					display: block;
+				}
+
+				.before, .after {
+					width: auto;
+
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					width: auto;
+
+					.preview-words {
+						float: none;
+					}
+				}
+
 				&:before, &:after {
 					position: absolute;
 					left: 0;
@@ -405,6 +411,41 @@ a {
 					bottom: 0;
 				}
 			}
+		}
+		
+		.focus-point {
+			position: static;
+			white-space: nowrap;
+			z-index: 2;
+			height: 100%;
+
+			font-weight: 200;
+			font-size: 65px;
+			line-height: $word-container-height;
+
+			.scaler {
+				transition-duration: .5s;
+				transform-origin: center;
+				text-align: center;
+				display: flex;
+			}
+
+			.preview-words {
+				display: inline;
+				opacity: 0;
+				transition-duration: .5s;
+			}
+
+			.is-paused & {
+				.scaler {
+					transform: scale(.6);
+				}
+				.preview-words {
+					opacity: 1;
+					transition-delay: .5s;
+				}
+			}
+
 			.center-focus-point.bright-mode & {
 				&:before, &:after {
 					background: rgba(0, 0, 0, .15);
@@ -412,32 +453,36 @@ a {
 			}
 			
 			.highlight {
-				.highlight-focus-point.center-focus-point & {
+				.center-focus-point.highlight-focus-point & {
 					color: $base-red;
 				}
 			}
 
-			.special {
-				opacity: 0;
-
-				.is-paused & {
-					opacity: .1;
-				}
-			}
-
 			.before, .after {
+				transition-duration: .5s;
+				flex: 1;
+				width: 1px; // Let it overflow
 
-				.center-focus-point & {
-					position: absolute;
-					top: 0;
-					bottom: 0;
+				&, & > span {
+					display: inline-block;
+				}
+				.highlight-focus-point.is-paused & > span {
+					color: $base-red;
 				}
 			}
 			.before {
 				right: 100%;
+
+				.preview-words {
+					float: right;
+				}
 			}
 			.after {
 				left: 100%;
+
+				.preview-words {
+					float: left;
+				}
 			}
 		}
 

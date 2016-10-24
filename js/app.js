@@ -506,7 +506,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		if($scope.settings.pauseBetweenParagraphs) {
 			words.pop();
 		}
-		
+		console.log(words);
 		return words;
 	}
 
