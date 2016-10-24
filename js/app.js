@@ -222,7 +222,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		$scope.game.paused = false;
 
 		$timeout(function() {
-			$scope.startCountdown($scope.settings.pauseCountdown*3);
+			$scope.startCountdown($scope.settings.pauseCountdown*1);
 		}, 300);
 	}
 
