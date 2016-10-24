@@ -50,17 +50,10 @@
 
                     <a class="icon-button" ng-click="goToPosition('last_sentence');" title="Start from previous sentence"><i class="fa fa-step-backward"></i></a>
                     <a class="icon-button" ng-click="restartRead();" title="Restart"><i class="fa fa-undo"></i></a>
-                    <a class="icon-button has-text" ng-click="stopRead();" title="Stop"><i class="fa fa-stop"></i>Edit</a>
+                    <a class="icon-button has-text" ng-click="stopRead();" title="Stop">Edit</a>
                 </div>
 
                 <div class="right">
-                    <div class="relative" title="Words Per Minute">
-                        <a ng-click="setWPM(settings.wpm - 50)"><i class="fa fa-minus"></i></a>
-                        <span>&nbsp;{{ settings.wpm }} wpm&nbsp;</span>
-                        <a ng-click="setWPM(settings.wpm + 50)"><i class="fa fa-plus"></i></a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                    </div>
-
                     <div class="relative">
                         <a class="icon-button outlined" title="Show keyboard shortcuts" data-toggle-dropdown="in-read-keyboard-dropdown"><i class="fa fa-keyboard-o"></i></a>
                 
@@ -165,7 +158,11 @@
                 </div>
 
                 <div class="center">
-                    
+                    <div class="relative" title="Words Per Minute">
+                        <a ng-click="setWPM(settings.wpm - 50)"><i class="fa fa-caret-left"></i></a>
+                        <span>&nbsp;{{ settings.wpm }} wpm&nbsp;</span>
+                        <a ng-click="setWPM(settings.wpm + 50)"><i class="fa fa-caret-right"></i></a>
+                    </div>
                 </div>
             </div>
 
