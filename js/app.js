@@ -423,22 +423,15 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 					lastChar = w.slice(-1),
 					multiplier;
 
-				// Super long word
-				if(w.length > 18) {
-					multiplier = 2;
-				
-				// Long word
-				} else if(w.length > 12) {
-					multiplier = 1.5;
-				
-				// Medium word
-				} else if(w.length > 8) {
-					multiplier = 1;
-				
-				// Short word
-				} else {
-					multiplier = .7;
-				}
+				// Set multiplier based on word length
+				multiplier = w.length * 0.13;
+
+				// Max 2.2
+				multiplier = multiplier > 2.2 ? 2.2 : multiplier;
+
+				// Min 0.7
+				multiplier = multiplier < 0.7 ? 0.7 : multiplier;
+
 
 				var highlighted = $scope.highlightFocusPoint(w);
 
