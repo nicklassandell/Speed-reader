@@ -261,7 +261,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 				bar.css('width', percent + '%');
 
 				if(currStep >= steps) {
-					$scope.wordLoop();
+					$scope.startWordLoop();
 					$interval.cancel($scope.countDownTimeout);
 
 					prog.removeClass('visible');
@@ -282,7 +282,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		$scope.game.currentWord = 0;
 
 		// Prevent timeout from firing if it's aleady started
-		$timeout.cancel($scope.wordLoopTimeout);
+		$timeout.cancel($scope.startWordLoopTimeout);
 	}
 
 	$scope.restartRead = function() {
@@ -299,7 +299,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		}
 
 		// Prevent timeout from firing if it's aleady started
-		$timeout.cancel($scope.wordLoopTimeout);
+		$timeout.cancel($scope.startWordLoopTimeout);
 
 		// Reset countdown element
 		angular.element('#countdown-bar').removeClass('visible');
@@ -310,7 +310,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	/**
 	 * Runs when reading is continued from a paused state
 	 */
-	$scope.continueRead = function(offset) {
+	$scope.continueRead = function(offset, showCountdown) {
 
 		// Bail if we're not paused or not running
 		if(!$scope.game.hasStarted || !$scope.game.paused) {
@@ -323,7 +323,12 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 		$scope.game.paused = false;
 		$scope.game.hasStarted = true;
-		$scope.startCountdown($scope.settings.pauseCountdown);
+
+		if(showCountdown) {
+			$scope.startCountdown($scope.settings.pauseCountdown);
+		} else {
+			$scope.startWordLoop();
+		}
 	}
 
 	$scope.goToPosition = function(pos) {
@@ -523,7 +528,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	/**
 	 * Loop that changes current word. Interval based on specified WPM.
 	 */
-	$scope.wordLoop = function() {
+	$scope.startWordLoop = function() {
 
 		// If reading is paused or not started, don't continue
 		if($scope.game.hasStarted === false || $scope.game.paused === true) {
@@ -535,7 +540,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		// If pause is disabled and the type is a pause, skip this word
 		if(!$scope.settings.pauseBetweenSentences && word.type == 'pause') {
 			$scope.game.currentWord += 1;
-			$scope.wordLoop();
+			$scope.startWordLoop();
 			return;
 		}
 
@@ -549,11 +554,11 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 				var timeout = ms * multiplier;
 			}
 
-			$scope.wordLoopTimeout = $timeout(function() {
+			$scope.startWordLoopTimeout = $timeout(function() {
 				// Todo: Clean dis' up
 				if($scope.game.hasStarted === true && $scope.game.paused === false) {
 					$scope.game.currentWord += 1;
-					$scope.wordLoop();
+					$scope.startWordLoop();
 				}
 			}, timeout);
 
@@ -611,10 +616,30 @@ $interval.cancel($scope.countDownTimeout);
 	});
 
 
-	// Tried to put this in ng-mousedown, but no luck
+	// Pause read when slider is moved manually
+	// Can't check for #timeline events because rzslider stops bubbling
 	angular.element(document.body)[0].addEventListener('mousedown', function(e){
-		if( angular.element(e.target).closest('#timeline').length > 0 ) {
-			$scope.pauseRead();
+
+		// Check if game has started, otherwise no point in pausing again
+		if( $scope.game.hasStarted && !$scope.game.paused ) {
+
+			// Check if we clicked on the slider
+			if( angular.element(e.target).closest('#timeline').length > 0 ) {
+				$scope.pauseRead();
+				$scope.continueOnMouseup = true;
+			}
+		}
+	}, true);
+
+	// Continue on mouseup after moving slider
+	angular.element(document.body)[0].addEventListener('mouseup', function(e){
+		if( $scope.continueOnMouseup ) {
+
+			// Small timeout for eyes to adjust
+			$timeout(function() {
+				$scope.continueRead(false, false);
+				$scope.continueOnMouseup = false;
+			}, 300);
 		}
 	}, true);
 
