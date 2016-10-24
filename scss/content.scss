@@ -57,14 +57,11 @@ $toast-window-spacing: 20px;
 			transition-duration: .3s;
 			color: #FFF;
 			background: #333;
-			line-height: 18px;
+			line-height: 19px;
 			font-size: 13px;
 			font-family: sans-serif;
 			border-radius: 2px;
 			padding: 3px 5px;
-			line-height: 18px;
-			font-size: 13px;
-			font-family: sans-serif;
 
 			&::after {
 				content: '';
@@ -87,7 +84,6 @@ $toast-window-spacing: 20px;
 			height: $toast-size;
 			width: $toast-size;
 			background: #333;
-			background-size: 34px;
 			background-position: center;
 			background-repeat: no-repeat;
 			border-radius: 1000px;
