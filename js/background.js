@@ -155,8 +155,8 @@ function openApp() {
 	chrome.windows.create({
 		url: 'app.html',
 		type: 'popup',
-		width: width,
-		height: height
+		//width: width,
+		//height: height
 
 		/*, Will center window but can't control which monitor it's displayed on, so skipping for now
 		left: left,
