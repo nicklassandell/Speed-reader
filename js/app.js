@@ -121,6 +121,10 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		// Add line breaks where appropriate
 		text = text.replace(newlineRegexp, '\r\n');
 
+		// Add spacing around all tags
+		// When they get removed words might collide otherwise
+		text = text.replace(/(<\/?.+?\/?>)/gim, ' $1 ');
+
 		// Remove all remaining HTML
 		text = text.replace(/(<\/?.+?\/?>)/gim, '');
 
