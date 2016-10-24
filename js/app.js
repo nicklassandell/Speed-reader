@@ -588,9 +588,11 @@ $interval.cancel($scope.countDownTimeout);
 
 
 	// Tried to put this in ng-mousedown, but no luck
-	angular.element('#timeline').on('mousedown', function() {
-		$scope.pauseRead();
-	});
+	angular.element(document.body).get(0).addEventListener('mousedown', function(e){
+		if( angular.element(e.target).closest('#timeline').length > 0 ) {
+			$scope.pauseRead();
+		}
+	}, true);
 
 
 	// Lastly, run app
