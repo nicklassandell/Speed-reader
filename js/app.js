@@ -324,11 +324,12 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		$scope.game.paused = false;
 		$scope.game.hasStarted = true;
 
-		if(showCountdown) {
-			$scope.startCountdown($scope.settings.pauseCountdown);
-		} else {
+		// Todo: Remove showCountdown param, not used
+		$timeout.cancel($scope.startWordLoopTimeout);
+
+		$scope.startWordLoopTimeout = $timeout(function() {
 			$scope.startWordLoop();
-		}
+		}, 500);
 	}
 
 	$scope.goToPosition = function(pos) {
@@ -554,6 +555,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 				var timeout = ms * multiplier;
 			}
 
+			$timeout.cancel($scope.startWordLoopTimeout);
 			$scope.startWordLoopTimeout = $timeout(function() {
 				// Todo: Clean dis' up
 				if($scope.game.hasStarted === true && $scope.game.paused === false) {
@@ -636,6 +638,8 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			if( angular.element(e.target).closest('#timeline').length > 0 ) {
 				$scope.pauseRead();
 				$scope.continueOnMouseup = true;
+
+				$scope.$apply();
 			}
 		}
 	}, true);
@@ -644,11 +648,10 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	angular.element(document.body)[0].addEventListener('mouseup', function(e){
 		if( $scope.continueOnMouseup ) {
 
-			// Small timeout for eyes to adjust
-			$timeout(function() {
-				$scope.continueRead(false, false);
-				$scope.continueOnMouseup = false;
-			}, 300);
+			$scope.continueRead();
+			$scope.continueOnMouseup = false;
+			
+			$scope.$apply();
 		}
 	}, true);
 
