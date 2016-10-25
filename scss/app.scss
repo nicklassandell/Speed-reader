@@ -370,6 +370,25 @@ a {
 			font-family: 'Roboto Slab', serif;
 		}
 
+		&::before, &::after {
+			position: absolute;
+			content: '';
+			top: 0;
+			bottom: 0;
+			width: 1000px;
+			z-index: 3;
+			pointer-events: none;
+		}
+
+		&::before {
+			right: calc(100% - 100px);
+			background: linear-gradient(90deg, $base-grey 905px, transparent 1000px);
+		}
+		&::after {
+			left: calc(100% - 100px);
+			background: linear-gradient(90deg, transparent 0, $base-grey 95px);
+		}
+
 		.center-focus-point & {
 			text-align: left;
 
