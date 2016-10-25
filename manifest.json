@@ -21,7 +21,8 @@
     "web_accessible_resources": ["img/*.png"],
 
     "browser_action": {
-        "default_title": "Read this page with Champ"
+        "default_title": "Read this page with Champ",
+        "default_popup": "popup.html"
     },
 
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"

@@ -11,7 +11,8 @@ module.exports = function(grunt) {
                     beautify: true
                 },
                 files: {
-                    '../js/min/app.js' : ['../js/libs/jquery.min.js', '../js/libs/angular.js', '../js/libs/angular.rzslider.js', '../js/mousetrap.js', '../js/app.js']
+                    '../js/min/app.js' : ['../js/libs/jquery.min.js', '../js/libs/angular.js', '../js/libs/angular.rzslider.js', '../js/mousetrap.js', '../js/app.js'],
+                    '../js/min/popup.js' : ['../js/popup.js']
                 }
             },
             dist: {
@@ -21,7 +22,8 @@ module.exports = function(grunt) {
                     beautify: false
                 },
                 files: {
-                    '../js/min/app.js' : ['../js/libs/jquery.min.js', '../js/libs/angular.js', '../js/libs/angular.rzslider.js', '../js/mousetrap.js', '../js/app.js']
+                    '../js/min/app.js' : ['../js/libs/jquery.min.js', '../js/libs/angular.js', '../js/libs/angular.rzslider.js', '../js/mousetrap.js', '../js/app.js'],
+                    '../js/min/popup.js' : ['../js/popup.js']
                 }
             }
         },
