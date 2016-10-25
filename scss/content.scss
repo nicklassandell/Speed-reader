@@ -10,18 +10,21 @@ $toast-window-spacing: 20px;
 	bottom: 0;
 	right: 0;
 	height: 70px;
-	width: 60px;
+	width: 70px;
 	z-index: 9999999;
 
 	&:hover {
-		height: 130px;
+		height: 180px;
 
 		.sr-toast-button {
 			pointer-events: auto;
 
-			&:nth-child(2n) {
-				transform: none;
-				opacity: 1;
+			@for $i from 2 through 3 {
+				&:nth-child(#{$i}n) {
+					transform: none;
+					opacity: 1;
+					transition-delay: #{ ($i + -1) / 10}s;
+				}
 			}
 		}
 	}
@@ -93,6 +96,9 @@ $toast-window-spacing: 20px;
 			&.sr-icon-book {
 				background-image: url(chrome-extension://__MSG_@@extension_id__/img/book.png);
 			}
+			&.sr-icon-edit {
+				background-image: url(chrome-extension://__MSG_@@extension_id__/img/edit.png);
+			}
 			&.sr-icon-close {
 				background-image: url(chrome-extension://__MSG_@@extension_id__/img/close.png);
 			}
@@ -101,10 +107,20 @@ $toast-window-spacing: 20px;
 		&:nth-child(1n) {
 			bottom: $toast-window-spacing;
 		}
-		&:nth-child(2n) {
-			bottom: $toast-window-spacing + $toast-size + $toast-spacing;
+		@for $i from 2 through 3 {
+			&:nth-child(#{$i}n) {
+				bottom: $toast-window-spacing + ($toast-size + $toast-spacing)*($i - 1);
+				opacity: 0;
+				transform: translateY(-5px);
+			}
+		}
+
+		/*
+		&:nth-child(3n) {
+			bottom: $toast-window-spacing + ($toast-size + $toast-spacing)*2;
 			opacity: 0;
 			transform: translateY(-5px);
 		}
+		*/
 	}
 }

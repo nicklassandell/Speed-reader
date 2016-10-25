@@ -20,6 +20,10 @@
 		html +=			'<span class="sr-label">Read page with Champ</span>';
 		html +=	 		'<span class="sr-icon sr-icon-book"></span>';
 		html +=		'</a>';
+		html += 	'<a title="Edit" id="sr-toast-trigger-edit" class="sr-toast-button">';
+		html +=			'<span class="sr-label">Open editor to paste text</span>';
+		html +=	 		'<span class="sr-icon sr-icon-edit"></span>';
+		html +=		'</a>';
 		html += 	'<a title="Hide" id="sr-toast-trigger-hide" class="sr-toast-button">';
 		html +=			'<span class="sr-label">Hide button on this site</span>';
 		html +=	 		'<span class="sr-icon sr-icon-close"></span>';
@@ -32,6 +36,7 @@
 	function setupEventListeners() {
 		var toastContainer = document.getElementById('sr-toast-container'),
 			readBtn = document.getElementById('sr-toast-trigger-read'),
+			editBtn = document.getElementById('sr-toast-trigger-edit'),
 			hideToastBtn = document.getElementById('sr-toast-trigger-hide');
 
 		// Make button visible on load
@@ -39,6 +44,8 @@
 			readBtn.className += ' visible';
 		}, 20);
 
+
+		// Read page
 		readBtn.onclick = function(e) {
 			e.preventDefault();
 
@@ -49,6 +56,17 @@
 			});
 		};
 
+		// Request edit
+		editBtn.onclick = function(e) {
+			e.preventDefault();
+
+			// Send parsed text
+			chrome.extension.sendMessage({
+				action: 'requestEdit'
+			});
+		}
+
+		// Request blacklist
 		hideToastBtn.onclick = function(e) {
 			e.preventDefault();
 

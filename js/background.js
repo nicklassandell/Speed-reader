@@ -1,8 +1,6 @@
 
-var textToRead = '';
-
-
-var contextMenuAdded = false;
+var textToRead = { text: '', action: '' },
+	contextMenuAdded = false;
 
 chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
 
@@ -63,13 +61,21 @@ chrome.extension.onMessage.addListener(function(data, sender, sendResponse) {
 				});
 			});
 		
-		// App is requesting text
+
+		// APP is requested text
 		} else if(data.action == 'getText') {
 			sendResponse(textToRead);
 		
-		// Document (content script) requested a read start
+
+		// DOCUMENT (content script) requested a read start
 		} else if(data.action == 'requestRead') {
-			textToRead = data.text;
+			textToRead.text = data.text;
+			textToRead.action = 'read'
+			openApp();
+		
+		// DOCUMENT (content script) requested a read start
+		} else if(data.action == 'requestEdit') {
+			textToRead.action = 'editBlank';
 			openApp();
 		}
 
@@ -114,7 +120,7 @@ function updateContextMenu() {
 						// App only accepts HTML, so let's convert plaintext line breaks into <br>
 						text = text[0].replace(/(\r\n|\n|\r)+/gm, '<br/>');
 
-						textToRead = text;
+						textToRead.text = text;
 						openApp();
 					});
 
@@ -122,7 +128,7 @@ function updateContextMenu() {
 
 					chrome.tabs.sendMessage(tab.id, {action: 'getParseData'}, function(text) {
 						if(text) {
-							textToRead = text;
+							textToRead.text = text;
 							openApp();
 						}
 					});

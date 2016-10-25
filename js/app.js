@@ -63,14 +63,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		}
 	};
 
-	$scope.$watch('game.words', function(words) {
-		$scope.slider.options.ceil = words.length;
-
-	    $timeout(function () {
-	        $scope.$broadcast('rzSliderForceRender');
-	    });
-	});
-
 	// Only for $scope.settings
 	$scope.modelsToAutosave = [
 		'wpm',
@@ -96,14 +88,22 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		chrome.runtime.sendMessage({action: 'getText'}, function(response) {
 			$scope.$apply(function() {
 
-				var text = $scope.HtmlToPlainText(response);
+				// If editor requested
+				if(response.action === 'editBlank') {
+					$scope.settings.text = '';
+				
+				// If read requested
+				} else {
+					var text = $scope.HtmlToPlainText(response.text);
 
-				$scope.settings.text = text;
+					$scope.settings.text = text;
+
+					$scope.startRead();
+				}
 
 				// Lastly, init app
 				$scope.settings.init = true;
 
-				$scope.startRead();
 			});
 		});
 	}
@@ -506,7 +506,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		if($scope.settings.pauseBetweenParagraphs) {
 			words.pop();
 		}
-		console.log(words);
+		
 		return words;
 	}
 
@@ -573,7 +573,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 
 
-$interval.cancel($scope.countDownTimeout);
 	// Pause
 	Mousetrap.bind('ctrl+enter', function() {
 		$scope.startRead();
@@ -613,6 +612,16 @@ $interval.cancel($scope.countDownTimeout);
 	// This makes sure the values stay the same
 	$scope.$watch('settings.pauseBetweenSentences', function() {
 		$scope.settings.pauseBetweenParagraphs = $scope.settings.pauseBetweenSentences;
+	});
+
+
+	// Force slider update when words list change
+	$scope.$watch('game.words', function(words) {
+		$scope.slider.options.ceil = words.length;
+
+	    $timeout(function () {
+	        $scope.$broadcast('rzSliderForceRender');
+	    });
 	});
 
 
