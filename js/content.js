@@ -9,6 +9,30 @@
 	if(parseResults) {
 		injectHTML();
 		setupEventListeners();
+		estimateParseTime();
+	}
+
+	function estimateParseTime() {
+
+		chrome.storage.sync.get('wpm', function(res) {
+			var timeContainer = document.getElementById('sr-read-time-container'),
+
+				words = parseResults.textContent.split(/\s+/g),
+				wordCount = words.length,
+				wpmOpt = res.wpm,
+
+				wpm = (wordCount/wpmOpt) * 1.2, // Add 20% words, magic number to be more correct
+				wpmRound = Math.floor(wpm),
+				text = '';
+
+			if(wpmRound < 1) {
+				text = '<1';
+			} else {
+				text = wpmRound;
+			}
+
+			timeContainer.innerHTML = text;
+		});
 	}
 
 
@@ -16,9 +40,9 @@
 		var html = '';
 
 		html += '<div id="sr-toast-container" class="sr-toast-container">';
-		html += 	'<a title="Read with Champ" id="sr-toast-trigger-read" class="sr-toast-button">';
+		html += 	'<a title="Read with Champ" id="sr-toast-trigger-read" class="sr-toast-button sr-toast-btn-read">';
 		html +=			'<span class="sr-label">Read page with Champ</span>';
-		html +=	 		'<span class="sr-icon sr-icon-book"></span>';
+		html +=	 		'<span id="sr-read-time-container" class="sr-icon sr-icon-book"></span>';
 		html +=		'</a>';
 		html += 	'<a title="Edit" id="sr-toast-trigger-edit" class="sr-toast-button">';
 		html +=			'<span class="sr-label">Open editor to paste text</span>';
@@ -52,7 +76,7 @@
 			// Send parsed text
 			chrome.extension.sendMessage({
 				action: 'requestRead',
-				text: parseResults
+				text: parseResults.content
 			});
 		};
 
@@ -95,8 +119,8 @@
 		result =  new Readability(uri, doc).parse();
 
 		if(result) {
-			parseResults = result.content;
-			return result.content;
+			parseResults = result;
+			return result;
 		}
 
 		return false;
@@ -121,7 +145,7 @@
 				return false;
 			}
 
-			sendResponse(parseResults);
+			sendResponse(parseResults.content);
 		}
 	});
 

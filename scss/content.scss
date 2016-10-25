@@ -39,6 +39,8 @@ $toast-window-spacing: 20px;
 		transition-duration: .2s;
 		z-index: 2;
 		pointer-events: none;
+		border: 0;
+		text-decoration: none;
 
 		&:hover {
 
@@ -48,6 +50,21 @@ $toast-window-spacing: 20px;
 			.sr-label {
 				opacity: 1;
 			}
+
+			&.sr-toast-btn-read .sr-icon {
+				background-size: 24px; // Match image size
+				font-size: 0px;
+				color: transparent;
+			}
+		}
+
+		&.sr-toast-btn-read .sr-icon {
+			background-size: 0;
+			color: #FFF;
+			font-size: 16px;
+			font-family: sans-serif;
+			text-align: center;
+			line-height: $toast-size;
 		}
 
 		.sr-label {
