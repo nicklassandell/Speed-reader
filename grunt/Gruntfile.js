@@ -4,26 +4,24 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         uglify: {
-            dev: {
+            app: {
                 options: {
                     mangle: false,
                     preserveComments: true,
                     beautify: true
                 },
                 files: {
-                    '../js/min/app.js' : ['../js/libs/jquery.min.js', '../js/libs/angular.js', '../js/libs/angular.rzslider.js', '../js/mousetrap.js', '../js/app.js'],
-                    '../js/min/popup.js' : ['../js/popup.js']
+                    '../js/min/app.js' : ['../js/libs/jquery.min.js', '../js/libs/angular.js', '../js/libs/angular.rzslider.js', '../js/mousetrap.js', '../js/app.js']
                 }
             },
-            dist: {
+            popup: {
                 options: {
-                    mangle: true,
-                    preserveComments: false,
-                    beautify: false
+                    mangle: false,
+                    preserveComments: true,
+                    beautify: true
                 },
                 files: {
-                    '../js/min/app.js' : ['../js/libs/jquery.min.js', '../js/libs/angular.js', '../js/libs/angular.rzslider.js', '../js/mousetrap.js', '../js/app.js'],
-                    '../js/min/popup.js' : ['../js/popup.js']
+                    '../js/min/popup.js' : ['../js/libs/jquery.min.js', '../js/libs/angular.js', '../js/popup.js']
                 }
             }
         },
@@ -46,19 +44,21 @@ module.exports = function(grunt) {
         },
 
         watch: {
+            options: {
+                spawn: false
+            },
             scss: {
                 files: ['../scss/*.scss'],
-                tasks: ['compass:dev'],
-                options: {
-                    spawn: false
-                }
+                tasks: ['compass:dev']
             },
-            js: {
-                files: ['../js/*.js'],
-                tasks: ['uglify:dev'],
-                options: {
-                    spawn: false
-                }
+
+            jsApp: {
+                files: ['../js/app.js'],
+                tasks: ['uglify:app']
+            },
+            jsPopup: {
+                files: ['../js/popup.js'],
+                tasks: ['uglify:popup']
             }
         }
 

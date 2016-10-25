@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="popupApp">
 <head>
 	<title></title>
 </head>
-<body style="width: 200px;">
+<body style="width: 400px;" ng-controller="MainCtrl">
 
-	<a href="#" id="enableToast">Show toasts</a> &nbsp;
-	<a href="#" id="disableToast">Hide toasts</a>
+	<a href="#" ng-click="quickAccessGlobal = !quickAccessGlobal">{{ quickAccessGlobal ? 'Disable everywhere' : 'Enable everywhere' }} &nbsp;&nbsp; quickAccessGlobal: {{ quickAccessGlobal }}</a>
+	<br>
+	<a href="#" ng-click="disableQuickAccessJusthere = !disableQuickAccessJusthere">{{ disableQuickAccessJusthere ? 'Enable here' : 'Disable here' }} &nbsp;&nbsp; disableQuickAccessJusthere: {{ disableQuickAccessJusthere }}</a>
 
 	<script src="js/min/popup.js"></script>
 

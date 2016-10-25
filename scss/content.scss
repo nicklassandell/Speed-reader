@@ -5,7 +5,7 @@ $toast-size: 45px;
 $toast-spacing: 10px;
 $toast-window-spacing: 20px;
 
-.sr-toast-container {
+.sr-qa-container {
 	position: fixed;
 	bottom: 0;
 	right: 0;
@@ -20,7 +20,7 @@ $toast-window-spacing: 20px;
 	&:hover {
 		height: 180px;
 
-		.sr-toast-button {
+		.sr-qa-button {
 			pointer-events: auto;
 
 			@for $i from 2 through 3 {
@@ -33,7 +33,7 @@ $toast-window-spacing: 20px;
 		}
 	}
 
-	.sr-toast-button {
+	.sr-qa-button {
 		position: absolute;
 		right: $toast-window-spacing;
 		display: block;
@@ -55,14 +55,14 @@ $toast-window-spacing: 20px;
 				opacity: 1;
 			}
 
-			&.sr-toast-btn-read .sr-icon {
+			&.sr-qa-btn-read .sr-icon {
 				background-size: 24px; // Match image size
 				font-size: 0px;
 				color: transparent;
 			}
 		}
 
-		&.sr-toast-btn-read .sr-icon {
+		&.sr-qa-btn-read .sr-icon {
 			background-size: 0;
 			color: #FFF;
 			font-size: 16px;
