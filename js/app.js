@@ -460,7 +460,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 				multiplier = multiplier > 2.2 ? 2.2 : multiplier;
 
 				// Min 0.7
-				multiplier = multiplier < 0.7 ? 0.7 : multiplier;
+				multiplier = multiplier < 0.75 ? 0.75 : multiplier;
 
 
 				var highlighted = $scope.highlightFocusPoint(w);
@@ -506,7 +506,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		if($scope.settings.pauseBetweenParagraphs) {
 			words.pop();
 		}
-		
+
 		return words;
 	}
 
