@@ -103,12 +103,6 @@ function updateContextMenu() {
 				contexts : ['selection']
 			});
 
-			chrome.contextMenus.create({
-				id: 'readPage',
-				title : 'Read page with Readio',
-				contexts : ['all']
-			});
-
 			chrome.contextMenus.onClicked.addListener(function(info, tab) {
 
 				if(info.menuItemId === 'readSelection') {
@@ -122,15 +116,6 @@ function updateContextMenu() {
 
 						textToRead.text = text;
 						openApp();
-					});
-
-				} else if(info.menuItemId === 'readPage') {
-
-					chrome.tabs.sendMessage(tab.id, {action: 'getParseData'}, function(text) {
-						if(text) {
-							textToRead.text = text;
-							openApp();
-						}
 					});
 
 				}
