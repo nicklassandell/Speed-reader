@@ -454,13 +454,13 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 					multiplier;
 
 				// Set multiplier based on word length
-				multiplier = w.length * 0.13;
+				multiplier = w.length * 0.18;
 
-				// Max 2.2
-				multiplier = multiplier > 2.2 ? 2.2 : multiplier;
+				// Max
+				multiplier = multiplier > 2 ? 2 : multiplier;
 
-				// Min 0.7
-				multiplier = multiplier < 0.75 ? 0.75 : multiplier;
+				// Min
+				multiplier = multiplier < 0.9 ? 0.9 : multiplier;
 
 
 				var highlighted = $scope.highlightFocusPoint(w);
