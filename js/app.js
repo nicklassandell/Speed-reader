@@ -27,6 +27,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		'words' : [],
 		'currentWord' : 0,
 		'paused' : false,
+		'delayedPause' : false, // Same a pause but unpause triggers slightly delayed
 		'hasStarted' : false,
 		'percentComplete' : function(round) {
 			var perc = ($scope.game.currentWord / $scope.game.words.length) * 100,
@@ -626,6 +627,18 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	    });
 	});
 
+	$scope.$watch('game.paused', function(paused) {
+		if(paused) {
+			$scope.game.delayedPause = true;
+		} else {
+			$timeout.cancel($scope.delayedPauseTimeout);
+
+			$scope.delayedPauseTimeout = $timeout(function() {
+				$scope.game.delayedPause = false;
+			}, 200);
+		}
+	});
+
 
 	// Pause read when slider is moved manually
 	// Can't check for #timeline events because rzslider stops bubbling
@@ -650,7 +663,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 			$scope.continueRead();
 			$scope.continueOnMouseup = false;
-			
+
 			$scope.$apply();
 		}
 	}, true);
