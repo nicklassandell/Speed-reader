@@ -20,7 +20,9 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		'pauseCountdown' : 1,
 		'countDownInProgress' : false,
 		'showLoadingOverlay' : false,
-		'init' : false
+		'init' : false,
+		'windowHeight' : window.innerHeight,
+		'windowWidth' : window.innerWidth
 	};
 
 	$scope.game = {
@@ -73,7 +75,9 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		'nightMode',
 		'highlightFocusPoint',
 		'centerFocusPoint',
-		'useSerifFont'
+		'useSerifFont',
+		'windowHeight',
+		'windowWidth'
 	];
 
 
@@ -642,7 +646,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 	// Pause read when slider is moved manually
 	// Can't check for #timeline events because rzslider stops bubbling
-	angular.element(document.body)[0].addEventListener('mousedown', function(e){
+	document.body.addEventListener('mousedown', function(e){
 
 		// Check if game has started, otherwise no point in pausing again
 		if( $scope.game.hasStarted && !$scope.game.paused ) {
@@ -658,7 +662,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	}, true);
 
 	// Continue on mouseup after moving slider
-	angular.element(document.body)[0].addEventListener('mouseup', function(e){
+	document.body.addEventListener('mouseup', function(e){
 		if( $scope.continueOnMouseup ) {
 
 			$scope.continueRead();
@@ -667,6 +671,15 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			$scope.$apply();
 		}
 	}, true);
+
+	// Save window dimentions on resize
+	window.addEventListener('resize', function(e) {
+		$timeout.cancel($scope.windowResizeThrottleTimeout);
+		$scope.windowResizeThrottleTimeout = $timeout(function() {
+			$scope.settings.windowWidth = window.innerWidth;
+			$scope.settings.windowHeight = window.innerHeight;
+		}, 200);
+	});
 
 
 	// Lastly, run app

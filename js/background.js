@@ -138,20 +138,16 @@ function updateContextMenu() {
 
 
 function openApp() {
-	var width = 1200,
-		height = 650/*,
-		left = (screen.width/2) - (width/2),
-		top = (screen.height/2) - (height/2)*/;
+	chrome.storage.sync.get(['windowHeight', 'windowWidtht'], function(size) {
+		var height = size.windowHeight || 550,
+			width = size.windowWidth || 1150;
 
-	chrome.windows.create({
-		url: 'app.html',
-		type: 'popup',
-		//width: width,
-		//height: height
-
-		/*, Will center window but can't control which monitor it's displayed on, so skipping for now
-		left: left,
-		top: top*/
+		chrome.windows.create({
+			url: 'app.html',
+			type: 'popup',
+			width: width,
+			height: height
+		});
 	});
 }
 
