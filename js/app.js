@@ -237,17 +237,11 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 		$timeout(function() {
 			$scope.startCountdown($scope.settings.pauseCountdown*3);
-		}, 300);
+		}, 50);
 	}
 
 	// Todo: Clean this mess up
 	$scope.startCountdown = function(steps) {
-
-		if($scope.settings.countDownInProgress) {
-			return false;
-		}
-
-		$scope.settings.countDownInProgress = true;
 
 		var prog = angular.element('#countdown-bar'),
 			bar = prog.find('.progress'),
@@ -256,9 +250,17 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 			percentSteps = 100/steps;
 
-		prog.addClass('visible');
+		if($scope.settings.countDownInProgress) {
+			$interval.cancel($scope.countDownTimeout);
+			prog.removeClass('visible');
+			bar.attr('style', '');
+		}
+
+		$scope.settings.countDownInProgress = true;
+
 
 		$timeout(function() {
+			prog.addClass('visible');
 			bar.css('width', percentSteps + '%');
 
 			$scope.countDownTimeout = $interval(function() {
@@ -292,8 +294,14 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 	$scope.restartRead = function() {
 		$scope.pauseRead();
+
 		$scope.game.currentWord = 0;
-		$scope.continueRead();
+		$scope.game.hasStarted = true;
+		$scope.game.paused = false;
+
+		$timeout(function() {
+			$scope.startCountdown($scope.settings.pauseCountdown*3);
+		}, 50);
 	}
 
 	$scope.pauseRead = function() {
