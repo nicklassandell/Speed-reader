@@ -4,25 +4,37 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         uglify: {
-            app: {
+            dist: {
                 options: {
-                    mangle: false,
-                    preserveComments: true,
-                    beautify: true
+                    mangle: true,
+                    preserveComments: false,
+                    beautify: false
                 },
-                files: {
-                    '../js/min/app.js' : ['../js/libs/jquery.min.js', '../js/libs/angular.js', '../js/libs/angular.rzslider.js', '../js/mousetrap.js', '../js/app.js']
-                }
+                files: [{
+                    expand: true,
+                    cwd: '../js/',
+                    src: '*.js',
+                    dest: '../js/min',
+                    ext: '.js'
+                }]
             },
-            popup: {
+            dev: {
                 options: {
                     mangle: false,
                     preserveComments: true,
                     beautify: true
                 },
-                files: {
-                    '../js/min/popup.js' : ['../js/libs/jquery.min.js', '../js/libs/angular.js', '../js/popup.js']
-                }
+
+                // This will uglify all files into separate files in min directory
+                // It's the default value but it's overwritten by the watch task so that
+                // only the changed file is uglified.
+                files: [{
+                    expand: true,
+                    cwd: '../js/',
+                    src: '*.js',
+                    dest: '../js/min',
+                    ext: '.js'
+                }]
             }
         },
 
@@ -47,18 +59,13 @@ module.exports = function(grunt) {
             options: {
                 spawn: false
             },
+            js: {
+                files: ['../js/*.js'],
+                tasks: ['uglify:dev']
+            },
             scss: {
                 files: ['../scss/*.scss'],
                 tasks: ['compass:dev']
-            },
-
-            jsApp: {
-                files: ['../js/app.js'],
-                tasks: ['uglify:app']
-            },
-            jsPopup: {
-                files: ['../js/popup.js'],
-                tasks: ['uglify:popup']
             }
         }
 
@@ -69,4 +76,20 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask('default', ['watch:js']);
+
+
+    grunt.event.on('watch', function(action, filepath, target) {
+
+        // Only uglify changed file
+
+        var fileName = filepath.split('\\').pop(),
+            dest = '../js/min/' + fileName,
+            files = {};
+
+        files[dest] = filepath;
+
+        grunt.log.writeln(dest);
+        grunt.config('uglify.dev.files', files);
+
+    });
 }
