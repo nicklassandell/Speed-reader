@@ -62,7 +62,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			showSelectionBar: true,
 			hideLimitLabels: true,
 			hidePointerLabels: true,
-			interval: 250
+			interval: 200
 		}
 	};
 
@@ -630,11 +630,13 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 	// Next/Previous word
 	Mousetrap.bind(['left', 'a'], function() {
+		console.log('left');
 		$scope.pauseRead();
 		$scope.goToPosition('previous');
 		$scope.$apply();
 	});
 	Mousetrap.bind(['right', 'd'], function() {
+		console.log('right');
 		$scope.pauseRead();
 		$scope.goToPosition('next');
 		$scope.$apply();
@@ -642,14 +644,18 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 	// Previous/next sentence
 	Mousetrap.bind(['q', 'ctrl+left'], function() {
+		console.log('prev_sentence');
 		$scope.pauseRead();
 		$scope.goToPosition('prev_sentence');
 		$scope.$apply();
+		return false;
 	});
-	Mousetrap.bind(['e', 'ctrl+right'], function() {
+	Mousetrap.bind(['next_sentence', 'ctrl+right'], function() {
+		console.log('right');
 		$scope.pauseRead();
 		$scope.goToPosition('next_sentence');
 		$scope.$apply();
+		return false;
 	});
 
 	// Toggle dark mode
