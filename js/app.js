@@ -365,6 +365,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		}
 
 		if(!isNaN(goTo)) {
+			$timeout.cancel($scope.startWordLoopTimeout);
 			$scope.game.currentWord = goTo;
 		}
 	}
@@ -532,7 +533,6 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			}
 		}
 
-		console.log(words);
 		return words;
 	}
 
@@ -603,6 +603,12 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	// Start (from editor)
 	Mousetrap.bind('ctrl+enter', function() {
 		$scope.startRead();
+		$scope.$apply();
+	});
+
+	// Restart (from reader)
+	Mousetrap.bind('r', function() {
+		$scope.restartRead();
 		$scope.$apply();
 	});
 
