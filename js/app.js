@@ -1,6 +1,6 @@
 var app = angular.module('speedReadingApp', ['rzModule']);
 
-app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http', function($scope, $timeout, $interval, $window, $http) {
+app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http', '$sce', function($scope, $timeout, $interval, $window, $http, $sce) {
 	"use strict";
 
 	$scope.settings = {
@@ -470,8 +470,8 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	$scope.splitToWords = function(text) {
 
 		// Remove double spaces, tabs, and new lines, this could be improved
-		var text = text.betterTrim().replace(/(\s){2,}/g, '$1'),
-			paras = text.split(/[\n]/),
+		var //text = text.betterTrim().replace(/(\s){2,}/g, '$1'),
+			paras = text.match(/(.{1,})/g),
 			words = [];
 
 		if(text.length < 1) {
@@ -479,9 +479,9 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		}
 
 		// Loop through all paragraphs
-		for(var i in paras) {
-			var para = paras[i],
-				paraWords = para.split(' '),
+		for(var pi in paras) {
+			var para = paras[pi],
+				paraWords = para.split(/\s+/g),
 				spaceAfterSentence = false;
 
 			// Loop through all words
@@ -500,7 +500,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 				multiplier = multiplier < 0.9 ? 0.9 : multiplier;
 
 
-				var highlighted = $scope.highlightFocusPoint(w);
+				var highlighted = $scope.getWordFocusPoint(w);
 
 				// Append word to array
 				words.push({
@@ -510,44 +510,33 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 					'raw': highlighted
 				});
 
-				// Append space after word if it's the last word in a
-				// sentence, and the setting is on
-				spaceAfterSentence = false;
-				if(lastChar === '.' || lastChar === '?' || lastChar === '!') {
+
+				// If not last word of paragraph
+				// If end of sentence
+				if( parseInt(wi)+1 !== paraWords.length && (lastChar === '.' || lastChar === '?' || lastChar === '!') ) {
 					words.push({
 						'type' : 'pause',
 						'multiplier': 1.5,
-						'value': '',
-						'raw' : {
-							'specialChar' : '(new line)'
-						}
+						'value': ''
 					});
-					spaceAfterSentence = true;
 				}
 			}
 
-			// Add space between each paragraph
-			if(!spaceAfterSentence) {
+			// Add break between each paragraph, except the last one
+			if( parseInt(pi)+1 != paras.length ) {
 				words.push({
 					'type' : 'pause',
 					'multiplier': 1.5,
-					'value': '',
-					'raw' : {
-						'specialChar' : '(new paragraph)'
-					}
+					'value': ''
 				});
 			}
 		}
 
-		// Hack, remove last whitespace
-		if($scope.settings.pauseBetweenParagraphs) {
-			words.pop();
-		}
-
+		console.log(words);
 		return words;
 	}
 
-	$scope.highlightFocusPoint = function(word) {
+	$scope.getWordFocusPoint = function(word) {
 		var breakpoint = .33,
 			length = word.length,
 			breakAt = Math.floor(length * breakpoint),

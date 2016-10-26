@@ -148,20 +148,20 @@
 
                         <div class="before">
                             <div class="preview-words">
-                                <span ng-if="game.delayedPause" ng-repeat="n in [-10,-9,-8,-7,-6,-5,-4,-3,-2,-1]">{{ game.words[game.currentWord + n].value }} </span>
+                                <span ng-if="game.delayedPause" ng-repeat="n in [-10,-9,-8,-7,-6,-5,-4,-3,-2,-1]">{{ game.words[game.currentWord + n].value ? game.words[game.currentWord + n].value : '&nbsp;&nbsp;'  }} </span>
                             </div>
 
-                            <span ng-if="settings.centerFocusPoint">{{ game.words[game.currentWord].raw.start || ' ' | unsafe }}</span>
+                            <span ng-if="settings.centerFocusPoint">{{ game.words[game.currentWord].raw.start || ' ' }}</span>
                         </div>
 
-                        <span class="highlight" ng-if="!settings.centerFocusPoint">&nbsp;{{ game.words[game.currentWord].value ? game.words[game.currentWord].value : game.paused ? game.words[game.currentWord].raw.specialChar: '' }}&nbsp;</span>
-                        <span class="highlight" ng-if="settings.centerFocusPoint"> {{ game.words[game.currentWord].raw.highlighted ? game.words[game.currentWord].raw.highlighted : game.paused ? game.words[game.currentWord].raw.specialChar: '' }} </span>
+                        <span class="highlight" ng-if="!settings.centerFocusPoint">&nbsp;{{ game.words[game.currentWord].value ? game.words[game.currentWord].value :'&nbsp;&nbsp;' }}&nbsp;</span>
+                        <span class="highlight" ng-if="settings.centerFocusPoint"> {{ game.words[game.currentWord].raw.highlighted ? game.words[game.currentWord].raw.highlighted : '&nbsp;&nbsp;' }} </span>
 
                         <div class="after">
-                            <span ng-if="settings.centerFocusPoint">{{ game.words[game.currentWord].raw.end || ' ' | unsafe }}</span>
+                            <span ng-if="settings.centerFocusPoint">{{ game.words[game.currentWord].raw.end || ' ' }}</span>
 
                             <div class="preview-words">
-                                <span ng-if="game.delayedPause" ng-repeat="n in [1,2,3,4,5,6,7,8,9,10]"> {{ game.words[game.currentWord + n].value }}</span>
+                                <span ng-if="game.delayedPause" ng-repeat="n in [1,2,3,4,5,6,7,8,9,10]"> {{ game.words[game.currentWord + n].value ? game.words[game.currentWord + n].value : '&nbsp;&nbsp;' }}</span>
                             </div>
                         </div>
 
