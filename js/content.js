@@ -143,22 +143,13 @@
 		// Read page
 		$scope.readBtn.onclick = function(e) {
 			e.preventDefault();
-
-			// Send parsed text
-			chrome.extension.sendMessage({
-				action: 'requestRead',
-				text: $scope.parseResults.content
-			});
+			requestRead();
 		};
 
 		// Request edit
 		$scope.editBtn.onclick = function(e) {
 			e.preventDefault();
-
-			// Send parsed text
-			chrome.extension.sendMessage({
-				action: 'requestEdit'
-			});
+			requestEditor();
 		}
 
 		// Request blacklist
@@ -190,6 +181,23 @@
 		}
 
 		return false;
+	}
+
+	function requestRead() {
+
+		// Send parsed text
+		chrome.extension.sendMessage({
+			action: 'requestRead',
+			text: $scope.parseResults.content
+		});
+	}
+
+	function requestEditor() {
+
+		// Send parsed text
+		chrome.extension.sendMessage({
+			action: 'requestEdit'
+		});
 	}
 
 	function addToBlacklist() {
@@ -244,6 +252,12 @@
 
 		} else if(request.action === 'hideQuickAccess') {
 			$scope.quickAccessContainer.classList.add('hidden');
+		
+		} else if(request.action === 'readPage') {
+			requestRead();
+
+		} else if(request.action === 'openEditor') {
+			requestEditor();
 		}
 	});
 

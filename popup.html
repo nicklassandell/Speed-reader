@@ -5,9 +5,14 @@
 </head>
 <body style="width: 400px;" ng-controller="MainCtrl">
 
-	<a href="#" ng-click="quickAccessGlobal = !quickAccessGlobal">{{ quickAccessGlobal ? 'Disable everywhere' : 'Enable everywhere' }} &nbsp;&nbsp; quickAccessGlobal: {{ quickAccessGlobal }}</a>
+	<a href="#" ng-click="quickAccessGlobal = !quickAccessGlobal">{{ quickAccessGlobal ? 'Disable everywhere' : 'Enable everywhere' }}</a>
 	<br>
-	<a href="#" ng-click="disableQuickAccessJusthere = !disableQuickAccessJusthere">{{ disableQuickAccessJusthere ? 'Enable here' : 'Disable here' }} &nbsp;&nbsp; disableQuickAccessJusthere: {{ disableQuickAccessJusthere }}</a>
+	<a href="#" ng-click="disableQuickAccessJusthere = !disableQuickAccessJusthere">{{ disableQuickAccessJusthere ? 'Enable here' : 'Disable here' }}</a>
+
+	<br><br>
+
+	<a href="#" ng-click="readCurrentPage()">Read this page</a>
+	<a href="#" ng-click="openEditor()">Open editor</a>
 
     <script src="js/libs/angular.js"></script>
 	<script src="js/min/popup.js"></script>

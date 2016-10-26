@@ -44,6 +44,22 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		});
 	}
 
+
+	$scope.readCurrentPage = function() {
+		chrome.tabs.sendMessage($scope.tabId, {
+			action: 'readPage'
+		});
+	}
+
+	$scope.openEditor = function() {
+		chrome.tabs.sendMessage($scope.tabId, {
+			action: 'openEditor'
+		});
+	}
+
+
+
+
 	$scope.$watch('quickAccessGlobal', function(newVal) {
 
 		if($scope.init !== true) return false;
