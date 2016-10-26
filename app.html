@@ -145,10 +145,10 @@
                 </div>
 
                 <div class="center">
-                    <div class="relative" title="Words Per Minute">
-                        <a ng-click="setWPM(settings.wpm - 50)"><i class="fa fa-caret-left"></i></a>
+                    <div class="wpm-setting">
+                        <a class="icon-button" ng-click="setWPM(settings.wpm - 50)" title="Slower"><i class="fa fa-minus"></i></a>
                         <span>&nbsp;{{ settings.wpm }} wpm&nbsp;</span>
-                        <a ng-click="setWPM(settings.wpm + 50)"><i class="fa fa-caret-right"></i></a>
+                        <a class="icon-button" ng-click="setWPM(settings.wpm + 50)" title="Faster"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>
             </div>

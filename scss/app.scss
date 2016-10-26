@@ -38,6 +38,7 @@ body {
 	margin: 0;
 	line-height: $global-line-height;
 	display: none;
+	-webkit-user-select: none;
 
 	&.init {
 		display: block;
@@ -223,6 +224,10 @@ a {
 		width: 100%;
 		background: rgba(255,255,255,.05);
 
+		.bright-mode & {
+			background: rgba(0,0,0,.05);
+		}
+
 		.editor {
 			max-width: $center-container-width + ($center-container-padding*2);
 			width: 100%;
@@ -346,6 +351,11 @@ a {
 			margin-right: 0;
 			margin-left: 5px;
 		}
+
+
+		.wpm-setting {
+			color: $base-blue;
+		}
 	}
 
 	
@@ -359,15 +369,23 @@ a {
 		text-align: center;
 		cursor: default;
 		margin: 90px 0 90px 0;
+		-webkit-user-select: auto;
 		@include transition-duration($global-transition-duration);
-
-		.bright-mode & {
-			border-color: rgba(0, 0, 0, 0.15);
-		}
 		
 		font-family: $global-font-family;
 		.serif-font & {
 			font-family: 'Roboto Slab', serif;
+		}
+
+		.bright-mode & {
+			border-color: rgba(0, 0, 0, 0.15);
+
+			&::before {
+				background: linear-gradient(90deg, $light-background-color 905px, transparent 1000px);
+			}
+			&::after {
+				background: linear-gradient(90deg, transparent 0, $light-background-color 95px);
+			}
 		}
 
 		&::before, &::after {
@@ -741,7 +759,7 @@ label {
 		color: rgba(0,0,0,.7);
 
 		&:hover {
-			color: inherit;
+			color: rgba(0,0,0,.8);
 			background: rgba(0,0,0,.06);
 			border-color: rgba(0,0,0,.15);
 		}
