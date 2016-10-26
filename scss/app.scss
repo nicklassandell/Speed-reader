@@ -458,9 +458,11 @@ a {
 			.is-paused & {
 				.scaler {
 					transform: scale(.4);
+					transition-delay: .1s; // To prevent mini zoom jump on timeline click (not drag)
 				}
 				.preview-words {
 					opacity: 1;
+					transition-delay: .1s; // To prevent mini zoom jump on timeline click (not drag)
 				}
 			}
 
@@ -517,7 +519,7 @@ a {
 
 			&.visible {
 				opacity: 1;
-				
+
 				.progress {
 					transition-duration: .75s;
 				}
