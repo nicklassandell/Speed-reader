@@ -30,19 +30,19 @@
 
 		html += '<div id="sr-qa-container" class="sr-qa-container">';
 
-		html += 	'<a title="Read with Champ" id="sr-qa-trigger-read" class="sr-qa-button sr-qa-btn-read">';
-		html +=			'<span class="sr-label">Read page with Champ</span>';
-		html +=	 		'<span id="sr-read-time-container" class="sr-icon sr-icon-book"></span>';
+		html += 	'<a title="Read with Champ" id="sr-qa-trigger-read" class="sr-qa-button">';
+		html +=			'<div class="sr-label">Read with Readio, <span id="sr-read-time-container"></span></div>';
+		html +=	 		'<div class="sr-icon sr-icon-book"></div>';
 		html +=		'</a>';
 
 		html += 	'<a title="Edit" id="sr-qa-trigger-edit" class="sr-qa-button">';
-		html +=			'<span class="sr-label">Open editor to paste text</span>';
-		html +=	 		'<span class="sr-icon sr-icon-edit"></span>';
+		html +=			'<div class="sr-label">Open editor to paste text</div>';
+		html +=	 		'<div class="sr-icon sr-icon-edit"></div>';
 		html +=		'</a>';
 
 		html += 	'<a title="Hide" id="sr-qa-trigger-hide" class="sr-qa-button">';
-		html +=			'<span class="sr-label">Hide button on this site</span>';
-		html +=	 		'<span class="sr-icon sr-icon-close"></span>';
+		html +=			'<div class="sr-label">Disable quick access buttons</div>';
+		html +=	 		'<div class="sr-icon sr-icon-close"></div>';
 		html += 	'</a>';
 
 		html += '</div>';
@@ -77,9 +77,9 @@
 				text = '';
 
 			if(wpmRound < 1) {
-				text = '<1';
+				text = '<1 min';
 			} else {
-				text = wpmRound;
+				text = wpmRound + ' min';
 			}
 
 			timeContainer.innerHTML = text;

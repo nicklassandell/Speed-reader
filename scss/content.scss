@@ -54,21 +54,6 @@ $toast-window-spacing: 20px;
 			.sr-label {
 				opacity: 1;
 			}
-
-			&.sr-qa-btn-read .sr-icon {
-				background-size: 24px; // Match image size
-				font-size: 0px;
-				color: transparent;
-			}
-		}
-
-		&.sr-qa-btn-read .sr-icon {
-			background-size: 0;
-			color: #FFF;
-			font-size: 16px;
-			font-family: sans-serif;
-			text-align: center;
-			line-height: $toast-size;
 		}
 
 		.sr-label {
