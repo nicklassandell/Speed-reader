@@ -103,13 +103,15 @@
 
 
 		$scope.disableEverywhereBtn.onclick = function() {
-			chrome.storage.sync.set({ quickAccessGlobal : true });
+			chrome.storage.sync.set({ quickAccessGlobal : false });
 			$scope.quickAccessContainer.classList.add('hidden');
 			hideDialogs();
 		}
 
 		$scope.disableJustHereBtn.onclick = function() {
 			addToBlacklist();
+			$scope.quickAccessContainer.classList.add('hidden');
+			hideDialogs();
 		}
 
 		$scope.dialogs.forEach(function(d) {
