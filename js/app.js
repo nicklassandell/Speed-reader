@@ -338,12 +338,18 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	}
 
 	$scope.goToPosition = function(pos) {
-		if(pos === 'last_sentence') {
-			var goTo = $scope.findLastSentence();
+
+		if(pos === 'prev_sentence') {
+			var goTo = $scope.findPreviousSentence();
+
+		} else if(pos === 'next_sentence') {
+			var goTo = $scope.findNextSentence();
+
 		} else if(pos === 'previous') {
 			if($scope.game.currentWord > 0) {
 				var goTo = $scope.game.currentWord-1;
 			}
+
 		} else if(pos === 'next') {
 			if($scope.game.currentWord < $scope.game.words.length) {
 				var goTo = $scope.game.currentWord+1;
@@ -387,9 +393,8 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	}
 
 
-	$scope.findLastSentence = function() {
-		var possible = false,
-			currWord = $scope.game.currentWord,
+	$scope.findPreviousSentence = function() {
+		var currWord = $scope.game.currentWord,
 			currWord = currWord > 0 ? currWord-1 : currWord,
 			countDown = currWord;
 
@@ -404,10 +409,28 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		}
 		return 0;
 	};
+	$scope.findNextSentence = function() {
+		var currWord = $scope.game.currentWord;
+
+		for(var i = $scope.game.currentWord; i < $scope.game.words.length-2; ++i ) {
+			var word = $scope.game.words[i].value,
+				nextWord = $scope.game.words[i+1].value,
+				secondNextWord = $scope.game.words[i+2].value,
+
+				currIsEnd = $scope.isEndOfSentence(word),
+				nextIsBeginning = $scope.isBeginningOfSentence(nextWord),
+				secondNextIsBeginning = $scope.isBeginningOfSentence(secondNextWord);
+
+			if( currIsEnd && ( nextIsBeginning || secondNextIsBeginning )) {
+
+				return nextIsBeginning ? i+1 : i+2;
+			}
+		}
+	};
 
 	$scope.isBeginningOfSentence = function(word) {
 		// Strip whitespace
-		word = word.betterTrim().replace(/\s/, '');
+		word = word.replace(/\s/, '');
 
 		// Cancel if empty (it's a pause)
 		if(word === '') {
@@ -422,7 +445,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	}
 
 	$scope.isEndOfSentence = function(word) {
-		var lastChar = word.slice(-1);
+		var lastChar = word.replace(/\s/, '').slice(-1);
 
 		// Check last char
 		if( lastChar === '!' || lastChar === '?' || lastChar === '.' ) {
@@ -614,10 +637,15 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		$scope.$apply();
 	});
 
-	// Previous sentence
+	// Previous/next sentence
 	Mousetrap.bind(['q', 'ctrl+left'], function() {
 		$scope.pauseRead();
-		$scope.goToPosition('last_sentence');
+		$scope.goToPosition('prev_sentence');
+		$scope.$apply();
+	});
+	Mousetrap.bind(['e', 'ctrl+right'], function() {
+		$scope.pauseRead();
+		$scope.goToPosition('next_sentence');
 		$scope.$apply();
 	});
 
