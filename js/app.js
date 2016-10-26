@@ -580,26 +580,34 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 
 
-	// Pause
+	// Start (from editor)
 	Mousetrap.bind('ctrl+enter', function() {
 		$scope.startRead();
 		$scope.$apply();
 	});
 
-	// Pause
+	// Toggle pause
 	Mousetrap.bind('space', function() {
 		$scope.togglePause();
 		$scope.$apply();
 	});
 
-	// Previous word
+	// Speed up/down
+	Mousetrap.bind(['w', 'up'], function() {
+		$scope.setWPM($scope.settings.wpm + 50);
+		$scope.$apply();
+	});
+	Mousetrap.bind(['s', 'down'], function() {
+		$scope.setWPM($scope.settings.wpm - 50);
+		$scope.$apply();
+	});
+
+	// Next/Previous word
 	Mousetrap.bind(['left', 'a'], function() {
 		$scope.pauseRead();
 		$scope.goToPosition('previous');
 		$scope.$apply();
 	});
-
-	// Next word
 	Mousetrap.bind(['right', 'd'], function() {
 		$scope.pauseRead();
 		$scope.goToPosition('next');
@@ -607,9 +615,15 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	});
 
 	// Previous sentence
-	Mousetrap.bind(['ctrl+left'], function() {
+	Mousetrap.bind(['q', 'ctrl+left'], function() {
 		$scope.pauseRead();
 		$scope.goToPosition('last_sentence');
+		$scope.$apply();
+	});
+
+	// Toggle dark mode
+	Mousetrap.bind('c', function() {
+		$scope.settings.nightMode = !$scope.settings.nightMode;
 		$scope.$apply();
 	});
 
