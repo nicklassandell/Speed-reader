@@ -2,17 +2,21 @@
 <html ng-app="popupApp">
 <head>
 	<title></title>
+	<link rel="stylesheet" href="css/popup.css">
 </head>
 <body style="width: 400px;" ng-controller="MainCtrl">
 
-	<a href="#" ng-click="quickAccessGlobal = !quickAccessGlobal">{{ quickAccessGlobal ? 'Disable everywhere' : 'Enable everywhere' }}</a>
-	<br>
-	<a href="#" ng-click="disableQuickAccessJusthere = !disableQuickAccessJusthere">{{ disableQuickAccessJusthere ? 'Enable here' : 'Disable here' }}</a>
+	<h2>How to use</h2>
+	<ul>
+		<li>Select text on page, right click and press Speed Read</li>
+		<li><a href="#" ng-click="readCurrentPage()">Read current page</a> (we'll try and find the correct content)</li>
+		<li><a href="#" ng-click="openEditor()">Open editor</a> and paste any text</li>
+	</ul>
 
-	<br><br>
+	<h2>Quick Access Buttons</h2>
+	<p>You can access the editor and the current page via the quick access buttons in the bottom right corner. It will show up on any webpage we can detect text on.</p>
 
-	<a href="#" ng-click="readCurrentPage()">Read this page</a>
-	<a href="#" ng-click="openEditor()">Open editor</a>
+	<p><a href="#" ng-click="quickAccessGlobal = !quickAccessGlobal">{{ quickAccessGlobal ? 'Disable everywhere' : 'Enable everywhere' }}</a> or <a href="#" ng-click="disableQuickAccessJusthere = !disableQuickAccessJusthere">{{ disableQuickAccessJusthere ? 'Enable on ' + tabUrl : 'Disable on ' + tabUrl }}</a></p>
 
     <script src="js/libs/angular.js"></script>
 	<script src="js/min/popup.js"></script>

@@ -19,30 +19,18 @@ chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
 			return false;
 		}
 
-		// Check if domain is blacklisted
-		//isBlacklisted(tab.url, function(isBlacklisted) {
-		//	if(isBlacklisted) {
-		//		return false;
-		//	}
-
-			// Show or hide toast for this tab
-			getOption('hideToast', function(hideToast) {
-				if(!hideToast) {
-					chrome.tabs.insertCSS(tabId, {file: 'css/content.css'}, function() {
-						chrome.tabs.executeScript(tabId, {file: 'js/libs/readability.js', runAt: 'document_end'});
-						chrome.tabs.executeScript(tabId, {file: 'js/content.js', runAt: 'document_end'});
-					});
-				}
-			});
-		//});
+		// Show or hide toast for this tab
+		getOption('hideToast', function(hideToast) {
+			if(!hideToast) {
+				chrome.tabs.insertCSS(tabId, {file: 'css/content.css'}, function() {
+					chrome.tabs.executeScript(tabId, {file: 'js/libs/readability.js', runAt: 'document_end'});
+					chrome.tabs.executeScript(tabId, {file: 'js/content.js', runAt: 'document_end'});
+				});
+			}
+		});
 	});
 
 });
-
-// When the toolbar icon is clicked
-chrome.browserAction.onClicked.addListener(function(tab) {
-});
-
 
 
 // Listen for callbacks from injected code
@@ -115,6 +103,7 @@ function updateContextMenu() {
 						text = text[0].replace(/(\r\n|\n|\r)+/gm, '<br/>');
 
 						textToRead.text = text;
+						textToRead.action = 'read';
 						openApp();
 					});
 

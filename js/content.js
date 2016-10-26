@@ -256,8 +256,6 @@
 		} else if(request.action === 'readPage') {
 			requestRead();
 
-		} else if(request.action === 'openEditor') {
-			requestEditor();
 		}
 	});
 

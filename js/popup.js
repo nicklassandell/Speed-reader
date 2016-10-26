@@ -52,8 +52,8 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	}
 
 	$scope.openEditor = function() {
-		chrome.tabs.sendMessage($scope.tabId, {
-			action: 'openEditor'
+		chrome.runtime.sendMessage({
+			action: 'requestEdit'
 		});
 	}
 
