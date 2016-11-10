@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Champ | Speed read like a boss</title>
+    <title>Readio Speed Reader</title>
     <link rel="stylesheet" href="css/app.css" />
 </head>
 <body ng-controller="MainCtrl" ng-class="
@@ -46,8 +46,8 @@
                     <a style="width: 132px;" class="icon-button outlined has-text right-spacing show-if-paused" ng-click="continueRead();" title="Continue"><i class="fa fa-play"></i>Continue</a>
                     <a style="width: 132px;" class="icon-button outlined has-text right-spacing show-if-not-paused" ng-click="pauseRead();" title="Pause"><i class="fa fa-pause"></i>Pause</a>
 
-                    <a class="icon-button" ng-click="goToPosition('last_sentence');" title="Start from previous sentence"><i class="fa fa-step-backward"></i></a>
-                    <a class="icon-button" ng-click="restartRead();" title="Restart"><i class="fa fa-undo"></i></a>
+                    <a class="icon-button icon-shorter" ng-click="pauseRead(); goToPosition('prev_sentence');" title="Jump to previous sentence"><i class="fa fa-step-backward"></i></a>
+                    <a class="icon-button icon-shorter" ng-click="pauseRead(); goToPosition('next_sentence');" title="Jump to next sentence"><i class="fa fa-step-forward"></i></a>
                     <a class="icon-button has-text" ng-click="stopRead();" title="Stop">Edit</a>
                 </div>
 
