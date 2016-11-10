@@ -45,6 +45,7 @@ $toast-window-spacing: 20px;
 		pointer-events: none;
 		border: 0;
 		text-decoration: none;
+		outline: none !important; // Override
 
 		&:hover {
 
