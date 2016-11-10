@@ -10,7 +10,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		},
 		'pauseBetweenParagraphs' : true,
 		'pauseBetweenSentences' : true,
-		'enableMultiplier' : true, // Vary speed by word length
+		'enableMultiplier' : false, // Vary speed by word length
 		'nightMode' : true,
 		'text' : '',
 		'highlightFocusPoint' : true,
