@@ -17,7 +17,6 @@
 				isBlacklisted = blacklist.includes( window.location.hostname );
 
 			if(res.quickAccessGlobal === false || isBlacklisted) {
-				console.log(blacklist)
 				$scope.quickAccessContainer.classList.add('hidden');
 			}
 			
