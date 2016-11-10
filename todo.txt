@@ -1,3 +1,5 @@
+Bugfix:
+- Theme switching bugs
 
 Future:
 - Feedback links

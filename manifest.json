@@ -1,8 +1,9 @@
 {
     "manifest_version": 2,
 
-    "name": "Readio Speed Reader",
-    "description": "...",
+    "name": "Readio Speed Reader (beta)",
+    "short_name": "Readio (beta)",
+    "description": "A modern, intuitive speed reader that just works. Currently in beta testing.",
     "version": "0.1",
 
     "permissions": [
@@ -22,7 +23,7 @@
     "options_page": "welcome.html",
 
     "background": {
-        "scripts": ["js/background.js"],
+        "scripts": ["js/min/background.js"],
         "persistent": false
     },
 

@@ -1,6 +1,8 @@
 @import "compass/css3";
 @import "compass/utilities/general/clearfix";
 
+@import "import/angular.rzslider.scss";
+
 @import url(http://fonts.googleapis.com/css?family=Roboto+Slab:300|Roboto:300,400&amp;subset=cyrillic,greek,vietnamese);
 @import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 
@@ -23,9 +25,7 @@ $global-transition-duration: .3s;
 
 
 $global-line-height: 1.3rem;
-$global-font-family: 'Roboto', sans-serif;;
-
-@import "import/angular.rzslider.scss";
+$global-font-family: 'Roboto', sans-serif;
 
 
 html, body {

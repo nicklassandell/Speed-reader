@@ -76,6 +76,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask('default', ['watch:js']);
+    grunt.registerTask('dist', ['compass:dist', 'uglify:dist']);
 
 
     grunt.event.on('watch', function(action, filepath, target) {

@@ -13,4 +13,4 @@ Released under the MIT License.
 
 ** Known bugs **
 
-- It goes in turbo speed if you spam pause/continue for a bit
+- You tell me.

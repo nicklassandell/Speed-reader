@@ -24,7 +24,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
 			if(!hideToast) {
 				chrome.tabs.insertCSS(tabId, {file: 'css/content.css'}, function() {
 					chrome.tabs.executeScript(tabId, {file: 'js/libs/readability.js', runAt: 'document_end'});
-					chrome.tabs.executeScript(tabId, {file: 'js/content.js', runAt: 'document_end'});
+					chrome.tabs.executeScript(tabId, {file: 'js/min/content.js', runAt: 'document_end'});
 				});
 			}
 		});
