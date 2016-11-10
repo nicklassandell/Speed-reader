@@ -33,6 +33,15 @@ chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
 });
 
 
+chrome.runtime.onInstalled.addListener(function() {
+
+	chrome.tabs.create({
+		'url': 'welcome.html'
+	});
+
+});
+
+
 // Listen for callbacks from injected code
 chrome.extension.onMessage.addListener(function(data, sender, sendResponse) {
 	if(typeof data === 'object') {

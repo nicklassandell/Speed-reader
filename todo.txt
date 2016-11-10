@@ -1,7 +1,5 @@
-- Why is it saved in localstorage?
-- Flash page on install with instructions how to use etc
-- Fix next/prev button
 
 Future:
 - Feedback links
 - First-run tutorial
+- Show more words at once?
