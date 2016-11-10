@@ -678,6 +678,8 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 	    });
 	});
 
+
+	// Set delayedPause after a delay. This is used for the zoom overview effect.
 	$scope.$watch('game.paused', function(paused) {
 		if(paused) {
 			$scope.game.delayedPause = true;
@@ -689,6 +691,17 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 			}, 200);
 		}
 	});
+
+
+	// Nightmode switch transition removal. Transitions got messed up anyway.
+	$scope.$watch('settings.nightMode', function(n) {
+		if($scope.settings.init) {
+			document.body.style.setProperty('display', 'none');
+			$timeout(function() {
+				document.body.style.setProperty('display', 'block');
+			}, 20);
+		}
+	}, true);
 
 
 	// Pause read when slider is moved manually
