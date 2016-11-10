@@ -185,11 +185,21 @@
 
 	function requestRead() {
 
-		// Send parsed text
-		chrome.extension.sendMessage({
-			action: 'requestRead',
-			text: $scope.parseResults.content
-		});
+		// If we found text to read, send it
+		if($scope.parseResults && $scope.parseResults.content) {
+
+			// Send parsed text
+			chrome.extension.sendMessage({
+				action: 'requestRead',
+				text: $scope.parseResults.content
+			});
+
+		// Otherwise open editor
+		} else {
+			chrome.extension.sendMessage({
+				action: 'requestEdit'
+			});
+		}
 	}
 
 	function requestEditor() {
