@@ -11,6 +11,8 @@ Future:
 	- Plus/minus on keyboard should work
 - Re-style welcome page and popup
 - Show more words at once?
+- Hover on timeline should show current word
+- Come up with a better name?
 
 Way in the future:
 - Save/load sessions
