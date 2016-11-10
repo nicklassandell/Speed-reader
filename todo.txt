@@ -1,7 +1,16 @@
-Bugfix:
-- Theme switching bugs
 
 Future:
 - Feedback links
 - First-run tutorial
+- Redesign reader window; play controls in bottom left, speed settings and more in top toolbar?
+- Redesign settings - make own "page" so that you can link directly to it?
+	- Add settings link from editor, quick access and settings (welcome) page
+	- Same with keyboard shortcuts?
+- Bright mode style refinements
+- Make speed controls more intuitive
+	- Plus/minus on keyboard should work
+- Re-style welcome page and popup
 - Show more words at once?
+
+Way in the future:
+- Save/load sessions
