@@ -3,7 +3,7 @@
 
     "name": "Readio Speed Reader",
     "description": "...",
-    "version": "2.0",
+    "version": "0.1",
 
     "permissions": [
         "tabs",
@@ -12,6 +12,12 @@
         "storage",
         "contextMenus"
     ],
+
+    "icons": {
+        "16": "img/icon-16.png",
+        "48": "img/icon-48.png",
+        "128": "img/icon-128.png"
+    },
 
     "options_page": "welcome.html",
 
