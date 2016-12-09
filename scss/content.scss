@@ -12,6 +12,7 @@ $toast-window-spacing: 20px;
 	height: 70px;
 	width: 70px;
 	z-index: 9999999;
+	user-select: none;
 
 	&.hidden {
 		display: none;
@@ -142,6 +143,7 @@ $toast-window-spacing: 20px;
 	background: rgba(0, 0, 0, .4);
 	z-index: 99999999;
 	display: none;
+	user-select: none;
 
 	&.visible {
 		display: block;
