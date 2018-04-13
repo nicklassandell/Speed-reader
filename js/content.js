@@ -2,32 +2,28 @@
 
 	var $scope = {};
 
-	// As soon as the page has loaded, parse it
-	parsePage();
+	chrome.storage.sync.get(['quickAccessGlobal', 'quickAccessBlacklist'], function(res) {
 
-	// If text was found, enable quick access
-	if($scope.parseResults) {
-		chrome.storage.sync.get(['quickAccessGlobal', 'quickAccessBlacklist'], function(res) {
+		// Abort if blacklisted
+		if(res.quickAccessGlobal === false || (res.quickAccessBlacklist || []).includes(window.location.hostname)) {
+			return false;
+		}
 
+		parsePage();
+		if($scope.parseResults) {
 			injectHTML();
 			setupEventListeners();
 			estimateParseTime();
 
-			var blacklist = res.quickAccessBlacklist || [],
-				isBlacklisted = blacklist.includes( window.location.hostname );
-
-			if(res.quickAccessGlobal === false || isBlacklisted) {
-				$scope.quickAccessContainer.classList.add('hidden');
-			}
-			
-		})
-	}
+			$scope.quickAccessContainer.classList.remove('hidden');
+		}
+	});
 
 
 	function injectHTML() {
 		var html = '';
 
-		html += '<div id="sr-qa-container" class="sr-qa-container">';
+		html += '<div id="sr-qa-container" class="sr-qa-container hidden">';
 
 		html += 	'<a title="Read with Champ" id="sr-qa-trigger-read" class="sr-qa-button">';
 		html +=			'<div class="sr-label">Read with Readio, <span id="sr-read-time-container"></span></div>';
@@ -103,13 +99,13 @@
 
 		$scope.disableEverywhereBtn.onclick = function() {
 			chrome.storage.sync.set({ quickAccessGlobal : false });
-			$scope.quickAccessContainer.classList.add('hidden');
+			if($scope.quickAccessContainer) $scope.quickAccessContainer.classList.add('hidden');
 			hideDialogs();
 		}
 
 		$scope.disableJustHereBtn.onclick = function() {
 			addToBlacklist();
-			$scope.quickAccessContainer.classList.add('hidden');
+			if($scope.quickAccessContainer) $scope.quickAccessContainer.classList.add('hidden');
 			hideDialogs();
 		}
 
@@ -128,9 +124,11 @@
 		});
 
 		function hideDialogs() {
-			$scope.dialogs.forEach(function(d) {
-				d.classList.remove('visible');
-			});
+			if($scope.dialogs) {
+				$scope.dialogs.forEach(function(d) {
+					d.classList.remove('visible');
+				});
+			}
 		}
 
 		// Make button visible on load
@@ -161,8 +159,12 @@
 
 
 	function parsePage() {
-		var doc = window.document.cloneNode(true),
-			loc = document.location,
+
+		// document.cloneNode(true) caused issues on certain pages
+		var doc = document.implementation.createHTMLDocument();
+		doc.body.innerHTML = document.body.innerHTML;
+
+		var loc = document.location,
 			uri = {
 			  spec: loc.href,
 			  host: loc.host,
@@ -257,10 +259,10 @@
 		
 
 		} else if(request.action === 'showQuickAccess') {
-			$scope.quickAccessContainer.classList.remove('hidden');
+			if($scope.quickAccessContainer) $scope.quickAccessContainer.classList.remove('hidden');
 
 		} else if(request.action === 'hideQuickAccess') {
-			$scope.quickAccessContainer.classList.add('hidden');
+			if($scope.quickAccessContainer) $scope.quickAccessContainer.classList.add('hidden');
 		
 		} else if(request.action === 'readPage') {
 			requestRead();
