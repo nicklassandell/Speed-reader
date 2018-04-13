@@ -38,20 +38,15 @@ module.exports = function(grunt) {
             }
         },
 
-        compass: {
-            dist: {
-                options: {
-                    sassDir: '../scss/',
-                    cssDir: '../css/',
-                    environment: 'production'
-                }
-            },
+        sass: {
             dev: {
-                options: {
-                    sassDir: '../scss/',
-                    cssDir: '../css/',
-                    outputStyle: 'expanded'
-                }
+                files: [{
+                    expand: true,
+                    cwd: '../scss',
+                    src: '*.scss',
+                    dest: '../css/',
+                    ext: '.css'
+                }]
             }
         },
 
@@ -65,18 +60,18 @@ module.exports = function(grunt) {
             },
             scss: {
                 files: ['../scss/*.scss'],
-                tasks: ['compass:dev']
+                tasks: ['sass:dev']
             }
         }
 
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-sass');
 
-    grunt.registerTask('default', ['watch:js']);
-    grunt.registerTask('dist', ['compass:dist', 'uglify:dist']);
+    grunt.registerTask('default', ['watch:js', 'watch:scss']);
+    grunt.registerTask('dist', ['sass:dev', 'uglify:dist']);
 
 
     grunt.event.on('watch', function(action, filepath, target) {
