@@ -386,7 +386,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		wpm = Math.round(wpm / 50) * 50; // Round to nearest 50
 
 		// Min/max checks
-		if(wpm < 50 || wpm > 1200) return false;
+		if(wpm < 50 || wpm > 1600) return false;
 
 		$scope.settings.wpm = wpm;
 	}
