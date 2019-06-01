@@ -17,12 +17,31 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		'centerFocusPoint' : true,
 		'toast' : '',
 		'useSerifFont' : true,
-		'pauseCountdown' : 1,
+		'pauseCountdown' : 250,
 		'countDownInProgress' : false,
 		'showLoadingOverlay' : false,
 		'init' : false,
 		'windowHeight' : window.innerHeight,
-		'windowWidth' : window.innerWidth
+		'windowWidth' : window.innerWidth,
+		'countdownMultiplier' : 3,
+		'countdownMultiplierOptions' : [
+			{
+				value: 3,
+				label: '3 seconds'
+			},
+			{
+				value: 2,
+				label: '2 seconds'
+			},
+			{
+				value: 1,
+				label: '1 second'
+			},
+			{
+				value: 0,
+				label: 'Disable countdown'
+			},
+		]
 	};
 
 	$scope.game = {
@@ -77,7 +96,8 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		'centerFocusPoint',
 		'useSerifFont',
 		'windowHeight',
-		'windowWidth'
+		'windowWidth',
+		'countdownMultiplier'
 	];
 
 
@@ -236,51 +256,56 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		$scope.game.paused = false;
 
 		$timeout(function() {
-			$scope.startCountdown($scope.settings.pauseCountdown*3);
+			$scope.startCountdown($scope.settings.countdownMultiplier);
 		}, 50);
 	}
 
 	// Todo: Clean this mess up
 	$scope.startCountdown = function(steps) {
 
-		var prog = angular.element('#countdown-bar'),
-			bar = prog.find('.progress'),
+		if(steps == 0) {
+			$scope.startWordLoop();
 
-			currStep = 1,
+		} else {
+			var prog = angular.element('#countdown-bar'),
+				bar = prog.find('.progress'),
 
-			percentSteps = 100/steps;
+				currStep = 1,
 
-		if($scope.settings.countDownInProgress) {
-			$interval.cancel($scope.countDownTimeout);
-			prog.removeClass('visible');
-			bar.attr('style', '');
+				percentSteps = 100/steps;
+
+			if($scope.settings.countDownInProgress) {
+				$interval.cancel($scope.countDownTimeout);
+				prog.removeClass('visible');
+				bar.attr('style', '');
+			}
+
+			$scope.settings.countDownInProgress = true;
+
+
+			$timeout(function() {
+				prog.addClass('visible');
+				bar.css('width', percentSteps + '%');
+
+				$scope.countDownTimeout = $interval(function() {
+					var percent = percentSteps * (currStep+1);
+					bar.css('width', percent + '%');
+
+					if(currStep >= steps) {
+						$scope.startWordLoop();
+						$interval.cancel($scope.countDownTimeout);
+
+						prog.removeClass('visible');
+						bar.attr('style', '');
+
+						$scope.settings.countDownInProgress = false;
+
+						return false;
+					}
+					currStep += 1;
+				}, 1000);
+			}, 100);
 		}
-
-		$scope.settings.countDownInProgress = true;
-
-
-		$timeout(function() {
-			prog.addClass('visible');
-			bar.css('width', percentSteps + '%');
-
-			$scope.countDownTimeout = $interval(function() {
-				var percent = percentSteps * (currStep+1);
-				bar.css('width', percent + '%');
-
-				if(currStep >= steps) {
-					$scope.startWordLoop();
-					$interval.cancel($scope.countDownTimeout);
-
-					prog.removeClass('visible');
-					bar.attr('style', '');
-
-					$scope.settings.countDownInProgress = false;
-
-					return false;
-				}
-				currStep += 1;
-			}, 1000);
-		}, 50);
 	}
 
 	$scope.stopRead = function() {
@@ -300,7 +325,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 		$scope.game.paused = false;
 
 		$timeout(function() {
-			$scope.startCountdown($scope.settings.pauseCountdown*3);
+			$scope.startCountdown($scope.settings.countdownMultiplier);
 		}, 50);
 	}
 
@@ -342,7 +367,7 @@ app.controller('MainCtrl', ['$scope', '$timeout', '$interval', '$window', '$http
 
 		$scope.startWordLoopTimeout = $timeout(function() {
 			$scope.startWordLoop();
-		}, 500);
+		}, $scope.settings.pauseCountdown);
 	}
 
 	$scope.goToPosition = function(pos) {

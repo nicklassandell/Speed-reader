@@ -33,11 +33,13 @@ chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
 });
 
 
-chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(function(details) {
 
-	chrome.tabs.create({
-		'url': 'welcome.html'
-	});
+	if(details.reason == "install") {
+		chrome.tabs.create({
+			'url': 'welcome.html'
+		});
+	}
 
 });
 

@@ -4,7 +4,7 @@
     "name": "Readio Speed Reader",
     "short_name": "Readio (beta)",
     "description": "A modern, intuitive speed reader that just works.",
-    "version": "0.1.4",
+    "version": "0.2.0",
 
     "permissions": [
         "tabs",

@@ -140,6 +140,12 @@
                                     <label for="set-serifFont-chk">Use Serif font style</label>
                                 </div>
                             </div>
+
+                            <div class="form-row">
+                                <select ng-model="settings.countdownMultiplier"
+                                        ng-options="opt.value as opt.label for opt in settings.countdownMultiplierOptions">
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
